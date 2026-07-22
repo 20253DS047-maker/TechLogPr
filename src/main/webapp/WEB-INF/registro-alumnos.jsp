@@ -118,7 +118,7 @@
   </div>
 
   <div class="card-formulario">
-    <form action="RegistrarBitacoraServlet" method="POST">
+    <form action="RegistroAlumnosServlet" method="POST">
 
       <div class="mb-3">
         <label for="nombre" class="form-label form-label-custom">Nombre:</label>

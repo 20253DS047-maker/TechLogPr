@@ -107,7 +107,7 @@
 
 <div class="decoracion-verde">
     <img src="imagenes/logo-utez.png" alt="UTEZ Logo" class="logo-utez">
-    <h1 class="texto-bienvenidos">Bienvenidos</h1>
+    <h1 class="texto-bienvenidos text-white fw-bold" style="position: absolute; top: 120px; left: 50%; transform: translateX(-50%);">Bienvenidos</h1>
 </div>
 
 <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center position-relative" style="z-index: 2;">

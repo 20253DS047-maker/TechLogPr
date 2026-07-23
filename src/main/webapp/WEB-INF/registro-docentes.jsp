@@ -234,7 +234,6 @@
 
             <div class="d-flex justify-content-end gap-3 mt-4">
                 <button type="button" onclick="mostrarModalCancelar()" class="btn btn-cancelar">Cancelar</button>
-                <!-- Cambiado a type="submit" para que envíe el formulario al Servlet -->
                 <button type="submit" class="btn btn-registrar">Registrar</button>
             </div>
         </form>
@@ -276,7 +275,7 @@
     }
 
     function confirmarCancelacion() {
-        window.location.href = "WEB-INF/index.jsp";
+        window.location.href = "index.jsp";
     }
 </script>
 </body>

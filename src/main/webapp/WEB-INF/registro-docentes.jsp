@@ -17,8 +17,7 @@
             font-family: Arial, sans-serif;
         }
 
-
-        .decoracion-verde {
+        .decoracion {
             position: absolute;
             left: 0;
             top: 0;
@@ -57,6 +56,7 @@
             max-width: 480px;
             width: 100%;
         }
+
         .form-label-custom {
             color: #7A7878;
             font-weight: 700;
@@ -101,13 +101,95 @@
             background-color: #02163d;
             color: white;
         }
+
+        .modal-overlay {
+            display: none; /* Inicia oculto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1050; /* Por encima de todo */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-card {
+            background-color: #E2DDD9;
+            width: 320px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .modal-header-custom {
+            background-color: #008767;
+            color: black;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .modal-body-custom {
+            padding: 20px 15px;
+        }
+
+        .icon-question {
+            width: 60px;
+            height: 60px;
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 auto 15px auto;
+        }
+
+        .modal-text {
+            color: #1A1A1A;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-modal-cancelar {
+            background-color: #FF3333;
+            color: white;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-modal-confirmar {
+            background-color: #03205B;
+            color: white;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-<div class="decoracion-verde">
+<div class="decoracion">
     <img src="imagenes/logo-utez.png" alt="UTEZ Logo" class="logo-utez">
-    <h1 class="texto-bienvenidos text-white fw-bold" style="position: absolute; top: 120px; left: 50%; transform: translateX(-50%);">Bienvenidos</h1>
+    <h1 class="texto-bienvenidos text-white fw-bold" style="position: absolute; top: 420px; left: 50%; transform: translateX(-50%);">Bienvenidos</h1>
 </div>
 
 <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center position-relative" style="z-index: 2;">
@@ -122,44 +204,80 @@
 
             <div class="mb-3">
                 <label for="nombre" class="form-label form-label-custom">Nombre:</label>
-                <input type="text" class="form-control form-control-custom" id="nombre" placeholder="Ej: Santiago" required>
+                <input type="text" class="form-control form-control-custom" id="nombre" name="nombre" placeholder="Ej: Santiago" required>
             </div>
 
             <div class="mb-3">
-                <label for="apellidoP" class="form-label form-label-custom">Apellido Paterno:</label>
-                <input type="text" class="form-control form-control-custom" id="apellido" placeholder="Ej: Perez" required>
+                <label for="apellido" class="form-label form-label-custom">Apellido Paterno:</label>
+                <input type="text" class="form-control form-control-custom" id="apellido" name="apellidoP" placeholder="Ej: Perez" required>
             </div>
 
             <div class="mb-3">
                 <label for="apellidoM" class="form-label form-label-custom">Apellido materno:</label>
-                <input type="text" class="form-control form-control-custom" id="apellidoM" placeholder="Ej: Solano" required>
+                <input type="text" class="form-control form-control-custom" id="apellidoM" name="apellidoM" placeholder="Ej: Solano" required>
             </div>
 
             <div class="mb-3">
                 <label for="salon" class="form-label form-label-custom">Salon:</label>
-                <input type="text" class="form-control form-control-custom" id="salon" placeholder="Ej: CC7" required>
+                <input type="text" class="form-control form-control-custom" id="salon" name="salon" placeholder="Ej: CC7" required>
             </div>
 
             <div class="mb-4">
                 <label for="area" class="form-label form-label-custom">Area:</label>
-                <select id="area" class="form-select">
-                    <option>DATID</option>
-                    <option>DACEA</option>
-                    <option>DAMI</option>
-                    <option>DATEFI</option>
+                <select id="area" name="area" class="form-select">
+                    <option value="DATID">DATID</option>
+                    <option value="DACEA">DACEA</option>
+                    <option value="DAMI">DAMI</option>
+                    <option value="DATEFI">DATEFI</option>
                 </select>
             </div>
 
             <div class="d-flex justify-content-end gap-3 mt-4">
-                <button type="button" class="btn btn-cancelar">Cancelar</button>
+                <button type="button" onclick="mostrarModalCancelar()" class="btn btn-cancelar">Cancelar</button>
+                <!-- Cambiado a type="submit" para que envíe el formulario al Servlet -->
                 <button type="submit" class="btn btn-registrar">Registrar</button>
             </div>
-
         </form>
     </div>
 
 </div>
 
+<div id="modalCancelar" class="modal-overlay">
+    <div class="modal-card">
+
+        <div class="modal-header-custom">
+            Cancelar Registro
+        </div>
+
+        <div class="modal-body-custom">
+            <div class="icon-question">?</div>
+
+            <div class="modal-text">
+                ¿Estas seguro que quieres<br>cancelar este registro?
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-modal-cancelar" onclick="cerrarModalCancelar()">Cancelar</button>
+                <button type="button" class="btn-modal-confirmar" onclick="confirmarCancelacion()">Confirmar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function mostrarModalCancelar() {
+        document.getElementById('modalCancelar').style.display = 'flex';
+    }
+
+    function cerrarModalCancelar() {
+        document.getElementById('modalCancelar').style.display = 'none';
+    }
+
+    function confirmarCancelacion() {
+        window.location.href = "WEB-INF/index.jsp";
+    }
+</script>
 </body>
 </html>

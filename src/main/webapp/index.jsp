@@ -94,13 +94,13 @@
                             <button type="submit" onclick="window.location.href='registro-docentes-servlet'" class="boton px-5 fw-bold" name="docente">DOCENTE</button>
                         </div>
 
-                        <div class="d-flex justify-content-center gap-3">
+                        <div class="d-flex justify-content-center gap-3" >
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="login_admin" id="login_admin" value="soyAdmin">
+                                <input class="form-check-input" type="radio" name="opcion_usuario" id="login_admin" value="soyAdmin" required>
                                 <label class="form-check-label" for="soyAdmin">Soy Admin </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="registro_usuario" id="registro_usuario" value="registrarUsuario">
+                                <input class="form-check-input" type="radio" name="opcion_usuario" id="registro_usuario" value="registrarUsuario" required>
                                 <label class="form-check-label" for="registrar_usuario"> Registrar Usuario</label>
                             </div>
                         </div>

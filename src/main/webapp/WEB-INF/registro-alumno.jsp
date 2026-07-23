@@ -230,7 +230,7 @@
 
             <div class="d-flex justify-content-end gap-3 mt-4">
                 <button type="button" onclick="mostrarModalCancelar()" class="btn btn-cancelar">Cancelar</button>
-                <button type="submit" onclick="window.location.href='registro-pc-servlet'" class="btn btn-registrar">Registrar</button>
+                <button type="submit" onclick="window.location.href='registro-pc-servlet'" class="btn btn-registrar">Continuar</button>
             </div>
 
         </form>

@@ -90,7 +90,7 @@
                         <h5 class="mb-3">¿Qué desea hacer hoy?</h5>
 
                         <div class="d-flex justify-content-center gap-3 mb-4">
-                            <button type="submit" class="boton px-5 fw-bold" name="alumno">ALUMNO</button>
+                            <button type="submit" onclick="window.location.href='registro-alumnos-servlet'" class="boton px-5 fw-bold" name="alumno">ALUMNO</button>
                             <button type="submit" onclick="window.location.href='registro-docentes-servlet'" class="boton px-5 fw-bold" name="docente">DOCENTE</button>
                         </div>
 

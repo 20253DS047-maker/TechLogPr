@@ -1,11 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: galil
-  Date: 22/07/2026
-  Time: 07:01 p. m.
+  Date: 23/07/2026
+  Time: 06:23 p. m.
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -51,7 +51,7 @@
     <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-4" style="margin-top: 50px">
     <div class="card p-4 shadow" style="width: 798px">
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
-            <h2 class="text-title">LOGIN ADMIN</h2>
+            <h2 class="text-title">REGISTRO USUARIOS</h2>
         </div>
         <form>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
@@ -62,14 +62,18 @@
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="password" class="form-label">Contraseña: </label>
+                <label for="apellido" class="form-label">Apellido:</label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" placeholder="Ingrese su contraseña" id="password">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" id="apellido" placeholder="Ingrese su apellido">
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <a href="recuperar-contrasena" class="text-primary">¿Olvidaste tu contraseña?</a>
+                <label for="matricula" class="form-label">Matrícula:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi  bi-card-text"></i></span>
+                    <input type="text" class="form-control" id="matricula" placeholder="Ej: 20253ds047">
+                </div>
             </div>
 
             <div class="d-grid gap-20 col-8 mx-auto mb-3">

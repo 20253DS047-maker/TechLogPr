@@ -1,0 +1,75 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: galil
+  Date: 23/07/2026
+  Time: 05:24 p. m.
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verificacion correo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    .btn-primary {
+        background-color: #183052;
+        color: white;
+        border-radius: 4px;
+        border: #183052;
+        height: 40px;
+    }
+    .btn-primary:hover{
+        background-color: #20477E;
+        border: #20477E;
+    }
+    .text-title{
+        color: #534646;
+        text-align: center;
+    }
+    .card{
+        background-color: #EFE6E6;
+    }
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #CBCABE;
+        font-family: 'Lexend Exa', sans-serif;
+    }
+</style>
+</head>
+<body>
+<div class="d-flex flex-column justify-content-start align-items-center vh-100">
+    <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-4" style="margin-top: 50px">
+    <div class="card p-4 shadow" style="width: 798px">
+        <div class="col-sm-6 col-md-8 mx-auto mb-4">
+            <h5 class="text-start">Por favor introduzca el correo con el que se registro</h5>
+        </div>
+        <form>
+            <div class="col-sm-6 col-md-8 mx-auto mb-3">
+                <label for="correo" class="form-label">Correo electrónico:</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input type="email" class="form-control" id="correo" placeholder="******************" aria-describedby="emailHelp">
+                </div>
+            </div>
+
+            <div class="d-grid gap-20 col-8 mx-auto mb-3">
+                <button type="submit" class="btn-primary">Siguiente</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

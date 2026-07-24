@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +47,17 @@
             width: 200px;
             height: 70px;
         }
+        .btn-primary {
+            background-color: #183052;
+            color: white;
+            border-radius: 4px;
+            border: #183052;
+            height: 40px;
+        }
+        .btn-primary:hover{
+            background-color: #20477E;
+            border: #20477E;
+        }
     </style>
 
 </head>
@@ -57,34 +68,23 @@
 </header>
 
 <main>
-
-    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12">
-                <h2 class="text-center">¡Bienvenido/a!</h2>
-                <p class="justify-content-center text-center">
-                    Este sistema ha sido diseñado para que tu registro al utilizar un equipo sea más fácil, seguro y no tan tardado.
-                </p>
-            </div>
-        </div>
+            <div class="col-8">
+                <div class="card border-0 shadow-lg p-4 text-center position-relative mb-5" id="div_card">
+                    <div class="card-body">
+                        <h5 class="mb-3">¿Que usuario eres?</h5>
 
-            <div class="row justify-content-center">
-                <div class="col-8">
-                    <div class="card border-0 shadow-lg p-4 text-center position-relative mb-5" id="div_card">
-                        <div class="card-body">
-                            <h5 class="mb-3">¿Quien eres?</h5>
-
-                            <div class="d-flex justify-content-center gap-3 mb-4">
-                                <button type="button" onclick="window.location.href='login-admin-servlet'" class="boton px-5 fw-bold" name="admin">Admin</button>
-                                <button type="button" onclick="window.location.href='tipo-user-servlet'" class="boton px-5 fw-bold" name="usuario">Usuario</button>
-                            </div>
-                            </div>
+                        <div class="d-flex justify-content-center gap-3 mb-4">
+                            <button type="button" onclick="window.location.href='login-alumno-servlet'" class="boton px-5 fw-bold" name="alumno">Alumno</button>
+                            <button type="button" onclick="window.location.href='login-docente-servlet'" class="boton px-5 fw-bold" name="docente">Docente</button>
                         </div>
                     </div>
                 </div>
-
-    </div>
-
+                <div class="d-grid gap-20 col-3 mb-3">
+                    <button type="button" onclick="window.location.href='index.jsp'" class="btn-primary">Regresar</button>
+                </div>
+            </div>
+        </div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

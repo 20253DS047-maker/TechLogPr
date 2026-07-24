@@ -184,7 +184,7 @@
             cursor: pointer;
         }
         .overlay-exito {
-            display: none; /* Cambiar a 'flex' para mostrarlo */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -196,7 +196,6 @@
             align-items: center;
         }
 
-        /* La tarjeta blanca/crema */
         .card-exito {
             background-color: #ECE8E5;
             width: 320px;
@@ -205,14 +204,12 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Franja superior verde */
         .header-verde {
             background-color: #008767;
             height: 50px;
             width: 100%;
         }
 
-        /* Contenido interior */
         .body-exito {
             padding: 25px 20px;
             text-align: center;
@@ -221,7 +218,6 @@
             align-items: center;
         }
 
-        /* Círculo verde con el 'check' */
         .circulo-check {
             background-color: #10B981;
             color: white;
@@ -235,7 +231,6 @@
             margin-bottom: 15px;
         }
 
-        /* Texto del mensaje */
         .texto-exito {
             color: #000;
             font-size: 16px;
@@ -244,7 +239,6 @@
             line-height: 1.3;
         }
 
-        /* Botón Volver azul oscuro */
         .btn-volver {
             background-color: #1C3152;
             color: white;
@@ -300,6 +294,7 @@
             <div class="mb-4">
                 <label for="area" class="form-label form-label-custom">Area:</label>
                 <select id="area" name="area" class="form-select">
+                    <option selected>Selecciona una opcion</option>
                     <option value="DATID">DATID</option>
                     <option value="DACEA">DACEA</option>
                     <option value="DAMI">DAMI</option>

@@ -201,7 +201,7 @@
     </div>
 
     <div class="card-formulario">
-        <form action="RegistroAlumnosServlet" method="POST">
+        <form action="registro-alumnos-servlet" method="POST">
 
             <div class="mb-3">
                 <label for="nombre" class="form-label form-label-custom">Nombre:</label>

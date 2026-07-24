@@ -73,6 +73,7 @@
 </header>
 
 <main>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12">
@@ -83,37 +84,39 @@
             </div>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-8">
-                <div class="card border-0 shadow-lg p-4 text-center position-relative mb-5" id="div_card">
-                    <div class="card-body">
-                        <h5 class="mb-3">¿Qué desea hacer hoy?</h5>
+        <form action="login-admin-servlet" method="POST">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div class="card border-0 shadow-lg p-4 text-center position-relative mb-5" id="div_card">
+                        <div class="card-body">
+                            <h5 class="mb-3">¿Qué desea hacer hoy?</h5>
 
-                        <div class="d-flex justify-content-center gap-3 mb-4">
-                            <button type="submit" onclick="window.location.href='registro-alumnos-servlet'" class="boton px-5 fw-bold" name="alumno">ALUMNO</button>
-                            <button type="submit" onclick="window.location.href='registro-docentes-servlet'" class="boton px-5 fw-bold" name="docente">DOCENTE</button>
-                        </div>
-
-                        <div class="d-flex justify-content-center gap-3" >
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="opcion_usuario" id="login_admin" value="soyAdmin" required>
-                                <label class="form-check-label" for="soyAdmin">Soy Admin </label>
+                            <div class="d-flex justify-content-center gap-3 mb-4">
+                                <button type="button" onclick="window.location.href='registro-alumnos-servlet'" class="boton px-5 fw-bold" name="alumno">ALUMNO</button>
+                                <button type="button" onclick="window.location.href='registro-docentes-servlet'" class="boton px-5 fw-bold" name="docente">DOCENTE</button>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="opcion_usuario" id="registro_usuario" value="registrarUsuario" required>
-                                <label class="form-check-label" for="registrar_usuario"> Registrar Usuario</label>
+
+                            <div class="d-flex justify-content-center gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="opcion_usuario" id="login_admin" value="soyAdmin" required>
+                                    <label class="form-check-label" for="login_admin">Soy Admin</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="opcion_usuario" id="registro_usuario" value="registrarUsuario" required>
+                                    <label class="form-check-label" for="registro_usuario">Registrar Usuario</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row justify-content-center">
-            <div class="col-4 position-absolute">
-                <button type="submit" class="btn2 position-absolute top-100 start-50 translate-middle-x shadow px-5 py-2 fw-bold" id="ingresar">INGRESAR</button>
+            <div class="row justify-content-center">
+                <div class="col-4 position-absolute">
+                    <button type="submit" class="btn2 position-absolute top-100 start-50 translate-middle-x shadow px-5 py-2 fw-bold" id="ingresar">INGRESAR</button>
+                </div>
             </div>
-        </div>
+        </form>
 
     </div>
 

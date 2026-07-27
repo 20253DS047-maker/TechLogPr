@@ -81,9 +81,8 @@
             </div>
         </form>
         <div class="d-grid gap-20 col-3 mb-3">
-            <button type="button" class="btn-primary">Regresar</button>
+            <button type="button" onclick="window.location.href='tipo-user-servlet'" class="btn-primary">Regresar</button>
         </div>
-
     </div>
 </div>
 

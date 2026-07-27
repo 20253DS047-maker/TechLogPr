@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: USER
-  Date: 24/07/2026
-  Time: 02:33 p.m.
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="es">
@@ -15,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa&display=swap" rel="stylesheet">
-
     <style>
         .btn-primary {
             background-color: #183052;
@@ -69,10 +61,9 @@
             </div>
 
             <div class="d-grid gap-20 col-3 mx-auto mb-3">
-                <button type="button" class="btn btn-primary">Volver</button>
+                <button type="button" class="btn btn-primary">Continuar</button>
             </div>
         </div>
-
     </div>
 </div>
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pantalla Principal</title>
+    <title>Bitácora Digital - Usuario</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
@@ -44,7 +44,7 @@
         }
 
         .logoImg{
-            width: 200px;
+            width: 170px;
             height: 70px;
         }
         .btn-primary {
@@ -62,17 +62,28 @@
 
 </head>
 <body>
-<img src="img/LogoUtez.png" class="logoImg" alt="UTEZ logo">
+<img src="imagenes/logo-utez.png" class="logoImg" alt="UTEZ logo">
 <header>
     <h1 class="fw-bold">BITÁCORA DIGITAL</h1>
 </header>
 
 <main>
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <h2 class="text-center">Identificación de rol para su registro</h2>
+                <p class="justify-content-center text-center">
+                    Seleccione uno para continuar...
+                </p>
+            </div>
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-8">
                 <div class="card border-0 shadow-lg p-4 text-center position-relative mb-5" id="div_card">
                     <div class="card-body">
-                        <h5 class="mb-3">¿Que usuario eres?</h5>
+                        <h5 class="mb-3">¿Que tipo de cuenta eres?</h5>
 
                         <div class="d-flex justify-content-center gap-3 mb-4">
                             <button type="button" onclick="window.location.href='login-alumno-servlet'" class="boton px-5 fw-bold" name="alumno">Alumno</button>
@@ -80,11 +91,15 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="d-grid gap-20 col-3 mb-3">
                     <button type="button" onclick="window.location.href='index.jsp'" class="btn-primary">Regresar</button>
                 </div>
+
             </div>
         </div>
+
+    </div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

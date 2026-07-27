@@ -62,10 +62,10 @@
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="area" class="form-label">Área:</label>
+                <label for="contrasena" class="form-label">Contraseña:</label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi  bi-grid"></i></span>
-                    <input type="text" class="form-control" id="area" placeholder="Ej: Datid">
+                    <span class="input-group-text"><i class="bi  bi-lock"></i></span>
+                    <input type="text" class="form-control" id="contrasena" placeholder="Ingrese su contraseña">
                 </div>
                 <a href="registro-docente-servlet">¿No tienes cuenta?</a>
             </div>

@@ -46,24 +46,31 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">REGISTRO DOCENTE</h2>
         </div>
-        <form action="CheckDocentesServlet" method="post">
+        <form action="registro-docente-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="nombre" class="form-label">Nombre:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre" required>
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese su nombre" required>
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="apellido" class="form-label">Apellido:</label>
+                <label for="apellido_paterno" class="form-label">Apellido Paterno:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="apellido" placeholder="Ingrese su apellido" required>
+                    <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" placeholder="Ingrese su apellido paterno" required>
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="matricula" class="form-label">Area:</label>
-                <select class="form-select" aria-label="Default select example">
+                <label for="apellido_materno" class="form-label">Apellido Materno:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" placeholder="Ingrese su apellido materno" required>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-8 mx-auto mb-3">
+                <label for="area" class="form-label">Area:</label>
+                <select class="form-select" id="area"  name="area" aria-label="Default select example">
                     <option selected>Selecciona una opcion</option>
                     <option value="1">DATID</option>
                     <option value="2">DAMI</option>
@@ -72,15 +79,15 @@
                 </select>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="contraseña" class="form-label">Contraseña:</label>
+                <label for="password" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="contraseña" placeholder="Max. 5 caracteres" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Max. 5 caracteres" required>
                 </div>
             </div>
 
             <div class="d-grid gap-20 col-8 mx-auto mb-3">
-                <button type="button" onclick="window.location.href=''" class="btn-primary">Iniciar</button>
+                <button type="submit" class="btn-primary">Iniciar</button>
             </div>
         </form>
         <div class="d-grid gap-20 col-3 mb-3">

@@ -41,7 +41,7 @@
 </head>
 <body>
 <div class="d-flex flex-column justify-content-start align-items-center vh-100">
-    <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-4" style="margin-top: 50px">
+    <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-4" style="margin-top: 30px">
     <div class="card p-4 shadow" style="width: 798px">
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">REGISTRO DOCENTE</h2>
@@ -72,10 +72,10 @@
                 <label for="area" class="form-label">Area:</label>
                 <select class="form-select" id="area"  name="area" aria-label="Default select example">
                     <option selected>Selecciona una opcion</option>
-                    <option value="1">DATID</option>
-                    <option value="2">DAMI</option>
-                    <option value="3">DACEA</option>
-                    <option value="4">DATEFI</option>
+                    <option value="DATID">DATID</option>
+                    <option value="DAMI">DAMI</option>
+                    <option value="DACEA">DACEA</option>
+                    <option value="DATEFI">DATEFI</option>
                 </select>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">

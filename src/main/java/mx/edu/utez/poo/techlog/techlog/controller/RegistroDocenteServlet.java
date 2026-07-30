@@ -31,6 +31,8 @@ public class RegistroDocenteServlet extends HttpServlet {
         DaoDocente dao = new DaoDocente();
         boolean guardado = dao.insertar(nuevoDocente);
         if (guardado){
+
+            req.setAttribute("docente", nuevoDocente);
             req.getRequestDispatcher("WEB-INF/check-docente.jsp").forward(req, resp);
         }else {
             req.setAttribute("error", "No se pudo registrar el docente");

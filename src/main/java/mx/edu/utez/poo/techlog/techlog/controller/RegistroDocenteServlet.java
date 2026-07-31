@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import mx.edu.utez.poo.techlog.techlog.dao.DaoDocente;
 import mx.edu.utez.poo.techlog.techlog.model.BeanDocente;
+import mx.edu.utez.poo.techlog.techlog.service.ServiceDocente;
 
 import java.io.IOException;
 
@@ -20,6 +21,8 @@ public class RegistroDocenteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        ServiceDocente serviceDocente = new ServiceDocente();
         String nombre = req.getParameter("nombre");
         String apellidoPaterno = req.getParameter("apellido_paterno");
         String apellidoMaterno = req.getParameter("apellido_materno");
@@ -29,7 +32,7 @@ public class RegistroDocenteServlet extends HttpServlet {
 
         BeanDocente nuevoDocente = new BeanDocente(nombre, apellidoPaterno, apellidoMaterno, area, password);
         DaoDocente dao = new DaoDocente();
-        boolean guardado = dao.insertar(nuevoDocente);
+        boolean guardado = serviceDocente.registrarDocente(nuevoDocente);
         if (guardado){
 
             req.setAttribute("docente", nuevoDocente);

@@ -62,7 +62,7 @@
 
 </head>
 <body>
-<img src="imagenes/logo-utez.png" class="logoImg" alt="UTEZ logo">
+<img src="imagenes/Logotipo-UTEZ-scaled.png" class="logoImg" alt="UTEZ logo">
 <header>
     <h1 class="fw-bold">BITÁCORA DIGITAL</h1>
 </header>

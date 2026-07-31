@@ -82,7 +82,7 @@
                 <label for="password" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Max. 5 caracteres" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Max. 10 caracteres" required>
                 </div>
             </div>
 

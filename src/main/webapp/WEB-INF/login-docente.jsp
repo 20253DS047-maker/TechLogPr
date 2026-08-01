@@ -67,7 +67,6 @@
                     <span class="input-group-text"><i class="bi  bi-lock"></i></span>
                     <input type="text" class="form-control" id="contrasena" placeholder="Ingrese su contraseña">
                 </div>
-                <a href="registro-docente-servlet">¿No tienes cuenta?</a>
             </div>
 
             <div class="d-grid gap-20 col-8 mx-auto mb-3">

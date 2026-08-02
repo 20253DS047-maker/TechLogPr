@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro Docentes</title>
+  <title>Alumnos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     body {
@@ -85,8 +85,6 @@
       white-space: nowrap;
     }
     tbody tr.empty-row td { padding: 16px 8px; border-bottom: 1px solid #d8d1c5; }
-    .badge-activo { color: #1c8a6c; font-weight: 600; }
-    .badge-inactivo { color: #b03a3a; font-weight: 600; }
     .icon-btn {
       border: none;
       background: none;
@@ -214,15 +212,28 @@
     .confirm-header {
       background-color: #1c8a6c;
       color: #fff;
-      padding: 16px 20px;
+      padding: 14px;
       font-weight: 700;
-      font-size: 1rem;
     }
-    .confirm-actions { display: flex; gap: 0; }
+    .confirm-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: #2c2c2c;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin: 24px auto 12px;
+    }
+    .confirm-text { padding: 0 24px 20px; color: #333; font-size: 0.9rem; }
+    .confirm-actions { display: flex; gap: 14px; padding: 0 24px 24px; }
     .confirm-actions button {
       flex: 1;
       border: none;
-      padding: 14px;
+      border-radius: 4px;
+      padding: 11px;
       font-weight: 700;
       font-size: 0.95rem;
       cursor: pointer;
@@ -238,7 +249,7 @@
   <button type="button" class="btn-agregar" onclick="abrirModal('modalAgregar')"><i class="bi bi-file-earmark-plus"></i> Agregar</button>
 </div>
 
-<h1 class="page-title">Registro Docentes</h1>
+<h1 class="page-title">Alumnos</h1>
 
 <div class="search-bar">
   <input type="text" id="buscarMatricula" placeholder="Introduzca la matrícula para buscar en el registro...">
@@ -250,54 +261,37 @@
     <thead>
     <tr>
       <th>#</th>
-      <th>Nombre completo</th>
-      <th>Fecha</th>
-      <th>P.C.</th>
-      <th>Docencia</th>
-      <th>Área</th>
-      <th>Estado</th>
+      <th>Matrícula</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Username</th>
       <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
     <tr>
       <td>0</td>
-      <td>Jonathan Alejandro...</td>
-      <td>11/11/2026</td>
-      <td>15</td>
-      <td>D4</td>
-      <td>DATID</td>
-      <td id="estadoTexto-0" class="badge-activo">Activo</td>
+      <td>20253DS196</td>
+      <td>Jonathan</td>
+      <td>Lopez Benites</td>
+      <td>jlopezb</td>
       <td>
-        <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar"
-                onclick="cambiarEstado(0, this)">
-          <i class="bi bi-toggle2-on"></i>
-        </button>
         <button type="button" class="icon-btn" title="Ver más"
                 onclick="verMas({
-                  nombre: 'Jonathan AlejandroLopez Benitez',
-                  horaEntrada: '11:00 AM',
-                  horaSalida: '13:00 PM',
-                  docencia: 'D4',
-                  fecha: '11/11/2026',
-                  pc: '15',
-                  salon: 'MAC9',
-                  area: 'DATID',
-                  estado: 'Activo'
+                  matricula: '20253DS196',
+                  nombre: 'Jonathan',
+                  apellido: 'Lopez Benites',
+                  username: 'jlopezb',
+                  contrasena: 'Jl123'
                 })">
           <i class="bi bi-eye"></i>
         </button>
         <button type="button" class="icon-btn" title="Editar"
                 onclick="editar(0, {
-                  nombre: 'Jonathan AlejandroLopez Benitez',
-                  horaEntrada: '11:00 AM',
-                  horaSalida: '13:00 PM',
-                  docencia: 'D4',
-                  fecha: '11/11/2026',
-                  pc: '15',
-                  salon: 'MAC9',
-                  area: 'DATID',
-                  estado: 'activo'
+                  matricula: '20253DS196',
+                  nombre: 'Jonathan',
+                  apellido: 'Lopez Benites',
+                  username: 'jlopezb'
                 })">
           <i class="bi bi-pencil-square"></i>
         </button>
@@ -309,42 +303,27 @@
     </tr>
     <tr>
       <td>1</td>
-      <td>Santiago Flores</td>
-      <td>20/02/2026</td>
-      <td>25</td>
-      <td>D3</td>
-      <td>DATID</td>
-      <td id="estadoTexto-1" class="badge-inactivo">Inactivo</td>
+      <td>20253DS034</td>
+      <td>Santiago</td>
+      <td>Flores</td>
+      <td>sfloresr</td>
       <td>
-        <button type="button" class="icon-btn" id="estadoBtn-1" title="Activar/Desactivar"
-                onclick="cambiarEstado(1, this)">
-          <i class="bi bi-toggle2-off"></i>
-        </button>
         <button type="button" class="icon-btn" title="Ver más"
                 onclick="verMas({
-                  nombre: 'Santiago Flores',
-                  horaEntrada: '',
-                  horaSalida: '',
-                  docencia: 'D3',
-                  fecha: '20/02/2026',
-                  pc: '25',
-                  salon: '',
-                  area: 'DATID',
-                  estado: 'Inactivo'
+                  matricula: '20253DS034',
+                  nombre: 'Santiago',
+                  apellido: 'Flores',
+                  username: 'sfloresr',
+                  contrasena: 'Sf456'
                 })">
           <i class="bi bi-eye"></i>
         </button>
         <button type="button" class="icon-btn" title="Editar"
                 onclick="editar(1, {
-                  nombre: 'Santiago Flores',
-                  horaEntrada: '',
-                  horaSalida: '',
-                  docencia: 'D3',
-                  fecha: '20/02/2026',
-                  pc: '25',
-                  salon: '',
-                  area: 'DATID',
-                  estado: 'inactivo'
+                  matricula: '20253DS034',
+                  nombre: 'Santiago',
+                  apellido: 'Flores',
+                  username: 'sfloresr'
                 })">
           <i class="bi bi-pencil-square"></i>
         </button>
@@ -354,21 +333,21 @@
         </button>
       </td>
     </tr>
-    <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-    <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-    <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-    <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-    <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+    <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
+    <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
+    <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
+    <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
+    <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
     </tbody>
   </table>
 
   <div class="pagination-bar">
     <button type="button">&laquo;</button>
     <button type="button">&lsaquo;</button>
-    <button type="button" class="active">5</button>
-    <button type="button">6</button>
-    <button type="button">7</button>
-    <button type="button">8</button>
+    <button type="button" class="active">1</button>
+    <button type="button">2</button>
+    <button type="button">3</button>
+    <button type="button">4</button>
     <button type="button">&rsaquo;</button>
     <button type="button">&raquo;</button>
   </div>
@@ -397,49 +376,27 @@
 <!-- ===================== MODAL: VER MAS ===================== -->
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box modal-white">
-    <h2>Detalle del registro</h2>
+    <h2>Detalle del alumno</h2>
 
-    <label>Nombre Completo:</label>
-    <input type="text" id="vm-nombre" disabled>
-
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="vm-horaSalida" disabled>
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <input type="text" id="vm-docencia" disabled>
-      </div>
-    </div>
+    <label>Matrícula:</label>
+    <input type="text" id="vm-matricula" disabled>
 
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" id="vm-fecha" disabled>
+        <label>Nombre:</label>
+        <input type="text" id="vm-nombre" disabled>
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" id="vm-pc" disabled>
+        <label>Apellido:</label>
+        <input type="text" id="vm-apellido" disabled>
       </div>
     </div>
 
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="vm-horaEntrada" disabled>
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="vm-salon" disabled>
-      </div>
-    </div>
+    <label>Username:</label>
+    <input type="text" id="vm-username" disabled>
 
-    <label>Área:</label>
-    <input type="text" id="vm-area" disabled>
-
-    <label>Estado:</label>
-    <input type="text" id="vm-estado" disabled>
+    <label>Contraseña:</label>
+    <input type="text" id="vm-contrasena" disabled>
 
     <div class="modal-actions">
       <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
@@ -450,56 +407,28 @@
 <!-- ===================== MODAL: EDITAR ===================== -->
 <div class="modal-overlay" id="modalEditar">
   <form class="modal-box modal-white" onsubmit="return false;">
-    <h2>Editar registro</h2>
+    <h2>Editar alumno</h2>
     <input type="hidden" id="ed-id">
 
-    <label>Nombre Completo:</label>
-    <input type="text" id="ed-nombre">
+    <label>Matrícula:</label>
+    <input type="text" id="ed-matricula">
 
     <div class="row-2">
       <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="ed-horaSalida" placeholder="Ej. 13:00 PM">
+        <label>Nombre:</label>
+        <input type="text" id="ed-nombre">
       </div>
       <div>
-        <label>Docencia:</label>
-        <select id="ed-docencia">
-          <option value="D3">D3</option>
-          <option value="D4">D4</option>
-        </select>
+        <label>Apellido:</label>
+        <input type="text" id="ed-apellido">
       </div>
     </div>
 
-    <div class="row-2">
-      <div>
-        <label>Fecha:</label>
-        <input type="text" id="ed-fecha" placeholder="dd/mm/aaaa">
-      </div>
-      <div>
-        <label>PC:</label>
-        <input type="text" id="ed-pc" placeholder="N. de PC">
-      </div>
-    </div>
+    <label>Username:</label>
+    <input type="text" id="ed-username">
 
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="ed-horaEntrada" placeholder="Ej. 11:00 AM">
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="ed-salon">
-      </div>
-    </div>
-
-    <label>Área:</label>
-    <input type="text" id="ed-area">
-
-    <label>Estado:</label>
-    <select id="ed-estado">
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
+    <label>Contraseña:</label>
+    <input type="password" id="ed-contrasena" placeholder="Dejar en blanco para no cambiarla" maxlength="5">
 
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
@@ -511,41 +440,27 @@
 <!-- ===================== MODAL: AGREGAR ===================== -->
 <div class="modal-overlay" id="modalAgregar">
   <form class="modal-box modal-white" onsubmit="return false;">
-    <h2>Agregar registro</h2>
+    <h2>Agregar alumno</h2>
 
-    <label>Nombre Completo:</label>
-    <input type="text" id="ag-nombre" placeholder="Introduzca su nombre completo">
-
-    <label>Docencia:</label>
-    <select id="ag-docencia">
-      <option value="" disabled selected hidden>Seleccione su Docencia</option>
-      <option value="D3">D3</option>
-      <option value="D4">D4</option>
-    </select>
+    <label>Matrícula:</label>
+    <input type="text" id="ag-matricula" placeholder="Introduzca su matrícula" maxlength="10">
 
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" id="ag-fecha" placeholder="Seleccione...">
+        <label>Nombre:</label>
+        <input type="text" id="ag-nombre" placeholder="Introduzca su nombre" maxlength="15">
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" id="ag-pc" placeholder="Introduzca N. de PC">
+        <label>Apellido:</label>
+        <input type="text" id="ag-apellido" placeholder="Introduzca su apellido" maxlength="15">
       </div>
     </div>
 
-    <label>Salón:</label>
-    <input type="text" id="ag-salon" placeholder="Introduzca su salón">
+    <label>Username:</label>
+    <input type="text" id="ag-username" placeholder="Introduzca su username" maxlength="10">
 
-    <label>Área:</label>
-    <input type="text" id="ag-area" placeholder="Introduzca su área..">
-
-    <label>Estado:</label>
-    <select id="ag-estado">
-      <option value="" disabled selected hidden>Seleccione su estado</option>
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
+    <label>Contraseña:</label>
+    <input type="password" id="ag-contrasena" placeholder="Introduzca su contraseña" maxlength="5">
 
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
@@ -557,7 +472,9 @@
 <!-- ===================== MODAL: ELIMINAR (confirmación) ===================== -->
 <div class="modal-overlay" id="modalEliminar">
   <div class="confirm-box">
-    <div class="confirm-header">¿Estás seguro que quieres eliminar este registro?</div>
+    <div class="confirm-header">Eliminar Alumno</div>
+    <div class="confirm-icon"><i class="bi bi-question-lg"></i></div>
+    <div class="confirm-text">¿Estás seguro que quieres eliminar este alumno?</div>
     <input type="hidden" id="el-id">
     <div class="confirm-actions">
       <button type="button" class="btn-no" onclick="cerrarModal('modalEliminar')">No</button>
@@ -588,35 +505,28 @@
 
   // ---------- Ver más: llena el modal de solo lectura con los datos de la fila ----------
   function verMas(datos) {
+    document.getElementById('vm-matricula').value = datos.matricula;
     document.getElementById('vm-nombre').value = datos.nombre;
-    document.getElementById('vm-horaSalida').value = datos.horaSalida;
-    document.getElementById('vm-docencia').value = datos.docencia;
-    document.getElementById('vm-fecha').value = datos.fecha;
-    document.getElementById('vm-pc').value = datos.pc;
-    document.getElementById('vm-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('vm-salon').value = datos.salon;
-    document.getElementById('vm-area').value = datos.area;
-    document.getElementById('vm-estado').value = datos.estado;
+    document.getElementById('vm-apellido').value = datos.apellido;
+    document.getElementById('vm-username').value = datos.username;
+    document.getElementById('vm-contrasena').value = datos.contrasena;
     abrirModal('modalVerMas');
   }
 
   // ---------- Editar: precarga el modal editable con los datos de la fila ----------
   function editar(id, datos) {
     document.getElementById('ed-id').value = id;
+    document.getElementById('ed-matricula').value = datos.matricula;
     document.getElementById('ed-nombre').value = datos.nombre;
-    document.getElementById('ed-horaSalida').value = datos.horaSalida;
-    document.getElementById('ed-docencia').value = datos.docencia;
-    document.getElementById('ed-fecha').value = datos.fecha;
-    document.getElementById('ed-pc').value = datos.pc;
-    document.getElementById('ed-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('ed-salon').value = datos.salon;
-    document.getElementById('ed-area').value = datos.area;
-    document.getElementById('ed-estado').value = datos.estado;
+    document.getElementById('ed-apellido').value = datos.apellido;
+    document.getElementById('ed-username').value = datos.username;
+    document.getElementById('ed-contrasena').value = '';
     abrirModal('modalEditar');
   }
 
   // Cuando conectes la base de datos, agrega aquí tu llamada (fetch/AJAX)
   // hacia tu Servlet, enviando los valores de los campos ed-*.
+  // Si ed-contrasena queda vacío, el backend debe conservar la contraseña actual.
   function guardarEdicion() {
     // TODO: peticion real al backend con los datos del formulario de edicion
     cerrarModal('modalEditar');
@@ -627,29 +537,6 @@
   function guardarNuevo() {
     // TODO: peticion real al backend con los datos del formulario de alta
     cerrarModal('modalAgregar');
-  }
-
-  // ---------- Activo / Inactivo: refleja el cambio visualmente en el icono y el badge ----------
-  function cambiarEstado(id, boton) {
-    var celda = document.getElementById('estadoTexto-' + id);
-    var icono = boton.querySelector('i');
-    var activo = icono.classList.contains('bi-toggle2-on');
-
-    if (activo) {
-      icono.classList.remove('bi-toggle2-on');
-      icono.classList.add('bi-toggle2-off');
-      celda.textContent = 'Inactivo';
-      celda.classList.remove('badge-activo');
-      celda.classList.add('badge-inactivo');
-      // TODO: peticion al backend para marcar id=" + id + " como inactivo
-    } else {
-      icono.classList.remove('bi-toggle2-off');
-      icono.classList.add('bi-toggle2-on');
-      celda.textContent = 'Activo';
-      celda.classList.remove('badge-inactivo');
-      celda.classList.add('badge-activo');
-      // TODO: peticion al backend para marcar id=" + id + " como activo
-    }
   }
 
   // ---------- Eliminar: pide confirmación con modal antes de borrar ----------

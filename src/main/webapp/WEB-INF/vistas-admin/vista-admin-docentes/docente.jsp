@@ -25,6 +25,7 @@
       border-radius: 4px;
       padding: 8px 16px;
       font-size: 0.85rem;
+      cursor: pointer;
     }
     .btn-cerrar-sesion { background-color: #1c2b4a; color: #fff; }
     .btn-cerrar-sesion:hover { background-color: #142038; color: #fff; }
@@ -95,6 +96,18 @@
       font-size: 1rem;
       padding: 0;
     }
+    .form-check.form-switch {
+      display: inline-block;
+      margin: 0 6px 0 0;
+      min-height: auto;
+      padding-left: 2.2em;
+      vertical-align: middle;
+    }
+    .form-check.form-switch .form-check-input {
+      width: 2em;
+      height: 1.1em;
+      cursor: pointer;
+    }
     .pagination-bar {
       display: flex;
       justify-content: center;
@@ -109,6 +122,7 @@
       background-color: #c9c2b3;
       font-size: 0.75rem;
       color: #333;
+      cursor: pointer;
     }
     .pagination-bar button.active { background-color: #1c8a6c; color: #fff; }
     .filters {
@@ -122,18 +136,20 @@
       gap: 6px;
       font-size: 0.85rem;
       color: #333;
+      cursor: pointer;
     }
-    /* ===== Modal genérico ===== */
+    /* ===== Modal genérico (oculto por defecto, JS lo muestra) ===== */
     .modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.15);
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       z-index: 10;
       padding: 20px;
     }
+    .modal-overlay.activo { display: flex; }
     .modal-box {
       background-color: #e9e2d8;
       padding: 28px 32px;
@@ -172,8 +188,6 @@
     .modal-box input::placeholder { color: #9a9a9a; }
     .modal-box input:disabled,
     .modal-box select:disabled { color: #8a8a8a; }
-    .row-2 { display: flex; gap: 14px; }
-    .row-2 > div { flex: 1; }
     .modal-actions { display: flex; gap: 14px; margin-top: 8px; }
     .btn-salir {
       background-color: #c0392b;
@@ -184,6 +198,7 @@
       font-weight: 700;
       flex: 1;
       font-size: 0.95rem;
+      cursor: pointer;
     }
     .btn-confirmar {
       background-color: #1c2b4a;
@@ -194,50 +209,49 @@
       font-weight: 700;
       flex: 1;
       font-size: 0.95rem;
+      cursor: pointer;
     }
-    .btn-confirmar:disabled { background-color: #8a94a6; }
-    /* ===== Confirmación (eliminar / cerrar sesión) ===== */
+    .btn-confirmar:disabled { background-color: #8a94a6; cursor: default; }
+    /* ===== Confirmación (cerrar sesión) ===== */
     .confirm-box {
       background-color: #ffffff;
       border-radius: 6px;
       overflow: hidden;
-      max-width: 360px;
+      max-width: 340px;
       width: 100%;
       text-align: center;
     }
     .confirm-header {
       background-color: #1c8a6c;
       color: #fff;
+      padding: 16px 20px;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .confirm-actions { display: flex; gap: 0; }
+    .confirm-actions button {
+      flex: 1;
+      border: none;
       padding: 14px;
       font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
     }
-    .confirm-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background-color: #2c2c2c;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      margin: 24px auto 12px;
-    }
-    .confirm-text { padding: 0 24px 20px; color: #333; font-size: 0.9rem; }
-    .confirm-actions { display: flex; gap: 14px; padding: 0 24px 24px; }
+    .confirm-actions .btn-no { background-color: #c0392b; color: #fff; }
+    .confirm-actions .btn-si { background-color: #1c2b4a; color: #fff; }
   </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <button class="btn-cerrar-sesion">Cerrar Sesion</button>
-  <button class="btn-agregar"><i class="bi bi-file-earmark-plus"></i> Agregar</button>
+  <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesión</button>
+  <button type="button" class="btn-agregar" onclick="abrirModal('modalAgregar')"><i class="bi bi-file-earmark-plus"></i> Agregar</button>
 </div>
 
 <h1 class="page-title">Docentes</h1>
 
 <div class="search-bar">
-  <input type="text" placeholder="Introduzca la matricula para buscar en el registro...">
+  <input type="text" id="buscarMatricula" placeholder="Introduzca la matrícula para buscar en el registro...">
   <i class="bi bi-search"></i>
 </div>
 
@@ -249,7 +263,7 @@
       <th>Nombre completo</th>
       <th>Usuario</th>
       <th>Contraseña</th>
-      <th>Area</th>
+      <th>Área</th>
       <th>Estado</th>
       <th>Acciones</th>
     </tr>
@@ -261,12 +275,25 @@
       <td>jalb2025</td>
       <td>2025jalb5b</td>
       <td>DATID</td>
-      <td class="badge-activo">Activo</td>
+      <td id="estadoTexto-0" class="badge-activo">Activo</td>
       <td>
-        <button class="icon-btn" title="Activar/Desactivar"><i class="bi bi-toggle2-on"></i></button>
-        <button class="icon-btn" title="Ver mas"><i class="bi bi-eye"></i></button>
-        <button class="icon-btn" title="Editar"><i class="bi bi-pencil-square"></i></button>
-        <button class="icon-btn" title="Eliminar"><i class="bi bi-trash"></i></button>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch"
+                 id="estadoSwitch-0" checked
+                 onchange="cambiarEstado(0, this)">
+        </div>
+        <button type="button" class="icon-btn" title="Ver más"
+                onclick="verMas('Jonathan AlejandroLopez Benitez','jalb2025','2025jalb5b','DATID','Activo')">
+          <i class="bi bi-eye"></i>
+        </button>
+        <button type="button" class="icon-btn" title="Editar"
+                onclick="editar(0,'Jonathan AlejandroLopez Benitez','jalb2025','2025jalb5b','DATID','activo')">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <button type="button" class="icon-btn" title="Eliminar"
+                onclick="eliminar(0)">
+          <i class="bi bi-trash"></i>
+        </button>
       </td>
     </tr>
     <tr>
@@ -275,12 +302,25 @@
       <td>sonff2026</td>
       <td>25.2025sonff5b</td>
       <td>DAT3D</td>
-      <td class="badge-inactivo">Inactivo</td>
+      <td id="estadoTexto-1" class="badge-inactivo">Inactivo</td>
       <td>
-        <button class="icon-btn" title="Activar/Desactivar"><i class="bi bi-toggle2-off"></i></button>
-        <button class="icon-btn" title="Ver mas"><i class="bi bi-eye"></i></button>
-        <button class="icon-btn" title="Editar"><i class="bi bi-pencil-square"></i></button>
-        <button class="icon-btn" title="Eliminar"><i class="bi bi-trash"></i></button>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch"
+                 id="estadoSwitch-1"
+                 onchange="cambiarEstado(1, this)">
+        </div>
+        <button type="button" class="icon-btn" title="Ver más"
+                onclick="verMas('Santiago Flores','sonff2026','25.2025sonff5b','DAT3D','Inactivo')">
+          <i class="bi bi-eye"></i>
+        </button>
+        <button type="button" class="icon-btn" title="Editar"
+                onclick="editar(1,'Santiago Flores','sonff2026','25.2025sonff5b','DAT3D','inactivo')">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <button type="button" class="icon-btn" title="Eliminar"
+                onclick="eliminar(1)">
+          <i class="bi bi-trash"></i>
+        </button>
       </td>
     </tr>
     <tr class="empty-row"><td colspan="7">&nbsp;</td></tr>
@@ -292,22 +332,229 @@
   </table>
 
   <div class="pagination-bar">
-    <button>&laquo;</button>
-    <button>&lsaquo;</button>
-    <button class="active">5</button>
-    <button>6</button>
-    <button>7</button>
-    <button>8</button>
-    <button>&rsaquo;</button>
-    <button>&raquo;</button>
+    <button type="button">&laquo;</button>
+    <button type="button">&lsaquo;</button>
+    <button type="button" class="active">5</button>
+    <button type="button">6</button>
+    <button type="button">7</button>
+    <button type="button">8</button>
+    <button type="button">&rsaquo;</button>
+    <button type="button">&raquo;</button>
   </div>
 </div>
 
+<!-- Filtros: A = Alumno, RA = registroalumno, D = docente RD = registrodocente. -->
 <div class="filters">
-  <label><input type="radio" name="filtro" checked> A</label>
-  <label><input type="radio" name="filtro"> D</label>
-  <label><input type="radio" name="filtro"> T</label>
+  <label>
+    <input type="radio" name="filtro" checked
+           onchange="window.location.href='admin-Alumno-servlet?tipo=A'"> A
+  </label>
+  <label>
+    <input type="radio" name="filtro"
+           onchange="window.location.href='admin-registroAlumno-servlet'"> RA
+  </label>
+  <label>
+    <input type="radio" name="filtro"
+           onchange="window.location.href='admin-Docente-servlet'"> T
+  </label>
+  <label>
+    <input type="radio" name="filtro"
+           onchange="window.location.href='admin-registrosDocente-servlet'"> T
+  </label>
 </div>
+
+<!-- ===================== MODAL: VER MAS ===================== -->
+<div class="modal-overlay" id="modalVerMas">
+  <div class="modal-box modal-white">
+    <h2>Detalle del docente</h2>
+
+    <label>Nombre Completo:</label>
+    <input type="text" id="vm-nombre" disabled>
+
+    <label>Usuario:</label>
+    <input type="text" id="vm-usuario" disabled>
+
+    <label>Contraseña:</label>
+    <input type="text" id="vm-contrasena" disabled>
+
+    <label>Área:</label>
+    <input type="text" id="vm-area" disabled>
+
+    <label>Estado:</label>
+    <input type="text" id="vm-estado" disabled>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-salir" onclick="cerrarModal('modalVerMas')">Salir</button>
+      <button type="button" class="btn-confirmar" disabled>Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL: EDITAR ===================== -->
+<div class="modal-overlay" id="modalEditar">
+  <form class="modal-box modal-white" onsubmit="return false;">
+    <h2>Editar docente</h2>
+    <input type="hidden" id="ed-id">
+
+    <label>Nombre Completo:</label>
+    <input type="text" id="ed-nombre">
+
+    <label>Usuario:</label>
+    <input type="text" id="ed-usuario">
+
+    <label>Contraseña:</label>
+    <input type="password" id="ed-contrasena">
+
+    <label>Área:</label>
+    <input type="text" id="ed-area">
+
+    <label>Estado:</label>
+    <select id="ed-estado">
+      <option value="activo">Activo</option>
+      <option value="inactivo">Inactivo</option>
+    </select>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
+      <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
+    </div>
+  </form>
+</div>
+
+<!-- ===================== MODAL: AGREGAR ===================== -->
+<div class="modal-overlay" id="modalAgregar">
+  <form class="modal-box modal-white" onsubmit="return false;">
+    <h2>Agregar docente</h2>
+
+    <label>Nombre Completo:</label>
+    <input type="text" id="ag-nombre" placeholder="Ingrese su nombre completo...">
+
+    <label>Usuario:</label>
+    <input type="text" id="ag-usuario" placeholder="Ingrese su usuario...">
+
+    <label>Contraseña:</label>
+    <input type="password" id="ag-contrasena" placeholder="Ingrese su contraseña...">
+
+    <label>Área:</label>
+    <input type="text" id="ag-area" placeholder="Ingrese su área...">
+
+    <label>Estado:</label>
+    <select id="ag-estado">
+      <option value="activo" selected>Activo</option>
+      <option value="inactivo">Inactivo</option>
+    </select>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
+      <button type="button" class="btn-confirmar" onclick="guardarNuevo()">Confirmar</button>
+    </div>
+  </form>
+</div>
+
+<!-- ===================== MODAL: ELIMINAR (confirmación) ===================== -->
+<div class="modal-overlay" id="modalEliminar">
+  <div class="confirm-box">
+    <div class="confirm-header">¿Estás seguro que quieres eliminar este registro?</div>
+    <input type="hidden" id="el-id">
+    <div class="confirm-actions">
+      <button type="button" class="btn-no" onclick="cerrarModal('modalEliminar')">No</button>
+      <button type="button" class="btn-si" onclick="confirmarEliminar()">Sí</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL: CERRAR SESION ===================== -->
+<div class="modal-overlay" id="modalCerrarSesion">
+  <div class="confirm-box">
+    <div class="confirm-header">¿Estás seguro de cerrar sesión?</div>
+    <div class="confirm-actions">
+      <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
+      <button type="button" class="btn-si" onclick="confirmarCerrarSesion()">Sí</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Utilidades genéricas para abrir/cerrar cualquier modal ----------
+  function abrirModal(idModal) {
+    document.getElementById(idModal).classList.add('activo');
+  }
+  function cerrarModal(idModal) {
+    document.getElementById(idModal).classList.remove('activo');
+  }
+
+  // ---------- Ver más: llena el modal de solo lectura con los datos de la fila ----------
+  function verMas(nombre, usuario, contrasena, area, estado) {
+    document.getElementById('vm-nombre').value = nombre;
+    document.getElementById('vm-usuario').value = usuario;
+    document.getElementById('vm-contrasena').value = contrasena;
+    document.getElementById('vm-area').value = area;
+    document.getElementById('vm-estado').value = estado;
+    abrirModal('modalVerMas');
+  }
+
+  // ---------- Editar: precarga el modal editable con los datos de la fila ----------
+  function editar(id, nombre, usuario, contrasena, area, estado) {
+    document.getElementById('ed-id').value = id;
+    document.getElementById('ed-nombre').value = nombre;
+    document.getElementById('ed-usuario').value = usuario;
+    document.getElementById('ed-contrasena').value = contrasena;
+    document.getElementById('ed-area').value = area;
+    document.getElementById('ed-estado').value = estado;
+    abrirModal('modalEditar');
+  }
+
+  // Cuando conectes la base de datos, agrega aquí tu llamada (fetch/AJAX)
+  // hacia tu Servlet, enviando los valores de los campos ed-*.
+  function guardarEdicion() {
+    // TODO: peticion real al backend con los datos del formulario de edicion
+    // Ejemplo:
+    // fetch('editarDocenteServlet', { method: 'POST', body: new FormData(...) })
+    //   .then(() => window.location.reload());
+    cerrarModal('modalEditar');
+  }
+
+  // Cuando conectes la base de datos, agrega aquí tu llamada (fetch/AJAX)
+  // hacia tu Servlet, enviando los valores de los campos ag-*.
+  function guardarNuevo() {
+    // TODO: peticion real al backend con los datos del formulario de alta
+    cerrarModal('modalAgregar');
+  }
+
+  // ---------- Activo / Inactivo: refleja el cambio visualmente ----------
+  function cambiarEstado(id, checkbox) {
+    var celda = document.getElementById('estadoTexto-' + id);
+    if (checkbox.checked) {
+      celda.textContent = 'Activo';
+      celda.classList.remove('badge-inactivo');
+      celda.classList.add('badge-activo');
+      // TODO: peticion al backend para marcar id=" + id + " como activo
+    } else {
+      celda.textContent = 'Inactivo';
+      celda.classList.remove('badge-activo');
+      celda.classList.add('badge-inactivo');
+      // TODO: peticion al backend para marcar id=" + id + " como inactivo
+    }
+  }
+
+  // ---------- Eliminar: pide confirmación con modal antes de borrar ----------
+  function eliminar(id) {
+    document.getElementById('el-id').value = id;
+    abrirModal('modalEliminar');
+  }
+  function confirmarEliminar() {
+    var id = document.getElementById('el-id').value;
+    // TODO: peticion real al backend para eliminar el id=" + id
+    cerrarModal('modalEliminar');
+  }
+
+  // ---------- Cerrar sesion confirmado ----------
+  function confirmarCerrarSesion() {
+    // TODO: aqui rediriges a tu Servlet/endpoint real de logout, por ejemplo:
+    // window.location.href = 'cerrarSesion';
+    cerrarModal('modalCerrarSesion');
+  }
+</script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vista Docente - Registros</title>
+  <title>Vista Docente - Alumnos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
@@ -87,8 +87,6 @@
       white-space: nowrap;
     }
     tbody tr.empty-row td { padding: 16px 8px; border-bottom: 1px solid #d8d1c5; }
-    .badge-activo { color: #1c8a6c; font-weight: 600; }
-    .badge-inactivo { color: #b03a3a; font-weight: 600; }
     .icon-btn {
       border: none;
       background: none;
@@ -97,18 +95,6 @@
       cursor: pointer;
       font-size: 1rem;
       padding: 0;
-    }
-    .form-check.form-switch {
-      display: inline-block;
-      margin: 0 6px 0 0;
-      min-height: auto;
-      padding-left: 2.2em;
-      vertical-align: middle;
-    }
-    .form-check.form-switch .form-check-input {
-      width: 2em;
-      height: 1.1em;
-      cursor: pointer;
     }
     .pagination-bar {
       display: flex;
@@ -213,7 +199,7 @@
     <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
   </div>
 
-  <h1 class="page-title">Registros</h1>
+  <h1 class="page-title">Alumnos</h1>
 
   <div class="search-bar">
     <input type="text" id="buscarMatricula" placeholder="Introduzca la matricula para buscar en el registro....">
@@ -226,11 +212,9 @@
         <tr>
           <th>#</th>
           <th>Matricula:</th>
-          <th>Nombre completo:</th>
-          <th>Fecha:</th>
-          <th>P.C.</th>
-          <th>Salon/Docencia</th>
-          <th>Estado:</th>
+          <th>Nombre:</th>
+          <th>Apellido:</th>
+          <th>Username:</th>
           <th>Acciones:</th>
         </tr>
       </thead>
@@ -238,58 +222,50 @@
         <tr>
           <td>0</td>
           <td>20253DS196</td>
-          <td>Jonathan Alejandro...</td>
-          <td>11/11/2026</td>
-          <td>15.</td>
-          <td>MAC9.D4</td>
-          <td id="estadoTexto-0" class="badge-activo">Activo</td>
+          <td>Jonathan</td>
+          <td>Lopez Benites</td>
+          <td>jlopezb</td>
           <td>
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch"
-                     id="estadoSwitch-0" checked
-                     onchange="cambiarEstado(0, this)">
-            </div>
             <button type="button" class="icon-btn" title="Ver mas"
-                    onclick="verMas('20253DS196','Jonathan AlejandroLopez Benites','11/11/2026','15','11:00 AM','MAC9','13:00 PM','D4','Activo')">
+                    onclick="verMas('20253DS196','Jonathan','Lopez Benites','jlopezb')">
               <i class="bi bi-eye"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Editar">
+              <i class="bi bi-pencil"></i>
             </button>
           </td>
         </tr>
         <tr>
           <td>1</td>
           <td>20253DS034</td>
-          <td>Santiago Flores</td>
-          <td>20/02/2026</td>
-          <td>25.D4</td>
-          <td>A9.D3</td>
-          <td id="estadoTexto-1" class="badge-inactivo">Inactivo</td>
+          <td>Santiago</td>
+          <td>Flores</td>
+          <td>sfloresr</td>
           <td>
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch"
-                     id="estadoSwitch-1"
-                     onchange="cambiarEstado(1, this)">
-            </div>
             <button type="button" class="icon-btn" title="Ver mas"
-                    onclick="verMas('20253DS034','Santiago Flores','20/02/2026','25.D4','—','A9','—','D3','Inactivo')">
+                    onclick="verMas('20253DS034','Santiago','Flores','sfloresr')">
               <i class="bi bi-eye"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Editar">
+              <i class="bi bi-pencil"></i>
             </button>
           </td>
         </tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
       </tbody>
     </table>
 
     <div class="pagination-bar">
       <button>&laquo;</button>
       <button>&lsaquo;</button>
-      <button class="active">5</button>
-      <button>6</button>
-      <button>7</button>
-      <button>8</button>
+      <button class="active">1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
       <button>&rsaquo;</button>
       <button>&raquo;</button>
     </div>
@@ -312,26 +288,13 @@
       <label>Matricula:</label>
       <input type="text" id="vm-matricula" disabled>
 
-      <label>Nombre Completo:</label>
-      <input type="text" id="vm-nombre" disabled>
-
       <div class="row-2">
-        <div><label>Fecha:</label><input type="text" id="vm-fecha" disabled></div>
-        <div><label>PC:</label><input type="text" id="vm-pc" disabled></div>
+        <div><label>Nombre:</label><input type="text" id="vm-nombre" disabled></div>
+        <div><label>Apellido:</label><input type="text" id="vm-apellido" disabled></div>
       </div>
 
-      <div class="row-2">
-        <div><label>Hora Entrada:</label><input type="text" id="vm-entrada" disabled></div>
-        <div><label>Salon:</label><input type="text" id="vm-salon" disabled></div>
-      </div>
-
-      <div class="row-2">
-        <div><label>Hora Salida:</label><input type="text" id="vm-salida" disabled></div>
-        <div><label>Docencia:</label><input type="text" id="vm-docencia" disabled></div>
-      </div>
-
-      <label>Estado:</label>
-      <input type="text" id="vm-estado" disabled>
+      <label>Username:</label>
+      <input type="text" id="vm-username" disabled>
 
       <div class="modal-actions">
         <button type="button" class="btn-salir" onclick="cerrarModal('modalVerMas')">Salir</button>
@@ -359,41 +322,18 @@
       document.getElementById(idModal).classList.remove('activo');
     }
 
-    // ---------- Ver mas:  ----------
-    function verMas(matricula, nombre, fecha, pc, entrada, salon, salida, docencia, estado) {
+    // ---------- Ver mas: muestra los datos del alumno en el modal ----------
+    function verMas(matricula, nombre, apellido, username) {
       document.getElementById('vm-matricula').value = matricula;
       document.getElementById('vm-nombre').value = nombre;
-      document.getElementById('vm-fecha').value = fecha;
-      document.getElementById('vm-pc').value = pc;
-      document.getElementById('vm-entrada').value = entrada;
-      document.getElementById('vm-salon').value = salon;
-      document.getElementById('vm-salida').value = salida;
-      document.getElementById('vm-docencia').value = docencia;
-      document.getElementById('vm-estado').value = estado;
+      document.getElementById('vm-apellido').value = apellido;
+      document.getElementById('vm-username').value = username;
       abrirModal('modalVerMas');
-    }
-
-    // ---------- Activo / Inactivo: refleja el cambio visualmente ----------
-    // Cuando conectes con la base de datos, agrega aqui tu llamada
-    // (fetch/AJAX o form.submit()) hacia tu Servlet, usando el id del registro.
-    function cambiarEstado(id, checkbox) {
-      var celda = document.getElementById('estadoTexto-' + id);
-      if (checkbox.checked) {
-        celda.textContent = 'Activo';
-        celda.classList.remove('badge-inactivo');
-        celda.classList.add('badge-activo');
-        // TODO: aqui va la peticion al backend para marcar id=" + id + " como activo
-      } else {
-        celda.textContent = 'Inactivo';
-        celda.classList.remove('badge-activo');
-        celda.classList.add('badge-inactivo');
-        // TODO: aqui va la peticion al backend para marcar id=" + id + " como inactivo
-      }
     }
 
     // ---------- Cerrar sesion confirmado ----------
     function confirmarCerrarSesion() {
-     
+
       cerrarModal('modalCerrarSesion');
     }
   </script>

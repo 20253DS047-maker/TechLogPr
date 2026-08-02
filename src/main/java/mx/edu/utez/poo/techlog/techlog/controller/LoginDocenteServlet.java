@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet (name="LoginDocenteServlet", value="/login-docente-servlet")
 public class LoginDocenteServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("WEB-INF/login-docente.jsp").forward(req,resp);
     }
 }

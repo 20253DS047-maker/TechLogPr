@@ -196,7 +196,7 @@
 <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center position-relative" style="z-index: 2;">
 
     <div class="text-center mb-4">
-        <h2 class="fw-bold mb-1" style="color: #000;">Registro Bitacora</h2>
+        <h2 class="fw-bold mb-1" style="color: #000;">Registro Bitácora</h2>
         <h5 class="fw-normal" style="color: #000;">(ALUMNOS)</h5>
     </div>
 
@@ -229,7 +229,7 @@
             </div>
 
             <div class="d-flex justify-content-end gap-3 mt-4">
-                <button type="button" onclick="mostrarModalCancelar()" class="btn btn-cancelar">Cancelar</button>
+                <button type="button" onclick="abrirModalCancelar()" class="btn btn-cancelar">Cancelar</button>
                 <button type="submit" class="btn btn-registrar">Continuar</button>
             </div>
 
@@ -260,7 +260,7 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function mostrarModalCancelar() {
+    function abrirModalCancelar() {
         document.getElementById('modalCancelar').style.display = 'flex';
     }
 

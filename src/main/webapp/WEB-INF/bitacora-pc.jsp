@@ -211,7 +211,7 @@
             <div class="mb-3">
                 <label for="docencia" class="form-label">Docencia:</label>
                 <select id="docencia" class="form-select">
-                    <option selected>Selecciona una opción</option>
+                    <option selected disabled>Selecciona una opción</option>
                     <option value="Docencia 2">Docencia 2</option>
                     <option value="Docencia 4">Docencia 4</option>
                     <option value="Cecadec">Cecadec</option>
@@ -231,7 +231,7 @@
             <div class="mb-3">
                 <label for="mesa" class="form-label">Isla/Mesa:</label>
                 <select id="mesa" class="form-select">
-                    <option selected>Selecciona una opción</option>
+                    <option selected disabled>Selecciona una opción</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -243,13 +243,13 @@
             <div class="mb-3">
                 <label for="estado" class="form-label">Estado</label>
                 <select id="estado" class="form-select">
-                    <option selected>Selecciona una opcion</option>
+                    <option selected disabled>Selecciona una opción</option>
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                 </select>
             </div>
             <div class="d-flex justify-content-end gap-3 mt-4">
-                <button type="button" onclick="mostrarModalCancelar()" class="btn btn-cancelar">Regresar</button>
+                <button type="button" onclick="abrirModalCancelar()" class="btn btn-cancelar">Regresar</button>
                 <button type="submit"  class="btn btn-registrar">Registrar</button>
             </div>
         </form>
@@ -266,7 +266,7 @@
             <div class="icon-question">?</div>
 
             <div class="modal-text">
-                ¿Estas seguro que quieres<br>regresar?
+                ¿Estás seguro que quieres<br>regresar?
             </div>
 
             <div class="modal-actions">
@@ -277,5 +277,20 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function abrirModalCancelar() {
+        document.getElementById('modalCancelar').style.display = 'flex';
+    }
+
+    function cerrarModalCancelar() {
+        document.getElementById('modalCancelar').style.display = 'none';
+    }
+
+    function confirmarCancelacion() {
+        window.location.href = "bitacora-alumno.jsp";
+    }
+</script>
+
 </body>
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Iniciar sesion</title>
+    <title>Registro Cuenta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">REGISTRO DOCENTE</h2>
         </div>
-        <form action="CheckDocentesServlet" method="post">
+        <form method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="nombre" class="form-label">Nombre:</label>
                 <div class="input-group">
@@ -62,9 +62,9 @@
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="matricula" class="form-label">Area:</label>
+                <label for="matricula" class="form-label">Área:</label>
                 <select class="form-select" aria-label="Default select example">
-                    <option selected>Selecciona una opcion</option>
+                    <option selected disabled>Selecciona una opción</option>
                     <option value="1">DATID</option>
                     <option value="2">DAMI</option>
                     <option value="3">DACEA</option>
@@ -80,7 +80,7 @@
             </div>
 
             <div class="d-grid gap-20 col-8 mx-auto mb-3">
-                <button type="button" onclick="window.location.href=''" class="btn-primary">Iniciar</button>
+                <button type="button" onclick="window.location.href='check-docente-servlet'" class="btn-primary">Registrar</button>
             </div>
         </form>
         <div class="d-grid gap-20 col-3 mb-3">

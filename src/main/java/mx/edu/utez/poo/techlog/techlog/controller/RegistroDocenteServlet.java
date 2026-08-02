@@ -28,9 +28,10 @@ public class RegistroDocenteServlet extends HttpServlet {
         String apellidoMaterno = req.getParameter("apellido_materno");
         String area = req.getParameter("area");
         String password = req.getParameter("password");
+        String username = req.getParameter("username");
 
 
-        BeanDocente nuevoDocente = new BeanDocente(nombre, apellidoPaterno, apellidoMaterno, area, password);
+        BeanDocente nuevoDocente = new BeanDocente(nombre, apellidoPaterno, apellidoMaterno, area, password, username);
         DaoDocente dao = new DaoDocente();
         boolean guardado = serviceDocente.registrarDocente(nuevoDocente);
         if (guardado){
@@ -39,7 +40,7 @@ public class RegistroDocenteServlet extends HttpServlet {
             req.getRequestDispatcher("WEB-INF/check-docente.jsp").forward(req, resp);
         }else {
             req.setAttribute("error", "No se pudo registrar el docente");
-            req.getRequestDispatcher("WEB-INF/bitacora-pc.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/registro-docente.jsp").forward(req, resp);
         }
 
     }

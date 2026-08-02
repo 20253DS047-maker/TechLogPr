@@ -7,12 +7,23 @@ public class BeanDocente {
     private String area;
     private String password;
 
-    public BeanDocente(String nombre, String apellidoPaterno, String apellidoMaterno, String area, String password) {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private String username;
+
+    public BeanDocente(String nombre, String apellidoPaterno, String apellidoMaterno, String area, String password, String username) {
         this.nombre = nombre;
         this.apellido_paterno = apellidoPaterno;
         this.apellido_materno = apellidoMaterno;
         this.area = area;
         this.password = password;
+        this.username = username;
     }
 
     public String getPassword() {

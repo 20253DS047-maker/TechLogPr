@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class DaoDocente {
     public boolean insertar(BeanDocente nuevoDocente){
-        String sql = "INSERT INTO DOCENTE (nombre, apellido_paterno, apellido_materno, area, password) VALUES (?, ?, ?, ?, ?) ";
+        String sql = "INSERT INTO USUARIO_DOCENTE (nombre, apellido_paterno, apellido_materno, area, password, username) VALUES (?, ?, ?, ?, ?, ?) ";
         try (Connection conexion = Conexion.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
@@ -19,6 +19,7 @@ public class DaoDocente {
             ps.setString(3, nuevoDocente.getApellido_materno());
             ps.setString(4, nuevoDocente.getArea());
             ps.setString(5, nuevoDocente.getPassword());
+            ps.setString(6, nuevoDocente.getUsername());
 
             int filasAfectadas = ps.executeUpdate();
             return filasAfectadas > 0;

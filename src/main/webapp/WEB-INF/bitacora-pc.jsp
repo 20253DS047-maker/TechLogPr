@@ -201,16 +201,16 @@
     </div>
 
     <div class="card-formulario">
-        <form action="check-bitacora-servlet" method="post">
+        <form action="bitacora-pc-servlet" method="post">
 
             <div class="mb-3">
                 <label for="salon" class="form-label form-label-custom">Salon de computo:</label>
-                <input type="text" class="form-control form-control-custom" id="salon" placeholder="Ej: CC7" required>
+                <input type="text" class="form-control form-control-custom" name="salon_computo" id="salon" placeholder="Ej: CC7" required>
             </div>
 
             <div class="mb-3">
                 <label for="docencia" class="form-label">Docencia</label>
-                <select id="docencia" class="form-select">
+                <select id="docencia" name="docencia" class="form-select">
                     <option>Docencia 2</option>
                     <option>Cecadec</option>
                     <option>Docencia 4</option>
@@ -218,18 +218,18 @@
             </div>
 
             <div class="mb-3">
-                <label for="pc" class="form-label form-label-custom">PC:</label>
-                <input type="text" class="form-control form-control-custom" id="pc" placeholder="Ej: 12" required>
+                <label for="numero_pc" class="form-label form-label-custom">PC:</label>
+                <input type="text" class="form-control form-control-custom" name="numero_pc" id="numero_pc" placeholder="Ej: 12" required>
             </div>
 
             <div class="mb-3">
                 <label for="modelo" class="form-label form-label-custom">Modelo:</label>
-                <input type="text" class="form-control form-control-custom" id="modelo" placeholder="Ej: HP" required>
+                <input type="text" class="form-control form-control-custom" name="modelo" id="modelo" placeholder="Ej: HP" required>
             </div>
 
             <div class="mb-3">
-                <label for="mesa" class="form-label">Isla/Mesa:</label>
-                <select id="mesa" class="form-select">
+                <label for="isla_mesa" class="form-label">Isla/Mesa:</label>
+                <select id="isla_mesa" name="isla_mesa" class="form-select">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -240,7 +240,7 @@
 
             <div class="mb-3">
                 <label for="estado" class="form-label">Estado</label>
-                <select id="estado" class="form-select">
+                <select id="estado" name="estado" class="form-select">
                     <option>Activo</option>
                     <option>Inactivo</option>
                 </select>

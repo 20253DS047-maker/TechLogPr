@@ -69,6 +69,13 @@
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Ej: ..." required>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="area" class="form-label">Area:</label>
                 <select class="form-select" id="area"  name="area" aria-label="Default select example">
                     <option selected>Selecciona una opcion</option>
@@ -82,7 +89,7 @@
                 <label for="password" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Max. 10 caracteres" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Max. 5 caracteres" required>
                 </div>
             </div>
 

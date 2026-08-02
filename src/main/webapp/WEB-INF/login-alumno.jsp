@@ -46,7 +46,7 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">LOGIN ALUMNO</h2>
         </div>
-        <form action="login-alumno-servlet" method="post">
+        <form action="bitacora-alumno-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="nombre" class="form-label">Nombre:</label>
                 <div class="input-group">
@@ -79,6 +79,7 @@
             <div class="d-grid gap-20 col-8 mx-auto mb-3">
                 <button type="submit" class="btn-primary">Iniciar</button>
             </div>
+            <a href="bitacora-alumno-servlet">Bitacora</a>
         </form>
         <div class="d-grid gap-20 col-3 mb-3">
             <button type="button" onclick="window.location.href='tipo-user-servlet'" class="btn-primary">Regresar</button>

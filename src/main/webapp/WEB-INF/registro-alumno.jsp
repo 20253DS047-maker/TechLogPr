@@ -82,6 +82,13 @@
                     <input type="password" class="form-control" id="contraseña" placeholder="Ej: MAx. 5 caracteres">
                 </div>
             </div>
+            <div class="col-sm-6 col-md-8 mx-auto mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese su correo institucional" required>
+                </div>
+            </div>
 
             <div class="d-grid gap-20 col-8 mx-auto mb-3">
                 <button type="submit" class="btn-primary">Iniciar</button>

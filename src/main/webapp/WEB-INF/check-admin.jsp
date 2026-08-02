@@ -61,7 +61,11 @@
             </div>
 
             <div class="d-grid gap-20 col-3 mx-auto mb-3">
+<<<<<<< HEAD
                 <button type="button" onclick="window.location.href='vista-admin-servlet'" class="btn btn-primary">Continuar</button>
+=======
+                <button type="button" onclick="window.location.href=''" class="btn btn-primary">Continuar</button>
+>>>>>>> 51b1eb326b9306c032ef3746b3750ba3dd0e00b0
             </div>
         </div>
     </div>

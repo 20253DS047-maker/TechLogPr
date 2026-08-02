@@ -16,3 +16,4 @@ public class BitacoraAlumnoServlet extends HttpServlet {
         req.getRequestDispatcher("WEB-INF/bitacora-alumno.jsp").forward(req, resp);
     }
 }
+

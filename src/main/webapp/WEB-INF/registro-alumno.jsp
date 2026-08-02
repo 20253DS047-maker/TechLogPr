@@ -53,7 +53,7 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">REGISTRO USUARIOS</h2>
         </div>
-        <form action="check-alumno-servlet" method="post">
+        <form action="registro-alumno-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="nombre" class="form-label">Nombre:</label>
                 <div class="input-group">
@@ -79,7 +79,7 @@
                 <label for="contraseña" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="contraseña" placeholder="Ej: MAx. 5 caracteres">
+                    <input type="password" class="form-control" id="password" placeholder="Ej: MAx. 5 caracteres">
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">

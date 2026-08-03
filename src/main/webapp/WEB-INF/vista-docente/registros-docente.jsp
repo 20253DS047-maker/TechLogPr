@@ -8,17 +8,36 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Evita barras de desplazamiento externas innecesarias */
+    }
     body {
       background-color: #c6c4a8;
-      min-height: 100vh;
       font-family: 'Segoe UI', Arial, sans-serif;
-      margin: 0;
+      padding: 20px 40px;
+      display: flex;
+      flex-direction: column;
     }
+
+    .main-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+
     .top-bar {
       display: flex;
       justify-content: flex-end;
       gap: 10px;
-      padding: 20px 30px 0;
+      margin-bottom: 10px;
+      flex-shrink: 0;
     }
     .btn-cerrar-sesion {
       font-weight: 600;
@@ -31,18 +50,20 @@
       cursor: pointer;
     }
     .btn-cerrar-sesion:hover { background-color: #142038; }
+
     .page-title {
       text-align: center;
       color: #1c8a6c;
       font-weight: 700;
-      margin: 0 0 24px;
-      font-size: 2.4rem;
+      margin: 0 0 16px;
+      font-size: 2.2rem;
+      flex-shrink: 0;
     }
     .search-bar {
-      max-width: 900px;
-      margin: 0 auto 20px;
+      width: 100%;
+      margin: 0 auto 16px;
       position: relative;
-      padding: 0 24px;
+      flex-shrink: 0;
     }
     .search-bar input {
       width: 100%;
@@ -55,20 +76,32 @@
     .search-bar input:focus { outline: none; }
     .search-bar i {
       position: absolute;
-      right: 40px;
+      right: 18px;
       top: 50%;
       transform: translateY(-50%);
       color: #555;
     }
+
+    /* Tabla flexible que se ajusta a la pantalla */
     .table-container {
-      max-width: 1000px;
-      margin: 0 auto;
+      width: 100%;
       background-color: #efe9e2;
       border-radius: 4px;
       overflow: hidden;
       padding: 0 24px;
+      flex: 1; /* Ocupa dinámicamente el alto vertical sobrante */
+      display: flex;
+      flex-direction: column;
     }
-    table { width: 100%; border-collapse: collapse; }
+    table {
+      width: 100%;
+      height: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    thead {
+      height: 45px;
+    }
     thead th {
       font-size: 0.78rem;
       text-transform: uppercase;
@@ -79,14 +112,20 @@
       letter-spacing: 0.4px;
       font-weight: 700;
     }
+    tbody {
+      height: calc(100% - 95px); /* Descuenta encabezado y paginación */
+    }
+    tbody tr {
+      height: 14.28%; /* Distribución pareja de las 7 filas */
+    }
     tbody td {
-      padding: 10px 8px;
+      padding: 8px;
       font-size: 0.85rem;
       color: #333;
       border-bottom: 1px solid #d8d1c5;
       white-space: nowrap;
+      vertical-align: middle;
     }
-    tbody tr.empty-row td { padding: 16px 8px; border-bottom: 1px solid #d8d1c5; }
     .badge-activo { color: #1c8a6c; font-weight: 600; }
     .badge-inactivo { color: #b03a3a; font-weight: 600; }
     .icon-btn {
@@ -113,8 +152,10 @@
     .pagination-bar {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 6px;
-      padding: 18px 0 6px;
+      height: 50px;
+      flex-shrink: 0;
     }
     .pagination-bar button {
       width: 28px;
@@ -126,7 +167,24 @@
       color: #333;
     }
     .pagination-bar button.active { background-color: #1c8a6c; color: #fff; }
-    /* ===== Modal genérico (oculto por defecto, JS lo muestra) ===== */
+
+    /* Filtros al pie */
+    .filters {
+      display: flex;
+      gap: 20px;
+      padding: 16px 0 0;
+      flex-shrink: 0;
+    }
+    .filters label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: #333;
+      cursor: pointer;
+    }
+
+    /* Modales */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -178,7 +236,8 @@
       font-size: 1rem;
       cursor: pointer;
     }
-    /* ===== Confirmación cerrar sesión ===== */
+
+    /* Modal confirmación */
     .confirm-box {
       background-color: #ffffff;
       border-radius: 6px;
@@ -209,6 +268,7 @@
 </head>
 <body>
 
+<div class="main-wrapper">
   <div class="top-bar">
     <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
   </div>
@@ -223,180 +283,170 @@
   <div class="table-container">
     <table>
       <thead>
-        <tr>
-          <th>#</th>
-          <th>Matricula:</th>
-          <th>Nombre completo:</th>
-          <th>Fecha:</th>
-          <th>P.C.</th>
-          <th>Salon/Docencia</th>
-          <th>Estado:</th>
-          <th>Acciones:</th>
-        </tr>
+      <tr>
+        <th style="width: 5%;">#</th>
+        <th style="width: 15%;">Matricula:</th>
+        <th style="width: 25%;">Nombre completo:</th>
+        <th style="width: 12%;">Fecha:</th>
+        <th style="width: 8%;">P.C.</th>
+        <th style="width: 15%;">Salon/Docencia</th>
+        <th style="width: 10%;">Estado:</th>
+        <th style="width: 10%;">Acciones:</th>
+      </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>0</td>
-          <td>20253DS196</td>
-          <td>Jonathan Alejandro...</td>
-          <td>11/11/2026</td>
-          <td>15.</td>
-          <td>MAC9.D4</td>
-          <td id="estadoTexto-0" class="badge-activo">Activo</td>
-          <td>
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch"
-                     id="estadoSwitch-0" checked
-                     onchange="cambiarEstado(0, this)">
-            </div>
-            <button type="button" class="icon-btn" title="Ver mas"
-                    onclick="verMas('20253DS196','Jonathan AlejandroLopez Benites','11/11/2026','15','11:00 AM','MAC9','13:00 PM','D4','Activo')">
-              <i class="bi bi-eye"></i>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>20253DS034</td>
-          <td>Santiago Flores</td>
-          <td>20/02/2026</td>
-          <td>25.D4</td>
-          <td>A9.D3</td>
-          <td id="estadoTexto-1" class="badge-inactivo">Inactivo</td>
-          <td>
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch"
-                     id="estadoSwitch-1"
-                     onchange="cambiarEstado(1, this)">
-            </div>
-            <button type="button" class="icon-btn" title="Ver mas"
-                    onclick="verMas('20253DS034','Santiago Flores','20/02/2026','25.D4','—','A9','—','D3','Inactivo')">
-              <i class="bi bi-eye"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+      <tr>
+        <td>0</td>
+        <td>20253DS196</td>
+        <td>Jonathan Alejandro...</td>
+        <td>11/11/2026</td>
+        <td>15</td>
+        <td>D4</td>
+        <td id="estadoTexto-0" class="badge-activo">Activo</td>
+        <td>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch"
+                   id="estadoSwitch-0" checked
+                   onchange="cambiarEstado(0, this)">
+          </div>
+          <button type="button" class="icon-btn" title="Ver mas"
+                  onclick="verMas('20253DS196','Jonathan AlejandroLopez Benites','11/11/2026','15','11:00 AM','MAC9','13:00 PM','D4','Activo')">
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>20253DS034</td>
+        <td>Santiago Flores</td>
+        <td>20/02/2026</td>
+        <td>25</td>
+        <td>D2</td>
+        <td id="estadoTexto-1" class="badge-inactivo">Inactivo</td>
+        <td>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch"
+                   id="estadoSwitch-1"
+                   onchange="cambiarEstado(1, this)">
+          </div>
+          <button type="button" class="icon-btn" title="Ver mas"
+                  onclick="verMas('20253DS034','Santiago Flores','20/02/2026','25.D4','—','A9','—','D3','Inactivo')">
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
+      </tr>
+      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
       </tbody>
     </table>
 
     <div class="pagination-bar">
-      <button>&laquo;</button>
-      <button>&lsaquo;</button>
-      <button class="active">5</button>
-      <button>6</button>
-      <button>7</button>
-      <button>8</button>
-      <button>&rsaquo;</button>
-      <button>&raquo;</button>
+      <button type="button">&laquo;</button>
+      <button type="button">&lsaquo;</button>
+      <button type="button" class="active">5</button>
+      <button type="button">6</button>
+      <button type="button">7</button>
+      <button type="button">8</button>
+      <button type="button">&rsaquo;</button>
+      <button type="button">&raquo;</button>
     </div>
   </div>
-  <!-- Filtros: A = Alumno, RA = registroalumno,  -->
+
+  <!-- Filtros -->
   <div class="filters">
     <label>
       <input type="radio" name="filtro" checked
-             onchange="window.location.href='docente-Alumno-servlet?tipo=A'"> A
+             onchange="window.location.href='docente-Alumno-servlet?tipo=A'"> UA
     </label>
     <label>
       <input type="radio" name="filtro"
              onchange="window.location.href='docente-registro-servlet'"> RA
-
+    </label>
   </div>
+</div>
 
-  <!-- ===================== MODAL: VER MAS ===================== -->
-  <div class="modal-overlay" id="modalVerMas">
-    <div class="modal-box">
-      <label>Matricula:</label>
-      <input type="text" id="vm-matricula" disabled>
+<!-- ===================== MODAL: VER MAS ===================== -->
+<div class="modal-overlay" id="modalVerMas">
+  <div class="modal-box">
+    <label>Matricula:</label>
+    <input type="text" id="vm-matricula" disabled>
 
-      <label>Nombre Completo:</label>
-      <input type="text" id="vm-nombre" disabled>
+    <label>Nombre Completo:</label>
+    <input type="text" id="vm-nombre" disabled>
 
-      <div class="row-2">
-        <div><label>Fecha:</label><input type="text" id="vm-fecha" disabled></div>
-        <div><label>PC:</label><input type="text" id="vm-pc" disabled></div>
-      </div>
+    <div class="row-2">
+      <div><label>Fecha:</label><input type="text" id="vm-fecha" disabled></div>
+      <div><label>PC:</label><input type="text" id="vm-pc" disabled></div>
+    </div>
 
-      <div class="row-2">
-        <div><label>Hora Entrada:</label><input type="text" id="vm-entrada" disabled></div>
-        <div><label>Salon:</label><input type="text" id="vm-salon" disabled></div>
-      </div>
+    <div class="row-2">
+      <div><label>Hora Entrada:</label><input type="text" id="vm-entrada" disabled></div>
+      <div><label>Salon:</label><input type="text" id="vm-salon" disabled></div>
+    </div>
 
-      <div class="row-2">
-        <div><label>Hora Salida:</label><input type="text" id="vm-salida" disabled></div>
-        <div><label>Docencia:</label><input type="text" id="vm-docencia" disabled></div>
-      </div>
+    <div class="row-2">
+      <div><label>Hora Salida:</label><input type="text" id="vm-salida" disabled></div>
+      <div><label>Docencia:</label><input type="text" id="vm-docencia" disabled></div>
+    </div>
 
-      <label>Estado:</label>
-      <input type="text" id="vm-estado" disabled>
+    <label>Estado:</label>
+    <input type="text" id="vm-estado" disabled>
 
-      <div class="modal-actions">
-        <button type="button" class="btn-salir" onclick="cerrarModal('modalVerMas')">Salir</button>
-      </div>
+    <div class="modal-actions">
+      <button type="button" class="btn-salir" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
   </div>
+</div>
 
-  <!-- ===================== MODAL: CERRAR SESION ===================== -->
-  <div class="modal-overlay" id="modalCerrarSesion">
-    <div class="confirm-box">
-      <div class="confirm-header">¿Estas seguro de cerrar sesion?</div>
-      <div class="confirm-actions">
-        <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
-        <button type="button" class="btn-si" onclick="confirmarCerrarSesion()">Si</button>
-      </div>
+<!-- ===================== MODAL: CERRAR SESION ===================== -->
+<div class="modal-overlay" id="modalCerrarSesion">
+  <div class="confirm-box">
+    <div class="confirm-header">¿Estas seguro de cerrar sesion?</div>
+    <div class="confirm-actions">
+      <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
+      <button type="button" class="btn-si" onclick="window.location.href='login-docente-servlet'">Si</button>
     </div>
   </div>
+</div>
 
-  <script>
-    // ----------  abrir/cerrar cualquier modal ----------
-    function abrirModal(idModal) {
-      document.getElementById(idModal).classList.add('activo');
-    }
-    function cerrarModal(idModal) {
-      document.getElementById(idModal).classList.remove('activo');
-    }
+<script>
+  function abrirModal(idModal) {
+    document.getElementById(idModal).classList.add('activo');
+  }
+  function cerrarModal(idModal) {
+    document.getElementById(idModal).classList.remove('activo');
+  }
 
-    // ---------- Ver mas:  ----------
-    function verMas(matricula, nombre, fecha, pc, entrada, salon, salida, docencia, estado) {
-      document.getElementById('vm-matricula').value = matricula;
-      document.getElementById('vm-nombre').value = nombre;
-      document.getElementById('vm-fecha').value = fecha;
-      document.getElementById('vm-pc').value = pc;
-      document.getElementById('vm-entrada').value = entrada;
-      document.getElementById('vm-salon').value = salon;
-      document.getElementById('vm-salida').value = salida;
-      document.getElementById('vm-docencia').value = docencia;
-      document.getElementById('vm-estado').value = estado;
-      abrirModal('modalVerMas');
-    }
+  function verMas(matricula, nombre, fecha, pc, entrada, salon, salida, docencia, estado) {
+    document.getElementById('vm-matricula').value = matricula;
+    document.getElementById('vm-nombre').value = nombre;
+    document.getElementById('vm-fecha').value = fecha;
+    document.getElementById('vm-pc').value = pc;
+    document.getElementById('vm-entrada').value = entrada;
+    document.getElementById('vm-salon').value = salon;
+    document.getElementById('vm-salida').value = salida;
+    document.getElementById('vm-docencia').value = docencia;
+    document.getElementById('vm-estado').value = estado;
+    abrirModal('modalVerMas');
+  }
 
-    // ---------- Activo / Inactivo: refleja el cambio visualmente ----------
-    // Cuando conectes con la base de datos, agrega aqui tu llamada
-    // (fetch/AJAX o form.submit()) hacia tu Servlet, usando el id del registro.
-    function cambiarEstado(id, checkbox) {
-      var celda = document.getElementById('estadoTexto-' + id);
-      if (checkbox.checked) {
-        celda.textContent = 'Activo';
-        celda.classList.remove('badge-inactivo');
-        celda.classList.add('badge-activo');
-        // TODO: aqui va la peticion al backend para marcar id=" + id + " como activo
-      } else {
-        celda.textContent = 'Inactivo';
-        celda.classList.remove('badge-activo');
-        celda.classList.add('badge-inactivo');
-        // TODO: aqui va la peticion al backend para marcar id=" + id + " como inactivo
-      }
+  function cambiarEstado(id, checkbox) {
+    var celda = document.getElementById('estadoTexto-' + id);
+    if (checkbox.checked) {
+      celda.textContent = 'Activo';
+      celda.classList.remove('badge-inactivo');
+      celda.classList.add('badge-activo');
+    } else {
+      celda.textContent = 'Inactivo';
+      celda.classList.remove('badge-activo');
+      celda.classList.add('badge-inactivo');
     }
+  }
 
-    // ---------- Cerrar sesion confirmado ----------
-    function confirmarCerrarSesion() {
-     
-      cerrarModal('modalCerrarSesion');
-    }
-  </script>
+</script>
 
 </body>
 </html>

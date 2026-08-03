@@ -46,26 +46,19 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">LOGIN DOCENTE</h2>
         </div>
-        <form>
+        <form action="registros-docente-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="nombre" class="form-label">Nombre:</label>
+                <label for="nombre" class="form-label">Usuario:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="apellido" class="form-label">Apellido:</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="apellido" placeholder="Ingrese su apellido">
+                    <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu usuario" required>
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="contrasena" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi  bi-lock"></i></span>
-                    <input type="text" class="form-control" id="contrasena" placeholder="Ingrese su contraseña">
+                    <input type="text" class="form-control" id="contrasena" placeholder="Ingrese su contraseña" required>
                 </div>
             </div>
 

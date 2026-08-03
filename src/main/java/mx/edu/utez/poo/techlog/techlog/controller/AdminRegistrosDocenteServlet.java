@@ -8,10 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet (name="LoginDocenteServlet", value="/login-docente-servlet")
-public class LoginDocenteServlet extends HttpServlet {
+@WebServlet (name="AdminRegistrosDocenteServlet", value="/admin-registrosDocente-servlet")
+
+public class AdminRegistrosDocenteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/login-docente.jsp").forward(req,resp);
+        req.getRequestDispatcher("WEB-INF/vistas-admin/vista-admin-registro-docentes/registrodocente.jsp").forward(req,resp);
     }
 }

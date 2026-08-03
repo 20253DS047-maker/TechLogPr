@@ -59,17 +59,16 @@
         </div>
         <div class="card-body text-center">
             <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
-            <p class="mt-3">Su registro en la bitácora ha sido exitoso.</p>
+            <p class="mt-3">Su registro ha sido exitoso.</p>
 
             <div class="text-start mt-4">
                 <p><strong>Nombre:</strong> Pedro</p>
                 <p><strong>Apellido:</strong> Hurieta</p>
                 <p><strong>Matrícula:</strong> 20253ds047</p>
-                <p><strong>ID:</strong> 12345</p>
             </div>
 
             <div class="d-grid gap-20 col-3 mx-auto mb-3">
-                <button type="button" class="btn btn-primary">Volver</button>
+                <button type="button" onclick="window.location.href='vista-admin-servlet'" class="btn btn-primary">Continuar</button>
             </div>
         </div>
 

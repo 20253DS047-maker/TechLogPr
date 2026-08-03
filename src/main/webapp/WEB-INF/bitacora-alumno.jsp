@@ -269,7 +269,7 @@
     }
 
     function confirmarCancelacion() {
-        window.location.href = "index.jsp";
+        window.location.href = "login-alumno-servlet";
     }
 </script>
 </body>

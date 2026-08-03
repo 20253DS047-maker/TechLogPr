@@ -59,7 +59,7 @@
         </div>
         <div class="card-body text-center">
             <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
-            <p class="mt-3">Su registro en la bitácora ha sido exitoso.</p>
+            <p class="mt-3">Su registro de docente ha sido exitoso.</p>
 
             <div class="text-start mt-4">
                 <p><strong>Nombre:</strong> Pedro</p>
@@ -69,7 +69,7 @@
             </div>
 
             <div class="d-grid gap-20 col-3 mx-auto mb-3">
-                <button type="button" class="btn btn-primary">Continuar</button>
+                <button type="button" onclick="window.location.href='vista-admin-servlet'" class="btn btn-primary">Continuar</button>
             </div>
         </div>
 

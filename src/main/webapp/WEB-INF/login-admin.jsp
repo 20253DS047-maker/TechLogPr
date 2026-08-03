@@ -51,14 +51,14 @@
                 <label for="nombre" class="form-label">Nombre:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese su usuario" required>
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="password" class="form-label">Contraseña: </label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" placeholder="Ingrese su contraseña" id="password">
+                    <input type="password" class="form-control" placeholder="Ingrese su contraseña" id="password" required>
                 </div>
             </div>
 

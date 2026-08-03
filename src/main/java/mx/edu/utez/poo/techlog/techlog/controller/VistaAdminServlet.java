@@ -13,6 +13,6 @@ import java.io.IOException;
 public class VistaAdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/vista-admin.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/vistas-admin/vista-admin-registros/registros.jsp").forward(req, resp);
     }
 }

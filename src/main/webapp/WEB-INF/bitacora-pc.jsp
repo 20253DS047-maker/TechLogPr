@@ -209,11 +209,12 @@
             </div>
 
             <div class="mb-3">
-                <label for="docencia" class="form-label">Docencia</label>
+                <label for="docencia" class="form-label">Docencia:</label>
                 <select id="docencia" name="docencia" class="form-select">
-                    <option>Docencia 2</option>
-                    <option>Cecadec</option>
-                    <option>Docencia 4</option>
+                    <option selected>Selecciona una opción</option>
+                    <option value="D2">Docencia 2</option>
+                    <option value="D4">Docencia 4</option>
+                    <option value="CECADEC">Cecadec</option>
                 </select>
             </div>
 
@@ -224,25 +225,27 @@
 
             <div class="mb-3">
                 <label for="modelo" class="form-label form-label-custom">Modelo:</label>
-                <input type="text" class="form-control form-control-custom" name="modelo" id="modelo" placeholder="Ej: HP" required>
+                <input type="text" class="form-control form-control-custom" id="modelo" name="modelo" placeholder="Ej: HP" required>
             </div>
 
             <div class="mb-3">
                 <label for="isla_mesa" class="form-label">Isla/Mesa:</label>
                 <select id="isla_mesa" name="isla_mesa" class="form-select">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option selected>Selecciona una opción</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
             </div>
 
             <div class="mb-3">
                 <label for="estado" class="form-label">Estado</label>
                 <select id="estado" name="estado" class="form-select">
-                    <option>Activo</option>
-                    <option>Inactivo</option>
+                    <option selected>Selecciona una opcion</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
                 </select>
             </div>
             <div class="d-flex justify-content-end gap-3 mt-4">
@@ -268,7 +271,7 @@
 
             <div class="modal-actions">
                 <button type="button" class="btn-modal-cancelar" onclick="cerrarModalCancelar()">Cancelar</button>
-                <button type="button" class="btn-modal-confirmar" onclick="confirmarCancelacion()">Regresar</button>
+                <button type="button" class="btn-modal-confirmar" onclick="confirmarCancelacion()">Aceptar</button>
             </div>
         </div>
     </div>

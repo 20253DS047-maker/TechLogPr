@@ -16,7 +16,6 @@ import java.io.IOException;
 public class BitacoraAlumnoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Muestra la vista con el primer formulario
         req.getRequestDispatcher("WEB-INF/bitacora-alumno.jsp").forward(req, resp);
     }
 
@@ -37,7 +36,7 @@ public class BitacoraAlumnoServlet extends HttpServlet {
             req.getRequestDispatcher("WEB-INF/bitacora-pc.jsp").forward(req, resp);
         }else {
             req.setAttribute("error", "No se pudo registrar en la bitacora");
-            req.getRequestDispatcher("WEB-INF/tipo-user.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/bitacora-alumno.jsp").forward(req, resp);
         }
 
     }

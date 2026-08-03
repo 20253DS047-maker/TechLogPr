@@ -79,7 +79,6 @@
             <div class="d-grid gap-20 col-8 mx-auto mb-3">
                 <button type="submit" class="btn-primary">Iniciar</button>
             </div>
-            <a href="bitacora-alumno-servlet">Bitacora</a>
         </form>
         <div class="d-grid gap-20 col-3 mb-3">
             <button type="button" onclick="window.location.href='tipo-user-servlet'" class="btn-primary">Regresar</button>

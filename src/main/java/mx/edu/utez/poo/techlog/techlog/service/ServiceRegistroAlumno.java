@@ -16,8 +16,8 @@ public class ServiceRegistroAlumno {
                 return false;
         }
 
-        if (nuevoAlumno.getContraseña() == null || nuevoAlumno.getContraseña().trim().isEmpty() ||
-                nuevoAlumno.getContraseña().length() < 5 ){
+        if (nuevoAlumno.getContrasena() == null || nuevoAlumno.getContrasena().trim().isEmpty() ||
+                nuevoAlumno.getContrasena().length() > 5 ){
                 return false;
         }
 

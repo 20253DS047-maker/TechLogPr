@@ -22,13 +22,13 @@ public class RegistroAlumnoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         ServiceRegistroAlumno serviceRegistroAlumno = new ServiceRegistroAlumno();
+        String matricula = req.getParameter("matricula");
         String nombre = req.getParameter("nombre");
         String apellido = req.getParameter("apellido");
-        String matricula = req.getParameter("matricula");
-        String contrasena = req.getParameter("password");
+        String contrasena = req.getParameter("contrasena");
         String username = req.getParameter("username");
 
-        BeanRegistroAlumno nuevoAlumno = new BeanRegistroAlumno(nombre, apellido, matricula, contrasena, username);
+        BeanRegistroAlumno nuevoAlumno = new BeanRegistroAlumno(matricula, nombre, apellido, contrasena, username);
         DaoRegistroAlumno dao = new DaoRegistroAlumno();
         boolean guardado = serviceRegistroAlumno.registrarRegistroAlumno(nuevoAlumno);
 

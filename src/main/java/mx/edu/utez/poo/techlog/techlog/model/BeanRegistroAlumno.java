@@ -4,14 +4,14 @@ public class BeanRegistroAlumno {
     private String matricula;
     private String nombre;
     private String apellido;
-    private String contraseña;
+    private String contrasena;
     private String username;
 
-    public BeanRegistroAlumno(String matricula, String nombre, String apellido, String contraseña, String username) {
+    public BeanRegistroAlumno(String matricula, String nombre, String apellido, String contrasena, String username) {
        this.matricula = matricula;
        this.nombre = nombre;
        this.apellido = apellido;
-       this.contraseña = contraseña;
+       this.contrasena = contrasena;
        this.username = username;
     }
 
@@ -27,9 +27,9 @@ public class BeanRegistroAlumno {
 
     public void setApellido(String apellido) { this.apellido = apellido; }
 
-    public String getContraseña() { return contraseña; }
+    public String getContrasena() { return contrasena; }
 
-    public void setContraseña(String contraseña) { this.contraseña = contraseña; }
+    public void setContrasena(String contraseña) { this.contrasena = contrasena; }
 
     public String getUsername() { return username; }
 

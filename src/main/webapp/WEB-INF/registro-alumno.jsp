@@ -58,28 +58,28 @@
                 <label for="nombre" class="form-label">Nombre:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese su nombre">
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="apellido" class="form-label">Apellido:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="apellido" placeholder="Ingrese su apellido">
+                    <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Ingrese su apellido">
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="matricula" class="form-label">Matrícula:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi  bi-card-text"></i></span>
-                    <input type="text" class="form-control" id="matricula" placeholder="Ej: 20253ds047">
+                    <input type="text" class="form-control" name="matricula" id="matricula" placeholder="Ej: 20253ds047">
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="contraseña" class="form-label">Contraseña:</label>
+                <label for="contrasena" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="password" placeholder="Ej: MAx. 5 caracteres">
+                    <input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Ej: MAx. 5 caracteres">
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">

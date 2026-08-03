@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class DaoBitacoraAlumno {
     public boolean insertar(BeanBitacoraAlumno registroAlumno){
-        String sql = "INSERT INTO REGISTRO_ALUMNO (matricula_usuario, id_computadora, fecha_hora_entrada, " +
-                "nombre_docente, observaciones) VALUES (?, 'PENDIENTE', SYSDATE, ?, ?)";
+        String sql = "INSERT INTO REGISTRO_ALUMNO (matricula_usuario, fecha_hora_entrada, " +
+                "nombre_docente, observaciones) VALUES (?, SYSDATE, ?, ?)";
         try (Connection conexion = Conexion.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, registroAlumno.getMatricula_usuario());

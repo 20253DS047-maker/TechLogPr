@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="es">
 <head>
@@ -62,14 +63,13 @@
             <p class="mt-3">Su registro en la bitácora ha sido exitoso.</p>
 
             <div class="text-start mt-4">
-                <p><strong>Nombre:</strong> Pedro</p>
-                <p><strong>Apellido:</strong> Hurieta</p>
-                <p><strong>Matrícula:</strong> 20253ds047</p>
-                <p><strong>ID:</strong> 12345</p>
+                <p><strong>Nombre:</strong> ${docente.nombre}</p>
+                <p><strong>Apellidos:</strong> ${docente.apellido_paterno} ${docente.apellido_materno}</p>
+                <p><strong>Área:</strong> ${docente.area}</p>
             </div>
 
             <div class="d-grid gap-20 col-3 mx-auto mb-3">
-                <button type="button" class="btn btn-primary">Continuar</button>
+                <button type="button" onclick="window.location.href='login-docente-servlet'" class="btn btn-primary">Continuar</button>
             </div>
         </div>
 

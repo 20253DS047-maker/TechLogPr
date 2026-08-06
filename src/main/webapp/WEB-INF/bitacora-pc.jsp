@@ -127,7 +127,7 @@
 
         .modal-header-custom {
             background-color: #008767;
-            color: white;
+            color: black;
             padding: 12px;
             font-weight: bold;
             font-size: 18px;
@@ -188,7 +188,7 @@
 </head>
 <body>
 
-<div class="decoracion-verde">
+<div class="decoracion-verde" >
     <img src="imagenes/logo-utez.png" alt="UTEZ Logo" class="logo-utez">
     <h1 class="texto-bienvenidos text-white fw-bold" style="position: absolute; top: 420px; left: 50%; transform: translateX(-50%);">Bienvenidos</h1>
 </div>
@@ -201,26 +201,26 @@
     </div>
 
     <div class="card-formulario">
-        <form action="check-bitacora-servlet" method="post">
+        <form action="bitacora-pc-servlet" method="post">
 
             <div class="mb-3">
                 <label for="salon" class="form-label form-label-custom">Salon de computo:</label>
-                <input type="text" class="form-control form-control-custom" id="salon" name="salon" placeholder="Ej: CC7" required>
+                <input type="text" class="form-control form-control-custom" name="salon_computo" id="salon" placeholder="Ej: CC7" required>
             </div>
 
             <div class="mb-3">
-                <label for="docencia" class="form-label form-label-custom">Docencia:</label>
-                <select id="docencia" name="docencia" class="form-select" required>
-                    <option value="" disabled selected>Selecciona una opción</option>
-                    <option value="Docencia 2">Docencia 2</option>
-                    <option value="Docencia 4">Docencia 4</option>
-                    <option value="Cecadec">Cecadec</option>
+                <label for="docencia" class="form-label">Docencia:</label>
+                <select id="docencia" name="docencia" class="form-select">
+                    <option selected>Selecciona una opción</option>
+                    <option value="D2">Docencia 2</option>
+                    <option value="D4">Docencia 4</option>
+                    <option value="CECADEC">Cecadec</option>
                 </select>
             </div>
 
             <div class="mb-3">
-                <label for="pc" class="form-label form-label-custom">PC:</label>
-                <input type="text" class="form-control form-control-custom" name="pc" id="pc" placeholder="Ej: 12" required>
+                <label for="numero_pc" class="form-label form-label-custom">PC:</label>
+                <input type="text" class="form-control form-control-custom" name="numero_pc" id="numero_pc" placeholder="Ej: 12" required>
             </div>
 
             <div class="mb-3">
@@ -229,9 +229,9 @@
             </div>
 
             <div class="mb-3">
-                <label for="mesa" class="form-label form-label-custom">Isla/Mesa:</label>
-                <select id="mesa" name="mesa" class="form-select" required>
-                    <option value="" disabled selected>Selecciona una opción</option>
+                <label for="isla_mesa" class="form-label">Isla/Mesa:</label>
+                <select id="isla_mesa" name="isla_mesa" class="form-select">
+                    <option selected>Selecciona una opción</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -241,23 +241,20 @@
             </div>
 
             <div class="mb-3">
-                <label for="estado" class="form-label form-label-custom">Estado:</label>
-                <select id="estado" name="estado" class="form-select" required>
-                    <option value="" disabled selected>Selecciona una opcion</option>
+                <label for="estado" class="form-label">Estado</label>
+                <select id="estado" name="estado" class="form-select">
+                    <option selected>Selecciona una opcion</option>
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                 </select>
             </div>
-
             <div class="d-flex justify-content-end gap-3 mt-4">
                 <button type="button" onclick="mostrarModalCancelar()" class="btn btn-cancelar">Regresar</button>
-                <button type="submit" class="btn btn-registrar">Registrar</button>
+                <button type="submit"  class="btn btn-registrar">Registrar</button>
             </div>
         </form>
     </div>
 </div>
-
-<!-- Ventana Modal de Confirmación -->
 <div id="modalCancelar" class="modal-overlay">
     <div class="modal-card">
 
@@ -279,34 +276,6 @@
         </div>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    const modalCancelar = document.getElementById('modalCancelar');
-
-    // Muestra el modal al pulsar Regresar
-    function mostrarModalCancelar() {
-        modalCancelar.style.display = 'flex';
-    }
-
-    // Oculta el modal al pulsar Cancelar
-    function cerrarModalCancelar() {
-        modalCancelar.style.display = 'none';
-    }
-
-    // Ejecuta la redirección al pulsar Aceptar
-    function confirmarCancelacion() {
-        // Ajusta la ruta del Servlet o vista hacia donde deseas volver
-        window.location.href = 'regresar-servlet';
-    }
-
-    // Cierra el modal si se pulsa fuera de la tarjeta
-    window.addEventListener('click', function(event) {
-        if (event.target === modalCancelar) {
-            cerrarModalCancelar();
-        }
-    });
-</script>
 </body>
 </html>

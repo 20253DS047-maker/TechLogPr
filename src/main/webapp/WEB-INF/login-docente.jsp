@@ -46,20 +46,28 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">LOGIN DOCENTE</h2>
         </div>
-        <form action="registros-docente-servlet" method="post">
+        <form action="bitacora-docente-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="nombre" class="form-label">Usuario:</label>
+                <label for="nombre" class="form-label">Nombre:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu usuario" required>
+                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-8 mx-auto mb-3">
+                <label for="apellido" class="form-label">Apellido:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" id="apellido" placeholder="Ingrese su apellido">
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="contrasena" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi  bi-lock"></i></span>
-                    <input type="text" class="form-control" id="contrasena" placeholder="Ingrese su contraseña" required>
+                    <input type="text" class="form-control" id="contrasena" placeholder="Ingrese su contraseña">
                 </div>
+                <a href="registro-docente-servlet">¿No tienes cuenta?</a>
             </div>
 
             <div class="d-grid gap-20 col-8 mx-auto mb-3">
@@ -67,7 +75,7 @@
             </div>
         </form>
         <div class="d-grid gap-20 col-3 mb-3">
-            <button type="button" onclick="window.location.href='tipo-user-servlet'" class="btn-primary">Regresar</button>
+            <button type="button" onclick="window.location.href='index.jsp'" class="btn-primary">Regresar</button>
         </div>
 
     </div>

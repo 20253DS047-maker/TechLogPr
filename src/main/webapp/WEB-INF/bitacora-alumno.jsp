@@ -201,31 +201,31 @@
     </div>
 
     <div class="card-formulario">
-        <form action="bitacora-pc-servlet" method="post">
+        <form action="bitacora-alumno-servlet" method="post">
 
             <div class="mb-3">
                 <label for="nombre" class="form-label form-label-custom">Nombre:</label>
-                <input type="text" class="form-control form-control-custom" id="nombre" placeholder="Ej: Santiago" required>
+                <input type="text" class="form-control form-control-custom" name="nombre" id="nombre" placeholder="Ej: Santiago" required>
             </div>
 
             <div class="mb-3">
-                <label for="apellido" class="form-label form-label-custom">Apellido Paterno:</label>
-                <input type="text" class="form-control form-control-custom" id="apellido" placeholder="Ej: Perez" required>
+                <label for="apellido" class="form-label form-label-custom">Apellido:</label>
+                <input type="text" class="form-control form-control-custom" name="apellido" id="apellido" placeholder="Ej: Perez" required>
             </div>
 
             <div class="mb-3">
                 <label for="matricula" class="form-label form-label-custom">Matricula</label>
-                <input type="text" class="form-control form-control-custom" id="matricula" placeholder="Ej: 20253ds046" required>
+                <input type="text" class="form-control form-control-custom" name="matricula_usuario" id="matricula" placeholder="Ej: 20253ds046" required>
             </div>
 
             <div class="mb-3">
                 <label for="docente" class="form-label form-label-custom">Docente:</label>
-                <input type="text" class="form-control form-control-custom" id="docente" placeholder="Ej: Pedro Urieta" required>
+                <input type="text" class="form-control form-control-custom" name="nombre_docente" id="docente" placeholder="Ej: Pedro Urieta" required>
             </div>
 
             <div class="mb-4">
                 <label for="observaciones" class="form-label form-label-custom">Observaciones:</label>
-                <textarea class="form-control form-control-custom" id="observaciones" placeholder="Ej: Manchas en la pantalla"></textarea>
+                <textarea class="form-control form-control-custom" name="observaciones" id="observaciones" placeholder="Ej: Manchas en la pantalla"></textarea>
             </div>
 
             <div class="d-flex justify-content-end gap-3 mt-4">

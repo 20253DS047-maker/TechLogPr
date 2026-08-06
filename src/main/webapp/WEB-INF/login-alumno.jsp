@@ -72,7 +72,7 @@
                 <label for="contrasena" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="contrasena" placeholder="Ej: 12345">
+                    <input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Ej: 12345">
                 </div>
             </div>
 

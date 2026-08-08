@@ -56,8 +56,6 @@
             <div class="text-start mt-4">
                 <p><strong>Nombre:</strong> Pedro</p>
                 <p><strong>Apellido:</strong> Hurieta</p>
-                <p><strong>Matrícula:</strong> 20253ds047</p>
-                <p><strong>ID:</strong> 12345</p>
             </div>
 
             <div class="d-grid gap-20 col-3 mx-auto mb-3">

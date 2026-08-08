@@ -2,10 +2,11 @@
   Created by IntelliJ IDEA.
   User: USER
   Date: 24/07/2026
-  Time: 02:33 p.m.
+  Time: 03:01 p.m.
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="es">
 <head>
@@ -59,16 +60,17 @@
         </div>
         <div class="card-body text-center">
             <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
-            <p class="mt-3">Su registro de docente ha sido exitoso.</p>
+            <p class="mt-3">Su registro en la bitácora ha sido exitoso.</p>
 
             <div class="text-start mt-4">
-                <p><strong>Nombre:</strong> ${docente.nombre}</p>
-                <p><strong>Apellidos:</strong> ${docente.apellido_paterno} ${docente.apellido_materno}</p>
-                <p><strong>Área:</strong> ${docente.area}</p>
+                <p><strong>Nombre:</strong> ${docenteBitacora.nombre}</p>
+                <p><strong>Apellido Paterno:</strong> ${docenteBitacora.apellido_paterno}</p>
+                <p><strong>Apellido Materno:</strong> ${docenteBitacora.apellido_materno}</p>
+                <p><strong>Área:</strong> ${docenteBitacora.area}</p>
             </div>
 
             <div class="d-grid gap-20 col-3 mx-auto mb-3">
-                <button type="button" class="btn btn-primary">Continuar</button>
+                <button type="button" onclick="window.location.href=''" class="btn btn-primary">Continuar</button>
             </div>
         </div>
 

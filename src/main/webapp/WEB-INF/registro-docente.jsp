@@ -108,8 +108,8 @@
                 </div>
             </div>
 
-            <div class="col-sm-10 col-md-8 mx-auto mb-3 mt-4">
-                <button type="submit" class="btn-primary-custom">Registrar</button>
+            <div class="d-grid gap-20 col-8 mx-auto mb-3">
+                <button type="button" onclick="window.location.href=''" class="btn-primary">Iniciar</button>
             </div>
         </form>
 

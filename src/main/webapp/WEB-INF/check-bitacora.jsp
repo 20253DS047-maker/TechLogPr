@@ -105,7 +105,8 @@
             </div>
 
             <p class="texto-exito">El registro se guardó<br>exitosamente</p>
-                <button type="button" class="btn-volver" onclick="window.location.href='volver-servlet'">Volver</button>
+
+            <button type="button" class="btn-volver" onclick="window.location.href='index.jsp'">Volver</button>
         </div>
     </div>
 </div>

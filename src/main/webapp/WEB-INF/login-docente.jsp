@@ -44,7 +44,7 @@
     <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-4" style="margin-top: 50px">
     <div class="card p-4 shadow" style="width: 798px">
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
-            <h2 class="text-title">LOGIN DOCENTE</h2>
+            <h2 class="text-title">LOGIN DOCENTE</h2>"form-control" id="n
         </div>
         <form action="registros-docente-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
@@ -58,8 +58,9 @@
                 <label for="contrasena" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi  bi-lock"></i></span>
-                    <input type="text" class="form-control" id="contrasena" placeholder="Ingrese su contraseña" required>
+                    <input type="text" class="form-control" id="contrasena" placeholder="Ingrese su contraseña">
                 </div>
+                <a href="registro-docente-servlet">¿No tienes cuenta?</a>
             </div>
 
             <div class="d-grid gap-20 col-8 mx-auto mb-3">
@@ -67,7 +68,7 @@
             </div>
         </form>
         <div class="d-grid gap-20 col-3 mb-3">
-            <button type="button" onclick="window.location.href='tipo-user-servlet'" class="btn-primary">Regresar</button>
+            <button type="button" onclick="window.location.href='index.jsp'" class="btn-primary">Regresar</button>
         </div>
 
     </div>

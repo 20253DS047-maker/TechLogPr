@@ -14,4 +14,6 @@ public class LoginDocenteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("WEB-INF/login-docente.jsp").forward(req,resp);
     }
+
+
 }

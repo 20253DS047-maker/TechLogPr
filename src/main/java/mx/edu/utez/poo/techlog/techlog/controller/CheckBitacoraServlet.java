@@ -13,6 +13,6 @@ import java.io.IOException;
 public class CheckBitacoraServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/check-bitacora.jsp").forward(req,resp);
+        req.getRequestDispatcher("WEB-INF/check-bitacoraDocente.jsp").forward(req,resp);
     }
 }

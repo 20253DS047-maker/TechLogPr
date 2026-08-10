@@ -26,13 +26,20 @@ public class LoginDocenteServlet extends HttpServlet {
         ServiceLoginDocente serviceLoginDocente = new ServiceLoginDocente();
         BeanLoginDocente docente = serviceLoginDocente.autenticar(username, password);
 
-        if (docente != null){
-            HttpSession session = req.getSession();
-            session.setAttribute("docenteLogueado", docente);
+        if (docente != null) {
+            // 1. Prevenir Session Fixation (tomado de LoginServlet)
+            HttpSession oldSession = req.getSession(false);
+            if (oldSession != null) {
+                oldSession.invalidate();
+            }
+
+            // 2. Crear sesión limpia y guardar el Bean
+            HttpSession newSession = req.getSession(true);
+            newSession.setAttribute("docenteLogueado", docente);
 
             resp.sendRedirect("tipo-user-servlet");
         }else {
-            req.setAttribute("error", "Username o contraseña incorrectos.");
+            req.setAttribute("error", "Credenciales incorrectas.");
             req.getRequestDispatcher("WEB-INF/login-docente.jsp").forward(req, resp);
         }
     }

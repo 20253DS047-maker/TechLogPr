@@ -2,6 +2,8 @@ package mx.edu.utez.poo.techlog.techlog.model;
 
 public class BeanLoginDocente {
     private String username;
+    private String password;
+
 
     public String getPassword() {
         return password;
@@ -18,6 +20,4 @@ public class BeanLoginDocente {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    private String password;
 }

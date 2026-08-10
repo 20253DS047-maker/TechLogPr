@@ -44,7 +44,7 @@
     <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-4" style="margin-top: 50px">
     <div class="card p-4 shadow" style="width: 798px">
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
-            <h2 class="text-title">LOGIN DOCENTE</h2>"form-control" id="n
+            <h2 class="text-title">LOGIN DOCENTE</h2>
         </div>
         <form action="registros-docente-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">

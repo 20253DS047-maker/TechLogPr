@@ -32,10 +32,12 @@
       width: 100%;
     }
 
+    /* Ajustado a columna para que el nuevo botón quede abajo */
     .top-bar {
       display: flex;
-      justify-content: flex-end;
-      gap: 10px;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
       margin-bottom: 10px;
       flex-shrink: 0;
     }
@@ -45,11 +47,23 @@
       border-radius: 4px;
       padding: 8px 16px;
       font-size: 0.85rem;
+      background-color: #FF0000;
+      color: #fff;
+      cursor: pointer;
+    }
+    .btn-cerrar-sesion:hover { background-color: #ED1515; }
+
+    .btn-bitacora-docente {
+      font-weight: 600;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
       background-color: #1c2b4a;
       color: #fff;
       cursor: pointer;
     }
-    .btn-cerrar-sesion:hover { background-color: #142038; }
+    .btn-bitacora-docente:hover { background-color: #142038; }
 
     .page-title {
       text-align: center;
@@ -168,7 +182,6 @@
     }
     .pagination-bar button.active { background-color: #1c8a6c; color: #fff; }
 
-    /* Filtros al pie */
     .filters {
       display: flex;
       gap: 20px;
@@ -269,8 +282,10 @@
 <body>
 
 <div class="main-wrapper">
+  <!-- Botones alineados uno arriba del otro -->
   <div class="top-bar">
     <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
+    <button type="button" class="btn-bitacora-docente" onclick="window.location.href='DocenteBitacoraServlet'">Bitacora</button>
   </div>
 
   <h1 class="page-title">Registros</h1>

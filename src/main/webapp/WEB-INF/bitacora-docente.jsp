@@ -268,7 +268,7 @@
     }
 
     function confirmarCancelacion() {
-        window.location.href = "index.jsp";
+        window.location.href = "CancelacionDocenteServlet";
     }
 </script>
 </body>

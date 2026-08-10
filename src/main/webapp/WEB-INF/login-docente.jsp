@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -46,19 +47,22 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">LOGIN DOCENTE</h2>
         </div>
-        <form action="registros-docente-servlet" method="post">
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger">${requestScope.error}</div>
+        </c:if>
+        <form action="login-docente-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="nombre" class="form-label">Usuario:</label>
+                <label for="username" class="form-label">Usuario:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu usuario" required>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Ingresa tu usuario" required>
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="contrasena" class="form-label">Contraseña:</label>
+                <label for="password" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi  bi-lock"></i></span>
-                    <input type="text" class="form-control" id="contrasena" placeholder="Ingrese su contraseña">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese su contraseña" required>
                 </div>
                 <a href="registro-docente-servlet">¿No tienes cuenta?</a>
             </div>
@@ -68,12 +72,11 @@
             </div>
         </form>
         <div class="d-grid gap-20 col-3 mb-3">
-            <button type="button" onclick="window.location.href='index.jsp'" class="btn-primary">Regresar</button>
+            <button type="button" onclick="window.location.href='tipo-user-servlet'" class="btn-primary">Regresar</button>
         </div>
 
     </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>

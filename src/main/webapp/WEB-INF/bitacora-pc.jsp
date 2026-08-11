@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -201,48 +202,54 @@
     </div>
 
     <div class="card-formulario">
-        <form action="check-bitacora-servlet" method="post">
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger">${requestScope.error}</div>
+        </c:if>
+        <form action="bitacora-pc-servlet" method="post">
 
             <div class="mb-3">
                 <label for="salon" class="form-label form-label-custom">Salon de computo:</label>
-                <input type="text" class="form-control form-control-custom" id="salon" placeholder="Ej: CC7" required>
+                <input type="text" class="form-control form-control-custom" name="salon_computo" id="salon" placeholder="Ej: CC7" required>
             </div>
 
             <div class="mb-3">
-                <label for="docencia" class="form-label">Docencia</label>
-                <select id="docencia" class="form-select">
-                    <option>Docencia 2</option>
-                    <option>Cecadec</option>
-                    <option>Docencia 4</option>
+                <label for="docencia" class="form-label">Docencia:</label>
+                <select id="docencia" name="docencia" class="form-select">
+                    <option selected disabled>Selecciona una opción</option>
+                    <option value="D2">Docencia 2</option>
+                    <option value="D4">Docencia 4</option>
+                    <option value="CECADEC">Cecadec</option>
                 </select>
             </div>
 
             <div class="mb-3">
-                <label for="pc" class="form-label form-label-custom">PC:</label>
-                <input type="text" class="form-control form-control-custom" id="pc" placeholder="Ej: 12" required>
+                <label for="numero_pc" class="form-label form-label-custom">PC:</label>
+                <input type="text" class="form-control form-control-custom" name="numero_pc" id="numero_pc" placeholder="Ej: 12" required>
             </div>
 
             <div class="mb-3">
                 <label for="modelo" class="form-label form-label-custom">Modelo:</label>
-                <input type="text" class="form-control form-control-custom" id="modelo" placeholder="Ej: HP" required>
+                <input type="text" class="form-control form-control-custom" id="modelo" name="modelo" placeholder="Ej: HP" required>
             </div>
 
             <div class="mb-3">
-                <label for="mesa" class="form-label">Isla/Mesa:</label>
-                <select id="mesa" class="form-select">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                <label for="isla_mesa" class="form-label">Isla/Mesa:</label>
+                <select id="isla_mesa" name="isla_mesa" class="form-select">
+                    <option selected>Selecciona una opción</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
             </div>
 
             <div class="mb-3">
                 <label for="estado" class="form-label">Estado</label>
-                <select id="estado" class="form-select">
-                    <option>Activo</option>
-                    <option>Inactivo</option>
+                <select id="estado" name="estado" class="form-select">
+                    <option selected disabled>Selecciona una opcion</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
                 </select>
             </div>
             <div class="d-flex justify-content-end gap-3 mt-4">

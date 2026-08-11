@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -46,19 +47,24 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">LOGIN ADMIN</h2>
         </div>
-        <form action="check-admin-servlet" method="post">
+
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger">${requestScope.error}</div>
+        </c:if>
+
+        <form action="login-admin-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="nombre" class="form-label">Nombre:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese su usuario" required>
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese su usuario" required>
                 </div>
             </div>
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="password" class="form-label">Contraseña: </label>
+                <label for="contrasena" class="form-label">Contraseña: </label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" placeholder="Ingrese su contraseña" id="password" required>
+                    <input type="password" class="form-control" name="contrasena" placeholder="Ingrese su contraseña" id="contrasena" required>
                 </div>
             </div>
 

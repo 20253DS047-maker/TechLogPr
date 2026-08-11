@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -201,6 +202,9 @@
     </div>
 
     <div class="card-formulario">
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger">${requestScope.error}</div>
+        </c:if>
         <form action="bitacora-alumno-servlet" method="post">
 
             <div class="mb-3">

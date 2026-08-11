@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import mx.edu.utez.poo.techlog.techlog.service.ServiceLoginAdmin;
 
 import java.io.IOException;
 
@@ -13,5 +15,28 @@ public class LoginAdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("WEB-INF/login-admin.jsp").forward(req,resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String nombre = req.getParameter("nombre");
+        String contrasena = req.getParameter("contrasena");
+
+        ServiceLoginAdmin serviceLoginAdmin = new ServiceLoginAdmin();
+        String admin = serviceLoginAdmin.autenticar(nombre, contrasena);
+
+        if (admin != null) {
+            HttpSession oldSession = req.getSession(false);
+            if (oldSession != null) {
+                oldSession.invalidate();
+            }
+            HttpSession newSession = req.getSession(true);
+            newSession.setAttribute("adminLogueado", admin);
+            req.getRequestDispatcher("WEB-INF/check-admin.jsp").forward(req, resp);
+        }else {
+            req.setAttribute("error", "Credenciales incorrectas.");
+            req.getRequestDispatcher("WEB-INF/login-admin.jsp").forward(req, resp);
+        }
+
     }
 }

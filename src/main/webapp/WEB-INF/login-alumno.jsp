@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -46,7 +47,12 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">LOGIN ALUMNO</h2>
         </div>
-        <form action="bitacora-alumno-servlet" method="post">
+
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger">${requestScope.error}</div>
+        </c:if>
+
+        <form action="login-alumno-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="nombre" class="form-label">Nombre:</label>
                 <div class="input-group">
@@ -72,7 +78,7 @@
                 <label for="contrasena" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="contrasena" placeholder="Ej: 12345">
+                    <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ej: 12345">
                 </div>
             </div>
 

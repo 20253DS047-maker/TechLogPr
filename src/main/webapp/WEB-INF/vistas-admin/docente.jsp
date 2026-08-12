@@ -59,6 +59,7 @@
       transform: translateY(-50%);
       color: #555;
     }
+
     .table-container {
       max-width: 1000px;
       margin: 0 auto;

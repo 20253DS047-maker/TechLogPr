@@ -338,7 +338,7 @@
       <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="UTEZ" class="logo-img">
     </div>
 
-    <h1 class="main-title">Registros</h1>
+    <h1 class="main-title">Registros Alumnos</h1>
 
     <div class="d-flex flex-column gap-2 align-items-end">
       <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
@@ -612,44 +612,82 @@
   </form>
 </div>
 
-<!-- Modal Agregar -->
+<!-- Modal Agregar (Paso 1: Datos Alumno) -->
 <div class="modal-overlay" id="modalAgregar">
-  <form action="registro-agregar-servlet" method="POST" class="modal-box modal-white">
-    <h2>Agregar registro</h2>
+  <form class="modal-box modal-white" onsubmit="abrirSiguienteModal(event)">
+    <h2>Agregar registro Alumno</h2>
     <label>Matrícula:</label>
-    <input type="text"name="matricula_usuario" id="ag-matricula" placeholder="Introduzca su matrícula">
+    <input type="text" name="matricula_usuario" id="ag-matricula" placeholder="Introduzca su matrícula" required>
     <label>Nombre Completo:</label>
-    <input type="text" name="nombre_completo" id="ag-nombre" placeholder="Introduzca su nombre completo">
-    <div class="row-2">
-      <div>
-        <label>Fecha:</label>
-        <input type="text" name="fecha" id="ag-fecha" placeholder="Seleccione...">
-      </div>
-      <div>
-        <label>PC:</label>
-        <input type="text" name="numero_pc" id="ag-pc" placeholder="Introduzca N. de PC">
-      </div>
+    <input type="text" name="nombre_completo" id="ag-nombre" placeholder="Introduzca su nombre completo" required>
+    <div>
+      <label>Observaciones</label>
+      <input type="text" name="Observaciones" id="observaciones" placeholder="Ej. Manchas en la pantalla">
     </div>
-    <label>Salón:</label>
-    <input type="text" name="salon_computo" id="ag-salon" placeholder="Introduzca su salón">
-    <label>Docencia:</label>
-    <select name="docencia" id="ag-docencia">
-      <option value="" disabled selected hidden>Seleccione su Docencia</option>
-      <option value="D2">D2</option>
-      <option value="D4">D4</option>
-      <option value="CECADEC">CECADEC</option>
-    </select>
-    <label>Estado:</label>
-    <select name="estado" id="ag-estado">
-      <option value="" disabled selected hidden>Seleccione su estado</option>
-      <option value="Activo">Activo</option>
-      <option value="Inactivo">Inactivo</option>
-    </select>
     <label>Docente:</label>
-    <input type="text" name="nombre_docente" id="ag-docente" placeholder="Ingrese su Docente">
+    <input type="text" name="nombre_docente" id="ag-docente" placeholder="Ingrese su Docente" required>
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
-      <button type="submit" class="btn-confirmar">Confirmar</button>
+      <button type="submit" class="btn-confirmar">Siguiente</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal Agregar (Paso 2: Datos Registro PC) -->
+<div class="modal-overlay" id="modalAgregarPC">
+  <form action="registro-agregar-servlet" method="POST" class="modal-box modal-white">
+    <h2>Agregar Registro PC</h2>
+
+    <!-- Campos ocultos para pasar los datos recopilados del Paso 1 al Servlet -->
+    <input type="hidden" name="matricula_usuario" id="pc-hidden-matricula">
+    <input type="hidden" name="nombre_completo" id="pc-hidden-nombre">
+    <input type="hidden" name="Observaciones" id="pc-hidden-observaciones">
+    <input type="hidden" name="nombre_docente" id="pc-hidden-docente">
+
+    <div class="row-2">
+      <div>
+        <label>Salón:</label>
+        <input type="text" name="salon_computo" id="ag-pc-salon" placeholder="Ej. CC7" required>
+      </div>
+      <div>
+        <label>Docencia:</label>
+        <select name="docencia" id="ag-pc-docencia" required>
+          <option value="D4">D4</option>
+          <option value="D3">D3</option>
+          <option value="D2">D2</option>
+          <option value="CECADEC">CECADEC</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row-2">
+      <div>
+        <label>PC (Número):</label>
+        <input type="text" name="numero_pc" id="ag-pc-numero" placeholder="Ej. 15" required>
+      </div>
+      <div>
+        <label>Mesa / Isla:</label>
+        <input type="text" name="mesa" id="ag-pc-mesa" placeholder="Ej. 2">
+      </div>
+    </div>
+
+    <div class="row-2">
+      <div>
+        <label>Modelo:</label>
+        <input type="text" name="modelo" id="ag-pc-modelo" placeholder="Ej. HP">
+      </div>
+      <div>
+        <label>Estado:</label>
+        <select name="estado" id="ag-pc-estado" required>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-salir" onclick="regresarPrimerModal()">Atrás</button>
+      <button type="submit" class="btn-confirmar">Guardar</button>
     </div>
   </form>
 </div>
@@ -688,6 +726,27 @@
     document.getElementById(idModal).classList.remove('activo');
   }
 
+  /* Transición entre el Modal 1 y el Modal 2 de Agregar */
+  function abrirSiguienteModal(event) {
+    event.preventDefault(); // Previene la recarga de página inmediata
+
+    // Pasa los valores ingresados en el Paso 1 a los campos ocultos del Paso 2
+    document.getElementById('pc-hidden-matricula').value = document.getElementById('ag-matricula').value;
+    document.getElementById('pc-hidden-nombre').value = document.getElementById('ag-nombre').value;
+    document.getElementById('pc-hidden-observaciones').value = document.getElementById('observaciones').value;
+    document.getElementById('pc-hidden-docente').value = document.getElementById('ag-docente').value;
+
+    // Cierra el primer modal y abre el segundo
+    cerrarModal('modalAgregar');
+    abrirModal('modalAgregarPC');
+  }
+
+  /* Permite regresar al primer modal en caso de querer editar algo */
+  function regresarPrimerModal() {
+    cerrarModal('modalAgregarPC');
+    abrirModal('modalAgregar');
+  }
+
   function verMas(datos) {
     document.getElementById('vm-matricula').value = datos.matricula;
     document.getElementById('vm-nombre').value = datos.nombre;
@@ -719,10 +778,6 @@
 
   function guardarEdicion() {
     cerrarModal('modalEditar');
-  }
-
-  function guardarNuevo() {
-    cerrarModal('modalAgregar');
   }
 
   function cambiarEstado(id, boton) {

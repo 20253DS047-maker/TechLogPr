@@ -613,7 +613,7 @@
 
 <!-- Modal Agregar -->
 <div class="modal-overlay" id="modalAgregar">
-  <form class="modal-box modal-white" onsubmit="return false;">
+  <form action="agregar-alumno-servlet" method="post" class="modal-box modal-white" >
     <h2>Agregar registro</h2>
     <label>Matrícula:</label>
     <input type="text" id="ag-matricula" placeholder="Introduzca su matrícula">
@@ -648,7 +648,7 @@
     <input type="text" id="ag-docente" placeholder="Ingrese su Docente">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
-      <button type="button" class="btn-confirmar" onclick="guardarNuevo()">Confirmar</button>
+      <button type="submit" class="btn-confirmar">Confirmar</button>
     </div>
   </form>
 </div>
@@ -673,7 +673,7 @@
     <div class="confirm-header">¿Estás seguro de cerrar sesión?</div>
     <div class="confirm-actions">
       <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
-      <button type="button" class="btn-si" onclick="window.location.href='login-admin-servlet'">Sí</button>
+      <button type="button" class="btn-si" onclick="window.location.href='logout-admin-servlet'">Sí</button>
     </div>
   </div>
 </div>

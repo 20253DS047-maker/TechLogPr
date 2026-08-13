@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="es">
 <head>
@@ -54,16 +55,13 @@
             <p class="mt-3">Su registro en la bitácora ha sido exitoso.</p>
 
             <div class="text-start mt-4">
-                <p><strong>Nombre:</strong> Pedro</p>
-                <p><strong>Apellido:</strong> Hurieta</p>
+                <p><strong>Nombre:</strong> ${adminLogueado.nombre}</p>
+                <p><strong>Apellido:</strong> ${adminLogueado.apellido}</p>
             </div>
 
             <div class="d-grid gap-20 col-3 mx-auto mb-3">
-<<<<<<< HEAD
                 <button type="button" onclick="window.location.href='vista-admin-servlet'" class="btn btn-primary">Continuar</button>
-=======
                 <button type="button" onclick="window.location.href=''" class="btn btn-primary">Continuar</button>
->>>>>>> 51b1eb326b9306c032ef3746b3750ba3dd0e00b0
             </div>
         </div>
     </div>

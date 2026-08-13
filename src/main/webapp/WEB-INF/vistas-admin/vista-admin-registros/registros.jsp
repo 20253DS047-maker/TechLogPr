@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -561,49 +562,49 @@
     <h2>Editar registro</h2>
     <input type="hidden" id="ed-id">
     <label>Matrícula:</label>
-    <input type="text" id="ed-matricula">
+    <input type="text" name="matricula" id="ed-matricula">
     <label>Nombre Completo:</label>
-    <input type="text" id="ed-nombre">
+    <input type="text" name="nombre_completo" id="ed-nombre">
     <div class="row-2">
       <div>
         <label>Fecha:</label>
-        <input type="text" id="ed-fecha">
+        <input type="text" name="fecha" id="ed-fecha">
       </div>
       <div>
         <label>PC:</label>
-        <input type="text" id="ed-pc">
+        <input type="text" name="numero_pc" id="ed-pc">
       </div>
     </div>
     <div class="row-2">
       <div>
         <label>Hora Entrada:</label>
-        <input type="text" id="ed-horaEntrada">
+        <input type="text" name="hora_entrada" id="ed-horaEntrada">
       </div>
       <div>
         <label>Salón:</label>
-        <input type="text" id="ed-salon">
+        <input type="text" name="salon_computo" id="ed-salon">
       </div>
     </div>
     <div class="row-2">
       <div>
         <label>Hora Salida:</label>
-        <input type="text" id="ed-horaSalida">
+        <input type="text" name="hora_salida" id="ed-horaSalida">
       </div>
       <div>
         <label>Docencia:</label>
-        <select id="ed-docencia">
+        <select name="docencia" id="ed-docencia">
           <option value="D4">D4</option>
           <option value="D3">D3</option>
         </select>
       </div>
     </div>
     <label>Estado:</label>
-    <select id="ed-estado">
+    <select name="estado" id="ed-estado">
       <option value="activo">Activo</option>
       <option value="inactivo">Inactivo</option>
     </select>
     <label>Docente:</label>
-    <input type="text" id="ed-docente" placeholder="Ingrese su Docente">
+    <input type="text" name="nombre_docente" id="ed-docente" placeholder="Ingrese su Docente">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
       <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
@@ -613,42 +614,42 @@
 
 <!-- Modal Agregar -->
 <div class="modal-overlay" id="modalAgregar">
-  <form class="modal-box modal-white" onsubmit="return false;">
+  <form action="registro-agregar-servlet" method="POST" class="modal-box modal-white">
     <h2>Agregar registro</h2>
     <label>Matrícula:</label>
-    <input type="text" id="ag-matricula" placeholder="Introduzca su matrícula">
+    <input type="text"name="matricula_usuario" id="ag-matricula" placeholder="Introduzca su matrícula">
     <label>Nombre Completo:</label>
-    <input type="text" id="ag-nombre" placeholder="Introduzca su nombre completo">
+    <input type="text" name="nombre_completo" id="ag-nombre" placeholder="Introduzca su nombre completo">
     <div class="row-2">
       <div>
         <label>Fecha:</label>
-        <input type="text" id="ag-fecha" placeholder="Seleccione...">
+        <input type="text" name="fecha" id="ag-fecha" placeholder="Seleccione...">
       </div>
       <div>
         <label>PC:</label>
-        <input type="text" id="ag-pc" placeholder="Introduzca N. de PC">
+        <input type="text" name="numero_pc" id="ag-pc" placeholder="Introduzca N. de PC">
       </div>
     </div>
     <label>Salón:</label>
-    <input type="text" id="ag-salon" placeholder="Introduzca su salón">
+    <input type="text" name="salon_computo" id="ag-salon" placeholder="Introduzca su salón">
     <label>Docencia:</label>
-    <select id="ag-docencia">
+    <select name="docencia" id="ag-docencia">
       <option value="" disabled selected hidden>Seleccione su Docencia</option>
       <option value="D2">D2</option>
       <option value="D4">D4</option>
       <option value="CECADEC">CECADEC</option>
     </select>
     <label>Estado:</label>
-    <select id="ag-estado">
+    <select name="estado" id="ag-estado">
       <option value="" disabled selected hidden>Seleccione su estado</option>
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
     </select>
     <label>Docente:</label>
-    <input type="text" id="ag-docente" placeholder="Ingrese su Docente">
+    <input type="text" name="nombre_docente" id="ag-docente" placeholder="Ingrese su Docente">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
-      <button type="button" class="btn-confirmar" onclick="guardarNuevo()">Confirmar</button>
+      <button type="submit" class="btn-confirmar">Confirmar</button>
     </div>
   </form>
 </div>
@@ -673,7 +674,7 @@
     <div class="confirm-header">¿Estás seguro de cerrar sesión?</div>
     <div class="confirm-actions">
       <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
-      <button type="button" class="btn-si" onclick="window.location.href='login-admin-servlet'">Sí</button>
+      <button type="button" class="btn-si" onclick="window.location.href='logout-admin-servlet'">Sí</button>
     </div>
   </div>
 </div>

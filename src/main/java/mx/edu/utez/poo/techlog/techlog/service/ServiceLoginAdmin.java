@@ -1,14 +1,15 @@
 package mx.edu.utez.poo.techlog.techlog.service;
 
 import mx.edu.utez.poo.techlog.techlog.dao.DaoLoginAdmin;
+import mx.edu.utez.poo.techlog.techlog.model.BeanLoginAdmin;
 
 public class ServiceLoginAdmin {
     public DaoLoginAdmin daoLoginAdmin = new DaoLoginAdmin();
-    public String autenticar(String nombre, String contrasena) {
-        if (nombre == null || nombre.trim().isEmpty() || contrasena == null || contrasena.trim().isEmpty() ||
+    public BeanLoginAdmin autenticar(String username, String contrasena) {
+        if (username == null || username.trim().isEmpty() || contrasena == null || contrasena.trim().isEmpty() ||
                 contrasena.length() > 5){
             return null;
         }
-        return daoLoginAdmin.login(nombre.trim(), contrasena.trim());
+        return daoLoginAdmin.login(username.trim(), contrasena.trim());
     }
 }

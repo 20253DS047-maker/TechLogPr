@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import mx.edu.utez.poo.techlog.techlog.model.BeanLoginAdmin;
 import mx.edu.utez.poo.techlog.techlog.service.ServiceLoginAdmin;
 
 import java.io.IOException;
@@ -19,11 +20,11 @@ public class LoginAdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String nombre = req.getParameter("nombre");
+        String usuario = req.getParameter("usuario");
         String contrasena = req.getParameter("contrasena");
 
         ServiceLoginAdmin serviceLoginAdmin = new ServiceLoginAdmin();
-        String admin = serviceLoginAdmin.autenticar(nombre, contrasena);
+        BeanLoginAdmin admin = serviceLoginAdmin.autenticar(usuario, contrasena);
 
         if (admin != null) {
             HttpSession oldSession = req.getSession(false);

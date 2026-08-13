@@ -172,16 +172,24 @@
     .radio-group {
       justify-self: start;
       display: flex;
-      gap: 20px;
+      gap: 15px;
       align-items: center;
     }
-    .radio-group .form-check-input {
+    .radio-group-right {
+      justify-self: end;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .radio-group .form-check-input,
+    .radio-group-right .form-check-input {
       width: 18px;
       height: 18px;
       cursor: pointer;
       border: 1.5px solid #333;
     }
-    .radio-group .form-check-input:checked {
+    .radio-group .form-check-input:checked,
+    .radio-group-right .form-check-input:checked {
       background-color: #000;
       border-color: #000;
     }
@@ -429,21 +437,23 @@
   </div>
 
   <div class="footer-controls">
+    <!-- Esquina Izquierda: Filtros de Bitácora -->
     <div class="radio-group">
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='admin-alumno-servlet'">
-        <label class="form-check-label fw-bold ms-1" for="optA">A</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraAlumno" value="PC"  onchange="window.location.href='admin-pc-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraAlumno">Bitácora(PC)</label>
       </div>
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optD" value="D" onchange="window.location.href='admin-registrosDocente-servlet'">
-        <label class="form-check-label fw-bold ms-1" for="optD">D</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraDocente" value="D" onchange="window.location.href='admin-registrosDocente-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraDocente">Bitácora(Docente)</label>
       </div>
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='vista-admin-servlet'" disabled>
-        <label class="form-check-label fw-bold ms-1" for="optA">T</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraPC" value="A" checked onchange="window.location.href='admin-alumno-servlet'" disabled>
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraPC">Bitácora(Alumnos)</label>
       </div>
     </div>
 
+    <!-- Centro: Paginación -->
     <div class="pagination-custom">
       <a class="page-btn"><i class="fa-solid fa-angles-left"></i></a>
       <a class="page-btn"><i class="fa-solid fa-angle-left"></i></a>
@@ -455,7 +465,17 @@
       <a class="page-btn"><i class="fa-solid fa-angles-right"></i></a>
     </div>
 
-    <div></div>
+    <!-- Esquina Derecha: Filtros de Usuarios -->
+    <div class="radio-group-right">
+      <div class="form-check form-check-inline m-0">
+        <input class="form-check-input" type="radio" name="filtroUsuarios" id="optUsuarioAlumno" value="UA" onchange="window.location.href='usuarios-alumnos-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optUsuarioAlumno">Usuarios Alumnos</label>
+      </div>
+      <div class="form-check form-check-inline m-0">
+        <input class="form-check-input" type="radio" name="filtroUsuarios" id="optUsuarioDocente" value="UD" onchange="window.location.href='usuarios-docentes-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optUsuarioDocente">Usuarios Docentes</label>
+      </div>
+    </div>
   </div>
 </div>
 

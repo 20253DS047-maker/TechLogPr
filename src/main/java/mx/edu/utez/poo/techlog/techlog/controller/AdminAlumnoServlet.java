@@ -21,6 +21,6 @@ public class AdminAlumnoServlet extends HttpServlet {
         List<BeanTablaUsuarioAlumno> listaUsuariosAlumnos = servicio.consultarUsuariosAlumnos();
 
         req.setAttribute("listaUsuariosAlumnos", listaUsuariosAlumnos);
-        req.getRequestDispatcher("WEB-INF/vistas-admin/adminAlumno.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/vistas-admin/registros.jsp").forward(req, resp);
     }
 }

@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registros - UTEZ</title>
+  <title>Usuarios Alumnos - UTEZ</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -18,7 +18,7 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Evita barras de desplazamiento innecesarias */
+      overflow: hidden;
     }
     body {
       background-color: #cbc8be;
@@ -107,7 +107,7 @@
       cursor: pointer;
     }
 
-    /* Tabla flexible que ocupa todo el alto restante */
+    /* Tabla */
     .table-container {
       background-color: #e5ded8;
       border-radius: 2px;
@@ -141,14 +141,9 @@
       vertical-align: middle;
     }
 
-    /* El cuerpo distribuye de manera uniforme las filas para llenar la pantalla */
-    .custom-table tbody {}
     .custom-table tbody tr {
-      height: 45px; /* Hace que las 8 filas ocupen exactamente el 100% del alto disponible */
+      height: 45px;
     }
-
-    .badge-activo { color: #0d8065; font-weight: 600; }
-    .badge-inactivo { color: #b03a3a; font-weight: 600; }
 
     /* Iconos de acciones */
     .icon-btn {
@@ -161,7 +156,7 @@
       padding: 0;
     }
 
-    /* Footer y paginación al final */
+    /* Footer y paginación */
     .footer-controls {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -172,16 +167,24 @@
     .radio-group {
       justify-self: start;
       display: flex;
-      gap: 20px;
+      gap: 15px;
       align-items: center;
     }
-    .radio-group .form-check-input {
+    .radio-group-right {
+      justify-self: end;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .radio-group .form-check-input,
+    .radio-group-right .form-check-input {
       width: 18px;
       height: 18px;
       cursor: pointer;
       border: 1.5px solid #333;
     }
-    .radio-group .form-check-input:checked {
+    .radio-group .form-check-input:checked,
+    .radio-group-right .form-check-input:checked {
       background-color: #000;
       border-color: #000;
     }
@@ -260,8 +263,6 @@
     }
     .modal-box.modal-white input,
     .modal-box.modal-white select { background-color: #f0f0f0; }
-    .row-2 { display: flex; gap: 14px; }
-    .row-2 > div { flex: 1; }
     .modal-actions { display: flex; gap: 14px; margin-top: 8px; }
     .btn-salir {
       background-color: #c0392b;
@@ -335,33 +336,31 @@
       <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="UTEZ" class="logo-img">
     </div>
 
-    <h1 class="main-title">Registros</h1>
+    <h1 class="main-title">Usuarios Alumnos</h1>
 
     <div class="d-flex flex-column gap-2 align-items-end">
       <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
-      <button type="button" class="btn-custom-dark" onclick="abrirModal('modalAgregar')"><i class="fa-solid fa-square-plus"></i> Agregar</button>
     </div>
   </div>
 
   <!-- Buscador -->
   <div class="search-bar-container">
-    <button class="btn btn-custom-dark px-4" onclick="window.location.href='registro-docente-servlet'">Usuarios</button>
+    <button class="btn btn-custom-dark px-4" onclick="window.location.href='usuarios-alumnos-servlet'">Usuarios</button>
     <div class="search-input-group">
-      <input type="text" id="buscarMatricula" class="form-control" placeholder="Introduzca la matricula para buscar en el registro....">
+      <input type="text" id="buscarMatricula" class="form-control" placeholder="Introduzca la matrícula para buscar usuario...">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
     </div>
   </div>
 
-  <!-- Tabla Agrandada dinámicamente -->
+  <!-- Tabla de Usuarios Alumnos sin Contraseña -->
   <div class="table-container">
     <table class="custom-table text-center">
       <thead>
       <tr>
-        <th style="width: 15%;">MATRÍCULA</th>
-        <th style="width: 15%;">NOMBRE</th>
-        <th style="width: 15%;">APELLIDO</th>
+        <th style="width: 20%;">MATRÍCULA</th>
+        <th style="width: 25%;">NOMBRE</th>
+        <th style="width: 25%;">APELLIDO</th>
         <th style="width: 15%;">USERNAME</th>
-        <th style="width: 15%;">CONTRASEÑA</th>
         <th style="width: 15%;">ACCIONES</th>
       </tr>
       </thead>
@@ -372,76 +371,54 @@
           <td>${usuarioAlumno.nombre}</td>
           <td>${usuarioAlumno.apellido}</td>
           <td>${usuarioAlumno.username}</td>
-          <td>${usuarioAlumno.contrasena}</td>
-
           <td>
-            <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar" onclick="cambiarEstado(0, this)">
-              <i class="fa-solid fa-toggle-on"></i>
-            </button>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
-                    matricula: '20253DS196',
-                    nombre: 'Jonathan AlejandroLopez Benitez',
-                    fecha: '11/11/2026',
-                    pc: '15',
-                    horaEntrada: '11:00 AM',
-                    salon: 'MAC9',
-                    horaSalida: '13:00 PM',
-                    docencia: 'D4',
-                    estado: 'Activo',
-                    docente: ''
-                  })">
+                            matricula: '${usuarioAlumno.matricula}',
+                            nombre: '${usuarioAlumno.nombre}',
+                            apellido: '${usuarioAlumno.apellido}',
+                            username: '${usuarioAlumno.username}'
+                            })">
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
-                    onclick="editar(0, {
-                    matricula: '20253DS196',
-                    nombre: 'Jonathan AlejandroLopez Benitez',
-                    fecha: '11/11/2026',
-                    pc: '15',
-                    horaEntrada: '11:00 AM',
-                    salon: 'MAC9',
-                    horaSalida: '13:00 PM',
-                    docencia: 'D4',
-                    estado: 'activo',
-                    docente: ''
-                  })">
+                    onclick="editar('${usuarioAlumno.matricula}', {
+                            matricula: '${usuarioAlumno.matricula}',
+                            nombre: '${usuarioAlumno.nombre}',
+                            apellido: '${usuarioAlumno.apellido}',
+                            username: '${usuarioAlumno.username}'
+                            })">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(0)">
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${usuarioAlumno.matricula}')">
               <i class="fa-regular fa-trash-can"></i>
             </button>
           </td>
         </tr>
-
-        <tr class="empty-row"></tr>
-        <tr class="empty-row"></tr>
-        <tr class="empty-row"></tr>
-        <tr class="empty-row"></tr>
-        <tr class="empty-row"></tr>
-        <tr class="empty-row"></tr>
       </c:forEach>
-
       </tbody>
     </table>
   </div>
 
+  <!-- Footer y Paginación -->
   <div class="footer-controls">
+    <!-- Esquina Izquierda: Filtros de Bitácora -->
     <div class="radio-group">
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='admin-alumno-servlet'" disabled>
-        <label class="form-check-label fw-bold ms-1" for="optA">A</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraAlumno" value="PC" onchange="window.location.href='admin-pc-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraAlumno">Bitácora(PC)</label>
       </div>
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optD" value="D" onchange="window.location.href='admin-registrosDocente-servlet'">
-        <label class="form-check-label fw-bold ms-1" for="optD">D</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraDocente" value="D" onchange="window.location.href='admin-registrosDocente-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraDocente">Bitácora(Docente)</label>
       </div>
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='vista-admin-servlet'">
-        <label class="form-check-label fw-bold ms-1" for="optA">T</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraPC" value="A" onchange="window.location.href='admin-alumno-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraPC">Bitácora(Alumno)</label>
       </div>
     </div>
 
+    <!-- Centro: Paginación -->
     <div class="pagination-custom">
       <a class="page-btn"><i class="fa-solid fa-angles-left"></i></a>
       <a class="page-btn"><i class="fa-solid fa-angle-left"></i></a>
@@ -453,7 +430,17 @@
       <a class="page-btn"><i class="fa-solid fa-angles-right"></i></a>
     </div>
 
-    <div></div>
+    <!-- Esquina Derecha: Filtros de Usuarios -->
+    <div class="radio-group-right">
+      <div class="form-check form-check-inline m-0">
+        <input class="form-check-input" type="radio" name="filtroUsuarios" id="optUsuarioAlumno" value="UA" checked onchange="window.location.href='usuarios-alumnos-servlet'" disabled>
+        <label class="form-check-label fw-bold ms-1" for="optUsuarioAlumno">Usuarios Alumnos</label>
+      </div>
+      <div class="form-check form-check-inline m-0">
+        <input class="form-check-input" type="radio" name="filtroUsuarios" id="optUsuarioDocente" value="UD" onchange="window.location.href='usuarios-docentes-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optUsuarioDocente">Usuarios Docentes</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -462,45 +449,15 @@
 <!-- Modal Ver Más -->
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box modal-white">
-    <h2>Detalle del registro</h2>
+    <h2>Detalle del Usuario Alumno</h2>
     <label>Matrícula:</label>
     <input type="text" id="vm-matricula" disabled>
-    <label>Nombre Completo:</label>
+    <label>Nombre:</label>
     <input type="text" id="vm-nombre" disabled>
-    <div class="row-2">
-      <div>
-        <label>Fecha:</label>
-        <input type="text" id="vm-fecha" disabled>
-      </div>
-      <div>
-        <label>PC:</label>
-        <input type="text" id="vm-pc" disabled>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="vm-horaEntrada" disabled>
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="vm-salon" disabled>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="vm-horaSalida" disabled>
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <input type="text" id="vm-docencia" disabled>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <input type="text" id="vm-estado" disabled>
-    <label>Docente:</label>
-    <input type="text" id="vm-docente" disabled>
+    <label>Apellido:</label>
+    <input type="text" id="vm-apellido" disabled>
+    <label>Username:</label>
+    <input type="text" id="vm-username" disabled>
     <div class="modal-actions">
       <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
@@ -510,52 +467,16 @@
 <!-- Modal Editar -->
 <div class="modal-overlay" id="modalEditar">
   <form class="modal-box modal-white" onsubmit="return false;">
-    <h2>Editar registro</h2>
+    <h2>Editar Usuario Alumno</h2>
     <input type="hidden" id="ed-id">
     <label>Matrícula:</label>
-    <input type="text" id="ed-matricula">
-    <label>Nombre Completo:</label>
+    <input type="text" id="ed-matricula" disabled>
+    <label>Nombre:</label>
     <input type="text" id="ed-nombre">
-    <div class="row-2">
-      <div>
-        <label>Fecha:</label>
-        <input type="text" id="ed-fecha">
-      </div>
-      <div>
-        <label>PC:</label>
-        <input type="text" id="ed-pc">
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="ed-horaEntrada">
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="ed-salon">
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="ed-horaSalida">
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <select id="ed-docencia">
-          <option value="D4">D4</option>
-          <option value="D3">D3</option>
-        </select>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <select id="ed-estado">
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
-    <label>Docente:</label>
-    <input type="text" id="ed-docente" placeholder="Ingrese su Docente">
+    <label>Apellido:</label>
+    <input type="text" id="ed-apellido">
+    <label>Username:</label>
+    <input type="text" id="ed-username">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
       <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
@@ -563,54 +484,12 @@
   </form>
 </div>
 
-<!-- Modal Agregar -->
-<div class="modal-overlay" id="modalAgregar">
-  <form action="agregar-alumno-servlet" method="post" class="modal-box modal-white" >
-    <h2>Agregar registro</h2>
-    <label>Matrícula:</label>
-    <input type="text" id="ag-matricula" placeholder="Introduzca su matrícula">
-    <label>Nombre Completo:</label>
-    <input type="text" id="ag-nombre" placeholder="Introduzca su nombre completo">
-    <div class="row-2">
-      <div>
-        <label>Fecha:</label>
-        <input type="text" id="ag-fecha" placeholder="Seleccione...">
-      </div>
-      <div>
-        <label>PC:</label>
-        <input type="text" id="ag-pc" placeholder="Introduzca N. de PC">
-      </div>
-    </div>
-    <label>Salón:</label>
-    <input type="text" id="ag-salon" placeholder="Introduzca su salón">
-    <label>Docencia:</label>
-    <select id="ag-docencia">
-      <option value="" disabled selected hidden>Seleccione su Docencia</option>
-      <option value="D2">D2</option>
-      <option value="D4">D4</option>
-      <option value="CECADEC">CECADEC</option>
-    </select>
-    <label>Estado:</label>
-    <select id="ag-estado">
-      <option value="" disabled selected hidden>Seleccione su estado</option>
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
-    <label>Docente:</label>
-    <input type="text" id="ag-docente" placeholder="Ingrese su Docente">
-    <div class="modal-actions">
-      <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
-      <button type="submit" class="btn-confirmar">Confirmar</button>
-    </div>
-  </form>
-</div>
-
 <!-- Modal Eliminar -->
 <div class="modal-overlay" id="modalEliminar">
   <div class="confirm-box">
-    <div class="confirm-header">Eliminar Registro</div>
+    <div class="confirm-header">Eliminar Usuario</div>
     <div class="confirm-icon"><i class="bi bi-question-lg"></i></div>
-    <div class="confirm-text">¿Estás seguro que quieres eliminar este registro?</div>
+    <div class="confirm-text">¿Estás seguro que quieres eliminar este usuario alumno?</div>
     <input type="hidden" id="el-id">
     <div class="confirm-actions">
       <button type="button" class="btn-no" onclick="cerrarModal('modalEliminar')">No</button>
@@ -640,31 +519,19 @@
   }
 
   function verMas(datos) {
-    document.getElementById('vm-matricula').value = datos.matricula;
-    document.getElementById('vm-nombre').value = datos.nombre;
-    document.getElementById('vm-fecha').value = datos.fecha;
-    document.getElementById('vm-pc').value = datos.pc;
-    document.getElementById('vm-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('vm-salon').value = datos.salon;
-    document.getElementById('vm-horaSalida').value = datos.horaSalida;
-    document.getElementById('vm-docencia').value = datos.docencia;
-    document.getElementById('vm-estado').value = datos.estado;
-    document.getElementById('vm-docente').value = datos.docente;
+    document.getElementById('vm-matricula').value = datos.matricula || '';
+    document.getElementById('vm-nombre').value = datos.nombre || '';
+    document.getElementById('vm-apellido').value = datos.apellido || '';
+    document.getElementById('vm-username').value = datos.username || '';
     abrirModal('modalVerMas');
   }
 
   function editar(id, datos) {
     document.getElementById('ed-id').value = id;
-    document.getElementById('ed-matricula').value = datos.matricula;
-    document.getElementById('ed-nombre').value = datos.nombre;
-    document.getElementById('ed-fecha').value = datos.fecha;
-    document.getElementById('ed-pc').value = datos.pc;
-    document.getElementById('ed-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('ed-salon').value = datos.salon;
-    document.getElementById('ed-horaSalida').value = datos.horaSalida;
-    document.getElementById('ed-docencia').value = datos.docencia;
-    document.getElementById('ed-estado').value = datos.estado;
-    document.getElementById('ed-docente').value = datos.docente;
+    document.getElementById('ed-matricula').value = datos.matricula || '';
+    document.getElementById('ed-nombre').value = datos.nombre || '';
+    document.getElementById('ed-apellido').value = datos.apellido || '';
+    document.getElementById('ed-username').value = datos.username || '';
     abrirModal('modalEditar');
   }
 
@@ -672,34 +539,11 @@
     cerrarModal('modalEditar');
   }
 
-  function guardarNuevo() {
-    cerrarModal('modalAgregar');
-  }
-
-  function cambiarEstado(id, boton) {
-    var celda = document.getElementById('estadoTexto-' + id);
-    var icono = boton.querySelector('i');
-    var activo = icono.classList.contains('fa-toggle-on');
-
-    if (activo) {
-      icono.classList.remove('fa-toggle-on');
-      icono.classList.add('fa-toggle-off');
-      celda.textContent = 'Inactivo';
-      celda.classList.remove('badge-activo');
-      celda.classList.add('badge-inactivo');
-    } else {
-      icono.classList.remove('fa-toggle-off');
-      icono.classList.add('fa-toggle-on');
-      celda.textContent = 'Activo';
-      celda.classList.remove('badge-inactivo');
-      celda.classList.add('badge-activo');
-    }
-  }
-
   function eliminar(id) {
     document.getElementById('el-id').value = id;
     abrirModal('modalEliminar');
   }
+
   function confirmarEliminar() {
     cerrarModal('modalEliminar');
   }

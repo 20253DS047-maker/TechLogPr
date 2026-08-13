@@ -17,6 +17,6 @@ public class LogoutAdminServlet extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
-        resp.sendRedirect("index.jsp");
+        req.getRequestDispatcher("WEB-INF/login-admin.jsp").forward(req,resp);
     }
 }

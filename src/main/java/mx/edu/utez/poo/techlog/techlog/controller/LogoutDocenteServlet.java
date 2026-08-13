@@ -19,6 +19,6 @@ public class LogoutDocenteServlet extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
-        resp.sendRedirect("index.jsp");
+        req.getRequestDispatcher("WEB-INF/login-docente.jsp").forward(req, resp);
     }
 }

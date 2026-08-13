@@ -1,10 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registros - UTEZ</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -112,13 +114,11 @@
       padding: 0;
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      flex: 1; /* Ocupa todo el espacio sobrante */
-      display: flex;
+      display: block;
       flex-direction: column;
     }
     .custom-table {
       width: 100%;
-      height: 100%;
       border-collapse: collapse;
       table-layout: fixed;
     }
@@ -142,11 +142,9 @@
     }
 
     /* El cuerpo distribuye de manera uniforme las filas para llenar la pantalla */
-    .custom-table tbody {
-      height: calc(100% - 50px);
-    }
+    .custom-table tbody {}
     .custom-table tbody tr {
-      height: 12.5%; /* Hace que las 8 filas ocupen exactamente el 100% del alto disponible */
+      height: 45px; /* Hace que las 8 filas ocupen exactamente el 100% del alto disponible */
     }
 
     .badge-activo { color: #0d8065; font-weight: 600; }
@@ -359,31 +357,29 @@
     <table class="custom-table text-center">
       <thead>
       <tr>
-        <th style="width: 5%;">#</th>
-        <th style="width: 15%;">MATRICULA:</th>
-        <th style="width: 25%;">NOMBRE COMPLETO:</th>
-        <th style="width: 12%;">FECHA:</th>
-        <th style="width: 10%;">P.C.</th>
-        <th style="width: 10%;">DOCENCIA</th>
-        <th style="width: 10%;">ESTADO:</th>
-        <th style="width: 13%;">ACCIONES:</th>
+        <th style="width: 10%;">ID_REGISTRO</th>
+        <th style="width: 15%;">MATRÍCULA</th>
+        <th style="width: 20%;">NOMBRE DOCENTE</th>
+        <th style="width: 20%;">OBSERVACIONES</th>
+        <th style="width: 15%">ESTADO</th>
+        <th style="width: 20%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>0</td>
-        <td>20253DS196</td>
-        <td>Jonathan Alejandro...</td>
-        <td>11/11/2026</td>
-        <td>15</td>
-        <td>D4</td>
-        <td id="estadoTexto-0" class="badge-activo">Activo</td>
-        <td>
-          <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar" onclick="cambiarEstado(0, this)">
-            <i class="fa-solid fa-toggle-on"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Ver detalles"
-                  onclick="verMas({
+      <c:forEach items="${listaRegistroBtcAlumnos}" var="registroAlumnos" varStatus="estado">
+        <tr>
+          <th scope="row">${estado.count}</th>
+          <td>${registroAlumnos.matricula_usuario}</td>
+          <td>${registroAlumnos.nombreDocente}</td>
+          <td>${registroAlumnos.observaciones}</td>
+
+          <td id="estadoTexto-0" class="badge-activo">Activo</td>
+          <td>
+            <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar" onclick="cambiarEstado(0, this)">
+              <i class="fa-solid fa-toggle-on"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Ver detalles"
+                    onclick="verMas({
                     matricula: '20253DS196',
                     nombre: 'Jonathan AlejandroLopez Benitez',
                     fecha: '11/11/2026',
@@ -395,10 +391,10 @@
                     estado: 'Activo',
                     docente: ''
                   })">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Editar"
-                  onclick="editar(0, {
+              <i class="fa-regular fa-eye"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Editar"
+                    onclick="editar(0, {
                     matricula: '20253DS196',
                     nombre: 'Jonathan AlejandroLopez Benitez',
                     fecha: '11/11/2026',
@@ -410,66 +406,24 @@
                     estado: 'activo',
                     docente: ''
                   })">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(0)">
-            <i class="fa-regular fa-trash-can"></i>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>20253DS034</td>
-        <td>Santiago Flores</td>
-        <td>20/02/2026</td>
-        <td>25</td>
-        <td>D3</td>
-        <td id="estadoTexto-1" class="badge-inactivo">Inactivo</td>
-        <td>
-          <button type="button" class="icon-btn" id="estadoBtn-1" title="Activar/Desactivar" onclick="cambiarEstado(1, this)">
-            <i class="fa-solid fa-toggle-off"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Ver detalles"
-                  onclick="verMas({
-                    matricula: '20253DS034',
-                    nombre: 'Santiago Flores',
-                    fecha: '20/02/2026',
-                    pc: '25',
-                    horaEntrada: '',
-                    salon: '44',
-                    horaSalida: '',
-                    docencia: 'D3',
-                    estado: 'Inactivo',
-                    docente: ''
-                  })">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Editar"
-                  onclick="editar(1, {
-                    matricula: '20253DS034',
-                    nombre: 'Santiago Flores',
-                    fecha: '20/02/2026',
-                    pc: '25',
-                    horaEntrada: '',
-                    salon: '44',
-                    horaSalida: '',
-                    docencia: 'D3',
-                    estado: 'inactivo',
-                    docente: ''
-                  })">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(1)">
-            <i class="fa-regular fa-trash-can"></i>
-          </button>
-        </td>
-      </tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(0)">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </td>
+        </tr>
+
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+
+
+      </c:forEach>
+
       </tbody>
     </table>
   </div>
@@ -477,7 +431,7 @@
   <div class="footer-controls">
     <div class="radio-group">
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='admin-alumno-servlet'" disabled>
+        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='admin-alumno-servlet'">
         <label class="form-check-label fw-bold ms-1" for="optA">A</label>
       </div>
       <div class="form-check form-check-inline m-0">
@@ -485,7 +439,7 @@
         <label class="form-check-label fw-bold ms-1" for="optD">D</label>
       </div>
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='vista-admin-servlet'">
+        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='vista-admin-servlet'" disabled>
         <label class="form-check-label fw-bold ms-1" for="optA">T</label>
       </div>
     </div>
@@ -561,49 +515,49 @@
     <h2>Editar registro</h2>
     <input type="hidden" id="ed-id">
     <label>Matrícula:</label>
-    <input type="text" id="ed-matricula">
+    <input type="text" name="matricula" id="ed-matricula">
     <label>Nombre Completo:</label>
-    <input type="text" id="ed-nombre">
+    <input type="text" name="nombre_completo" id="ed-nombre">
     <div class="row-2">
       <div>
         <label>Fecha:</label>
-        <input type="text" id="ed-fecha">
+        <input type="text" name="fecha" id="ed-fecha">
       </div>
       <div>
         <label>PC:</label>
-        <input type="text" id="ed-pc">
+        <input type="text" name="numero_pc" id="ed-pc">
       </div>
     </div>
     <div class="row-2">
       <div>
         <label>Hora Entrada:</label>
-        <input type="text" id="ed-horaEntrada">
+        <input type="text" name="hora_entrada" id="ed-horaEntrada">
       </div>
       <div>
         <label>Salón:</label>
-        <input type="text" id="ed-salon">
+        <input type="text" name="salon_computo" id="ed-salon">
       </div>
     </div>
     <div class="row-2">
       <div>
         <label>Hora Salida:</label>
-        <input type="text" id="ed-horaSalida">
+        <input type="text" name="hora_salida" id="ed-horaSalida">
       </div>
       <div>
         <label>Docencia:</label>
-        <select id="ed-docencia">
+        <select name="docencia" id="ed-docencia">
           <option value="D4">D4</option>
           <option value="D3">D3</option>
         </select>
       </div>
     </div>
     <label>Estado:</label>
-    <select id="ed-estado">
+    <select name="estado" id="ed-estado">
       <option value="activo">Activo</option>
       <option value="inactivo">Inactivo</option>
     </select>
     <label>Docente:</label>
-    <input type="text" id="ed-docente" placeholder="Ingrese su Docente">
+    <input type="text" name="nombre_docente" id="ed-docente" placeholder="Ingrese su Docente">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
       <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
@@ -611,44 +565,82 @@
   </form>
 </div>
 
-<!-- Modal Agregar -->
+<!-- Modal Agregar (Paso 1: Datos Alumno) -->
 <div class="modal-overlay" id="modalAgregar">
-  <form action="agregar-alumno-servlet" method="post" class="modal-box modal-white" >
-    <h2>Agregar registro</h2>
+  <form class="modal-box modal-white" onsubmit="abrirSiguienteModal(event)">
+    <h2>Agregar registro Alumno</h2>
     <label>Matrícula:</label>
-    <input type="text" id="ag-matricula" placeholder="Introduzca su matrícula">
+    <input type="text" name="matricula_usuario" id="ag-matricula" placeholder="Introduzca su matrícula" required>
     <label>Nombre Completo:</label>
-    <input type="text" id="ag-nombre" placeholder="Introduzca su nombre completo">
-    <div class="row-2">
-      <div>
-        <label>Fecha:</label>
-        <input type="text" id="ag-fecha" placeholder="Seleccione...">
-      </div>
-      <div>
-        <label>PC:</label>
-        <input type="text" id="ag-pc" placeholder="Introduzca N. de PC">
-      </div>
+    <input type="text" name="nombre_completo" id="ag-nombre" placeholder="Introduzca su nombre completo" required>
+    <div>
+      <label>Observaciones</label>
+      <input type="text" name="Observaciones" id="observaciones" placeholder="Ej. Manchas en la pantalla">
     </div>
-    <label>Salón:</label>
-    <input type="text" id="ag-salon" placeholder="Introduzca su salón">
-    <label>Docencia:</label>
-    <select id="ag-docencia">
-      <option value="" disabled selected hidden>Seleccione su Docencia</option>
-      <option value="D2">D2</option>
-      <option value="D4">D4</option>
-      <option value="CECADEC">CECADEC</option>
-    </select>
-    <label>Estado:</label>
-    <select id="ag-estado">
-      <option value="" disabled selected hidden>Seleccione su estado</option>
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
     <label>Docente:</label>
-    <input type="text" id="ag-docente" placeholder="Ingrese su Docente">
+    <input type="text" name="nombre_docente" id="ag-docente" placeholder="Ingrese su Docente" required>
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
-      <button type="submit" class="btn-confirmar">Confirmar</button>
+      <button type="submit" class="btn-confirmar">Siguiente</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal Agregar (Paso 2: Datos Registro PC) -->
+<div class="modal-overlay" id="modalAgregarPC">
+  <form action="registro-agregar-servlet" method="POST" class="modal-box modal-white">
+    <h2>Agregar Registro PC</h2>
+
+    <!-- Campos ocultos para pasar los datos recopilados del Paso 1 al Servlet -->
+    <input type="hidden" name="matricula_usuario" id="pc-hidden-matricula">
+    <input type="hidden" name="nombre_completo" id="pc-hidden-nombre">
+    <input type="hidden" name="Observaciones" id="pc-hidden-observaciones">
+    <input type="hidden" name="nombre_docente" id="pc-hidden-docente">
+
+    <div class="row-2">
+      <div>
+        <label>Salón:</label>
+        <input type="text" name="salon_computo" id="ag-pc-salon" placeholder="Ej. CC7" required>
+      </div>
+      <div>
+        <label>Docencia:</label>
+        <select name="docencia" id="ag-pc-docencia" required>
+          <option value="D4">D4</option>
+          <option value="D3">D3</option>
+          <option value="D2">D2</option>
+          <option value="CECADEC">CECADEC</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row-2">
+      <div>
+        <label>PC (Número):</label>
+        <input type="text" name="numero_pc" id="ag-pc-numero" placeholder="Ej. 15" required>
+      </div>
+      <div>
+        <label>Mesa / Isla:</label>
+        <input type="text" name="mesa" id="ag-pc-mesa" placeholder="Ej. 2">
+      </div>
+    </div>
+
+    <div class="row-2">
+      <div>
+        <label>Modelo:</label>
+        <input type="text" name="modelo" id="ag-pc-modelo" placeholder="Ej. HP">
+      </div>
+      <div>
+        <label>Estado:</label>
+        <select name="estado" id="ag-pc-estado" required>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-salir" onclick="regresarPrimerModal()">Atrás</button>
+      <button type="submit" class="btn-confirmar">Guardar</button>
     </div>
   </form>
 </div>
@@ -687,6 +679,27 @@
     document.getElementById(idModal).classList.remove('activo');
   }
 
+  /* Transición entre el Modal 1 y el Modal 2 de Agregar */
+  function abrirSiguienteModal(event) {
+    event.preventDefault(); // Previene la recarga de página inmediata
+
+    // Pasa los valores ingresados en el Paso 1 a los campos ocultos del Paso 2
+    document.getElementById('pc-hidden-matricula').value = document.getElementById('ag-matricula').value;
+    document.getElementById('pc-hidden-nombre').value = document.getElementById('ag-nombre').value;
+    document.getElementById('pc-hidden-observaciones').value = document.getElementById('observaciones').value;
+    document.getElementById('pc-hidden-docente').value = document.getElementById('ag-docente').value;
+
+    // Cierra el primer modal y abre el segundo
+    cerrarModal('modalAgregar');
+    abrirModal('modalAgregarPC');
+  }
+
+  /* Permite regresar al primer modal en caso de querer editar algo */
+  function regresarPrimerModal() {
+    cerrarModal('modalAgregarPC');
+    abrirModal('modalAgregar');
+  }
+
   function verMas(datos) {
     document.getElementById('vm-matricula').value = datos.matricula;
     document.getElementById('vm-nombre').value = datos.nombre;
@@ -718,10 +731,6 @@
 
   function guardarEdicion() {
     cerrarModal('modalEditar');
-  }
-
-  function guardarNuevo() {
-    cerrarModal('modalAgregar');
   }
 
   function cambiarEstado(id, boton) {

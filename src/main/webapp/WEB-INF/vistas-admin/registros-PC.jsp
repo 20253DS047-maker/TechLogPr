@@ -416,7 +416,7 @@
                                         })">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
-                        <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${estado.index}')">
+                        <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${pc.numero_pc}', this)">
                             <i class="fa-regular fa-trash-can"></i>
                         </button>
                     </td>
@@ -618,6 +618,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    var filaAEliminar = null;
+
     function abrirModal(idModal) {
         document.getElementById(idModal).classList.add('activo');
     }
@@ -670,12 +672,36 @@
         }
     }
 
-    function eliminar(id) {
-        document.getElementById('el-id').value = id;
+    function eliminar(numeroPc, boton) {
+        document.getElementById('el-id').value = numeroPc;
+        filaAEliminar = boton ? boton.closest('tr') : null;
         abrirModal('modalEliminar');
     }
+
     function confirmarEliminar() {
-        cerrarModal('modalEliminar');
+        var numeroPc = document.getElementById('el-id').value;
+
+        fetch('eliminar-pc-servlet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'numero_pc=' + encodeURIComponent(numeroPc)
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                if (data.success) {
+                    if (filaAEliminar) {
+                        filaAEliminar.remove();
+                    }
+                } else {
+                    alert('No se pudo eliminar: ' + (data.message || 'Error desconocido'));
+                }
+                cerrarModal('modalEliminar');
+            })
+            .catch(function (error) {
+                console.error(error);
+                alert('Error de conexión al eliminar el equipo.');
+                cerrarModal('modalEliminar');
+            });
     }
 </script>
 

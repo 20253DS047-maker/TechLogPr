@@ -1,11 +1,17 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: USER
+  Date: 12/08/2026
+  Time: 08:56 p.m.
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registros - UTEZ</title>
+  <title>Registros PC - UTEZ</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -141,10 +147,9 @@
       vertical-align: middle;
     }
 
-    /* El cuerpo distribuye de manera uniforme las filas para llenar la pantalla */
-    .custom-table tbody {}
+    /* Filas con altura fija */
     .custom-table tbody tr {
-      height: 45px; /* Hace que las 8 filas ocupen exactamente el 100% del alto disponible */
+      height: 45px;
     }
 
     .badge-activo { color: #0d8065; font-weight: 600; }
@@ -343,11 +348,11 @@
       <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="UTEZ" class="logo-img">
     </div>
 
-    <h1 class="main-title">Registros Alumnos</h1>
+    <h1 class="main-title">Registros Equipos / PC</h1>
 
+    <!-- Únicamente botón para cerrar sesión (Sin botón agregar) -->
     <div class="d-flex flex-column gap-2 align-items-end">
       <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
-      <button type="button" class="btn-custom-dark" onclick="abrirModal('modalAgregar')"><i class="fa-solid fa-square-plus"></i> Agregar</button>
     </div>
   </div>
 
@@ -355,82 +360,108 @@
   <div class="search-bar-container">
     <button class="btn btn-custom-dark px-4" onclick="window.location.href='registro-docente-servlet'">Usuarios</button>
     <div class="search-input-group">
-      <input type="text" id="buscarMatricula" class="form-control" placeholder="Introduzca la matricula para buscar en el registro....">
+      <input type="text" id="buscarPC" class="form-control" placeholder="Introduzca el número de PC o salón para buscar....">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
     </div>
   </div>
 
-  <!-- Tabla Agrandada dinámicamente -->
+  <!-- Tabla de Equipos PC -->
   <div class="table-container">
     <table class="custom-table text-center">
       <thead>
       <tr>
-        <th style="width: 10%;">ID_REGISTRO</th>
-        <th style="width: 15%;">MATRÍCULA</th>
-        <th style="width: 20%;">NOMBRE DOCENTE</th>
-        <th style="width: 20%;">OBSERVACIONES</th>
-        <th style="width: 15%">ESTADO</th>
-        <th style="width: 20%;">ACCIONES</th>
+        <th style="width: 10%;">ID_PC</th>
+        <th style="width: 15%;">MESA / ISLA</th>
+        <th style="width: 15%;">SALÓN</th>
+        <th style="width: 15%;">DOCENCIA</th>
+        <th style="width: 20%;">MODELO</th>
+        <th style="width: 10%;">ESTADO</th>
+        <th style="width: 15%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
-      <c:forEach items="${listaRegistroBtcAlumnos}" var="registroAlumnos" varStatus="estado">
+      <c:forEach items="${listaRegistrosPC}" var="pc" varStatus="estado">
         <tr>
-          <th scope="row">${estado.count}</th>
-          <td>${registroAlumnos.matricula_usuario}</td>
-          <td>${registroAlumnos.nombreDocente}</td>
-          <td>${registroAlumnos.observaciones}</td>
-
-          <td id="estadoTexto-0" class="badge-activo">Activo</td>
+          <th scope="row">${pc.id_pc}</th>
+          <td>${pc.mesa}</td>
+          <td>${pc.salon_computo}</td>
+          <td>${pc.docencia}</td>
+          <td>${pc.modelo}</td>
+          <td id="estadoTexto-${estado.index}" class="${pc.estado == 'activo' ? 'badge-activo' : 'badge-inactivo'}">
+              ${pc.estado}
+          </td>
           <td>
-            <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar" onclick="cambiarEstado(0, this)">
-              <i class="fa-solid fa-toggle-on"></i>
+            <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado('${estado.index}', this)">
+              <i class="fa-solid ${pc.estado == 'activo' ? 'fa-toggle-on' : 'fa-toggle-off'}"></i>
             </button>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
-                    matricula: '20253DS196',
-                    nombre: 'Jonathan AlejandroLopez Benitez',
-                    fecha: '11/11/2026',
-                    pc: '15',
-                    horaEntrada: '11:00 AM',
-                    salon: 'MAC9',
-                    horaSalida: '13:00 PM',
-                    docencia: 'D4',
-                    estado: 'Activo',
-                    docente: ''
-                  })">
+                            id_pc: '${pc.id_pc}',
+                            mesa: '${pc.mesa}',
+                            salon: '${pc.salon_computo}',
+                            docencia: '${pc.docencia}',
+                            modelo: '${pc.modelo}',
+                            estado: '${pc.estado}'
+                            })">
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
-                    onclick="editar(0, {
-                    matricula: '20253DS196',
-                    nombre: 'Jonathan AlejandroLopez Benitez',
-                    fecha: '11/11/2026',
-                    pc: '15',
-                    horaEntrada: '11:00 AM',
-                    salon: 'MAC9',
-                    horaSalida: '13:00 PM',
-                    docencia: 'D4',
-                    estado: 'activo',
-                    docente: ''
-                  })">
+                    onclick="editar('${estado.index}', {
+                            id_pc: '${pc.id_pc}',
+                            mesa: '${pc.mesa}',
+                            salon: '${pc.salon_computo}',
+                            docencia: '${pc.docencia}',
+                            modelo: '${pc.modelo}',
+                            estado: '${pc.estado}'
+                            })">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(0)">
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${pc.numero_pc}', this)">
               <i class="fa-regular fa-trash-can"></i>
             </button>
           </td>
         </tr>
-
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-
-
       </c:forEach>
+
+      <!-- Filas vacías por defecto en caso de no haber iteraciones Java -->
+      <tr>
+        <th scope="row">15</th>
+        <td>Mesa 2</td>
+        <td>CC7</td>
+        <td>D4</td>
+        <td>HP EliteDesk</td>
+        <td id="estadoTexto-0" class="badge-activo">Activo</td>
+        <td>
+          <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar" onclick="cambiarEstado(0, this)">
+            <i class="fa-solid fa-toggle-on"></i>
+          </button>
+          <button type="button" class="icon-btn" title="Ver detalles"
+                  onclick="verMas({
+                  id_pc: '15',
+                  mesa: 'Mesa 2',
+                  salon: 'CC7',
+                  docencia: 'D4',
+                  modelo: 'HP EliteDesk',
+                  estado: 'Activo'
+                })">
+            <i class="fa-regular fa-eye"></i>
+          </button>
+          <button type="button" class="icon-btn" title="Editar"
+                  onclick="editar(0, {
+                  id_pc: '15',
+                  mesa: 'Mesa 2',
+                  salon: 'CC7',
+                  docencia: 'D4',
+                  modelo: 'HP EliteDesk',
+                  estado: 'Activo'
+                })">
+            <i class="fa-regular fa-pen-to-square"></i>
+          </button>
+          <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(0)">
+            <i class="fa-regular fa-trash-can"></i>
+          </button>
+        </td>
+      </tr>
 
       </tbody>
     </table>
@@ -440,7 +471,7 @@
     <!-- Esquina Izquierda: Filtros de Bitácora -->
     <div class="radio-group">
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraAlumno" value="PC"  onchange="window.location.href='admin-pc-servlet'">
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraAlumno" value="PC" checked onchange="window.location.href='admin-pc-servlet'">
         <label class="form-check-label fw-bold ms-1" for="optBitacoraAlumno">Bitácora(PC)</label>
       </div>
       <div class="form-check form-check-inline m-0">
@@ -448,8 +479,8 @@
         <label class="form-check-label fw-bold ms-1" for="optBitacoraDocente">Bitácora(Docente)</label>
       </div>
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraPC" value="A" checked onchange="window.location.href='admin-alumno-servlet'" disabled>
-        <label class="form-check-label fw-bold ms-1" for="optBitacoraPC">Bitácora(Alumnos)</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraPC" value="A"  onchange="window.location.href='admin-alumno-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraPC">Bitácora(Alumno)</label>
       </div>
     </div>
 
@@ -481,103 +512,78 @@
 
 <!-- MODALES -->
 
-<!-- Modal Ver Más -->
+<!-- Modal Ver Más (Datos del Equipo PC) -->
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box modal-white">
-    <h2>Detalle del registro</h2>
-    <label>Matrícula:</label>
-    <input type="text" id="vm-matricula" disabled>
-    <label>Nombre Completo:</label>
-    <input type="text" id="vm-nombre" disabled>
+    <h2>Detalle del Equipo PC</h2>
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" id="vm-fecha" disabled>
+        <label>Número PC:</label>
+        <input type="text" id="vm-id-pc" disabled>
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" id="vm-pc" disabled>
+        <label>Mesa / Isla:</label>
+        <input type="text" id="vm-mesa" disabled>
       </div>
     </div>
     <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="vm-horaEntrada" disabled>
-      </div>
       <div>
         <label>Salón:</label>
         <input type="text" id="vm-salon" disabled>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="vm-horaSalida" disabled>
       </div>
       <div>
         <label>Docencia:</label>
         <input type="text" id="vm-docencia" disabled>
       </div>
     </div>
+    <label>Modelo del equipo:</label>
+    <input type="text" id="vm-modelo" disabled>
     <label>Estado:</label>
     <input type="text" id="vm-estado" disabled>
-    <label>Docente:</label>
-    <input type="text" id="vm-docente" disabled>
     <div class="modal-actions">
       <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
   </div>
 </div>
 
-<!-- Modal Editar -->
+<!-- Modal Editar (Datos del Equipo PC) -->
 <div class="modal-overlay" id="modalEditar">
   <form class="modal-box modal-white" onsubmit="return false;">
-    <h2>Editar registro</h2>
+    <h2>Editar Equipo PC</h2>
     <input type="hidden" id="ed-id">
-    <label>Matrícula:</label>
-    <input type="text" name="matricula" id="ed-matricula">
-    <label>Nombre Completo:</label>
-    <input type="text" name="nombre_completo" id="ed-nombre">
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" name="fecha" id="ed-fecha">
+        <label>Número PC:</label>
+        <input type="text" name="numero_pc" id="ed-id-pc">
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" name="numero_pc" id="ed-pc">
+        <label>Mesa / Isla:</label>
+        <input type="text" name="mesa" id="ed-mesa">
       </div>
     </div>
     <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" name="hora_entrada" id="ed-horaEntrada">
-      </div>
       <div>
         <label>Salón:</label>
         <input type="text" name="salon_computo" id="ed-salon">
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" name="hora_salida" id="ed-horaSalida">
       </div>
       <div>
         <label>Docencia:</label>
         <select name="docencia" id="ed-docencia">
           <option value="D4">D4</option>
           <option value="D3">D3</option>
+
+          <option value="D2">D2</option>
+          <option value="CECADEC">CECADEC</option>
         </select>
       </div>
     </div>
+    <label>Modelo:</label>
+    <input type="text" name="modelo" id="ed-modelo">
     <label>Estado:</label>
     <select name="estado" id="ed-estado">
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
     </select>
-    <label>Docente:</label>
-    <input type="text" name="nombre_docente" id="ed-docente" placeholder="Ingrese su Docente">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
       <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
@@ -585,92 +591,12 @@
   </form>
 </div>
 
-<!-- Modal Agregar (Paso 1: Datos Alumno) -->
-<div class="modal-overlay" id="modalAgregar">
-  <form class="modal-box modal-white" onsubmit="abrirSiguienteModal(event)">
-    <h2>Agregar registro Alumno</h2>
-    <label>Matrícula:</label>
-    <input type="text" name="matricula_usuario" id="ag-matricula" placeholder="Introduzca su matrícula" required>
-    <label>Nombre Completo:</label>
-    <input type="text" name="nombre_completo" id="ag-nombre" placeholder="Introduzca su nombre completo" required>
-    <div>
-      <label>Observaciones</label>
-      <input type="text" name="Observaciones" id="observaciones" placeholder="Ej. Manchas en la pantalla">
-    </div>
-    <label>Docente:</label>
-    <input type="text" name="nombre_docente" id="ag-docente" placeholder="Ingrese su Docente" required>
-    <div class="modal-actions">
-      <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
-      <button type="submit" class="btn-confirmar">Siguiente</button>
-    </div>
-  </form>
-</div>
-
-<!-- Modal Agregar (Paso 2: Datos Registro PC) -->
-<div class="modal-overlay" id="modalAgregarPC">
-  <form action="registro-agregar-servlet" method="POST" class="modal-box modal-white">
-    <h2>Agregar Registro PC</h2>
-
-    <!-- Campos ocultos para pasar los datos recopilados del Paso 1 al Servlet -->
-    <input type="hidden" name="matricula_usuario" id="pc-hidden-matricula">
-    <input type="hidden" name="nombre_completo" id="pc-hidden-nombre">
-    <input type="hidden" name="Observaciones" id="pc-hidden-observaciones">
-    <input type="hidden" name="nombre_docente" id="pc-hidden-docente">
-
-    <div class="row-2">
-      <div>
-        <label>Salón:</label>
-        <input type="text" name="salon_computo" id="ag-pc-salon" placeholder="Ej. CC7" required>
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <select name="docencia" id="ag-pc-docencia" required>
-          <option value="D4">D4</option>
-          <option value="D3">D3</option>
-          <option value="D2">D2</option>
-          <option value="CECADEC">CECADEC</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="row-2">
-      <div>
-        <label>PC (Número):</label>
-        <input type="text" name="numero_pc" id="ag-pc-numero" placeholder="Ej. 15" required>
-      </div>
-      <div>
-        <label>Mesa / Isla:</label>
-        <input type="text" name="mesa" id="ag-pc-mesa" placeholder="Ej. 2">
-      </div>
-    </div>
-
-    <div class="row-2">
-      <div>
-        <label>Modelo:</label>
-        <input type="text" name="modelo" id="ag-pc-modelo" placeholder="Ej. HP">
-      </div>
-      <div>
-        <label>Estado:</label>
-        <select name="estado" id="ag-pc-estado" required>
-          <option value="activo">Activo</option>
-          <option value="inactivo">Inactivo</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="modal-actions">
-      <button type="button" class="btn-salir" onclick="regresarPrimerModal()">Atrás</button>
-      <button type="submit" class="btn-confirmar">Guardar</button>
-    </div>
-  </form>
-</div>
-
 <!-- Modal Eliminar -->
 <div class="modal-overlay" id="modalEliminar">
   <div class="confirm-box">
-    <div class="confirm-header">Eliminar Registro</div>
+    <div class="confirm-header">Eliminar PC</div>
     <div class="confirm-icon"><i class="bi bi-question-lg"></i></div>
-    <div class="confirm-text">¿Estás seguro que quieres eliminar este registro?</div>
+    <div class="confirm-text">¿Estás seguro que quieres eliminar este equipo del registro?</div>
     <input type="hidden" id="el-id">
     <div class="confirm-actions">
       <button type="button" class="btn-no" onclick="cerrarModal('modalEliminar')">No</button>
@@ -692,6 +618,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  var filaAEliminar = null;
+
   function abrirModal(idModal) {
     document.getElementById(idModal).classList.add('activo');
   }
@@ -699,53 +627,24 @@
     document.getElementById(idModal).classList.remove('activo');
   }
 
-  /* Transición entre el Modal 1 y el Modal 2 de Agregar */
-  function abrirSiguienteModal(event) {
-    event.preventDefault(); // Previene la recarga de página inmediata
-
-    // Pasa los valores ingresados en el Paso 1 a los campos ocultos del Paso 2
-    document.getElementById('pc-hidden-matricula').value = document.getElementById('ag-matricula').value;
-    document.getElementById('pc-hidden-nombre').value = document.getElementById('ag-nombre').value;
-    document.getElementById('pc-hidden-observaciones').value = document.getElementById('observaciones').value;
-    document.getElementById('pc-hidden-docente').value = document.getElementById('ag-docente').value;
-
-    // Cierra el primer modal y abre el segundo
-    cerrarModal('modalAgregar');
-    abrirModal('modalAgregarPC');
-  }
-
-  /* Permite regresar al primer modal en caso de querer editar algo */
-  function regresarPrimerModal() {
-    cerrarModal('modalAgregarPC');
-    abrirModal('modalAgregar');
-  }
-
   function verMas(datos) {
-    document.getElementById('vm-matricula').value = datos.matricula;
-    document.getElementById('vm-nombre').value = datos.nombre;
-    document.getElementById('vm-fecha').value = datos.fecha;
-    document.getElementById('vm-pc').value = datos.pc;
-    document.getElementById('vm-horaEntrada').value = datos.horaEntrada;
+    document.getElementById('vm-id-pc').value = datos.id_pc;
+    document.getElementById('vm-mesa').value = datos.mesa;
     document.getElementById('vm-salon').value = datos.salon;
-    document.getElementById('vm-horaSalida').value = datos.horaSalida;
     document.getElementById('vm-docencia').value = datos.docencia;
+    document.getElementById('vm-modelo').value = datos.modelo;
     document.getElementById('vm-estado').value = datos.estado;
-    document.getElementById('vm-docente').value = datos.docente;
     abrirModal('modalVerMas');
   }
 
   function editar(id, datos) {
     document.getElementById('ed-id').value = id;
-    document.getElementById('ed-matricula').value = datos.matricula;
-    document.getElementById('ed-nombre').value = datos.nombre;
-    document.getElementById('ed-fecha').value = datos.fecha;
-    document.getElementById('ed-pc').value = datos.pc;
-    document.getElementById('ed-horaEntrada').value = datos.horaEntrada;
+    document.getElementById('ed-id-pc').value = datos.id_pc;
+    document.getElementById('ed-mesa').value = datos.mesa;
     document.getElementById('ed-salon').value = datos.salon;
-    document.getElementById('ed-horaSalida').value = datos.horaSalida;
     document.getElementById('ed-docencia').value = datos.docencia;
+    document.getElementById('ed-modelo').value = datos.modelo;
     document.getElementById('ed-estado').value = datos.estado;
-    document.getElementById('ed-docente').value = datos.docente;
     abrirModal('modalEditar');
   }
 
@@ -773,12 +672,36 @@
     }
   }
 
-  function eliminar(id) {
-    document.getElementById('el-id').value = id;
+  function eliminar(numeroPc, boton) {
+    document.getElementById('el-id').value = numeroPc;
+    filaAEliminar = boton ? boton.closest('tr') : null;
     abrirModal('modalEliminar');
   }
+
   function confirmarEliminar() {
-    cerrarModal('modalEliminar');
+    var numeroPc = document.getElementById('el-id').value;
+
+    fetch('eliminar-pc-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'numero_pc=' + encodeURIComponent(numeroPc)
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                if (filaAEliminar) {
+                  filaAEliminar.remove();
+                }
+              } else {
+                alert('No se pudo eliminar: ' + (data.message || 'Error desconocido'));
+              }
+              cerrarModal('modalEliminar');
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al eliminar el equipo.');
+              cerrarModal('modalEliminar');
+            });
   }
 </script>
 

@@ -73,8 +73,6 @@
                     <div class="card border-0 shadow-lg p-4 text-center position-relative mb-5" id="div_card">
                         <div class="card-body">
                             <h5 class="mb-3">¿Quien eres?</h5>
-                            <a href="registro-alumno-servlet">Registro alumno</a>
-
                             <div class="d-flex justify-content-center gap-3 mb-4">
                                 <button type="button" onclick="window.location.href='login-admin-servlet'" class="boton px-5 fw-bold" name="admin">Admin</button>
                                 <button type="button" onclick="window.location.href='tipo-user-servlet'" class="boton px-5 fw-bold" name="usuario">Usuario</button>

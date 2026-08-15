@@ -8,11 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet (name="RegistrosDocenteServlet", value="/registros-docente-servlet")
+@WebServlet (name="RegistrosAlumnosServlet", value="/registros-alumnos-servlet")
 
-public class RegistrosDocenteSerlvet extends HttpServlet {
+public class RegistrosAlumnosSerlvet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("WEB-INF/vista-docente/registros-docente.jsp").forward(req, resp);
     }
 }

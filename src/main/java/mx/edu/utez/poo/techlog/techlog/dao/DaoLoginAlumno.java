@@ -10,17 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DaoLoginAlumno {
-    public BeanLoginAlumno login(String nombre, String apellido, String matricula, String contrasena) {
+    public BeanLoginAlumno findByMatricula(String matricula) {
         BeanLoginAlumno alumno = null;
-        String sql = "SELECT * FROM USUARIO_ALUMNO WHERE UPPER(NOMBRE) = UPPER(?) AND UPPER(APELLIDO) = UPPER(?) AND MATRICULA = ? AND CONTRASENA = ?";
+        String sql = "SELECT * FROM USUARIO_ALUMNO WHERE MATRICULA = ?";
 
         try (Connection conexion = Conexion.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
-            ps.setString(1, nombre);
-            ps.setString(2, apellido);
-            ps.setString(3, matricula);
-            ps.setString(4, contrasena);
+            ps.setString(1, matricula);
 
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){

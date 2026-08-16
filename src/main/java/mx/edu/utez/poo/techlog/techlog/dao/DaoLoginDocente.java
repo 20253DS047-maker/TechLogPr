@@ -11,15 +11,14 @@ import java.sql.SQLException;
 
 public class DaoLoginDocente {
 
-    public BeanLoginDocente login(String username, String password) {
+    public BeanLoginDocente findByUsuario(String username) {
         BeanLoginDocente docente = null;
-        String sql = "SELECT * FROM USUARIO_DOCENTE WHERE USERNAME = ?  AND PASSWORD = ?";
+        String sql = "SELECT * FROM USUARIO_DOCENTE WHERE UPPER(USERNAME) = UPPER(?)";
 
         try (Connection conexion = Conexion.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setString(1, username);
-            ps.setString(2, password);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

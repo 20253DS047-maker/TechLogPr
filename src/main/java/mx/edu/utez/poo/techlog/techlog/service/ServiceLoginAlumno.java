@@ -3,6 +3,7 @@ package mx.edu.utez.poo.techlog.techlog.service;
 import mx.edu.utez.poo.techlog.techlog.dao.DaoLoginAlumno;
 import mx.edu.utez.poo.techlog.techlog.model.BeanLoginAlumno;
 import mx.edu.utez.poo.techlog.techlog.model.BeanLoginDocente;
+import mx.edu.utez.poo.techlog.techlog.util.HashUtils;
 
 public class ServiceLoginAlumno {
 
@@ -10,15 +11,29 @@ public class ServiceLoginAlumno {
 
     public BeanLoginAlumno autenticar(String nombre, String apellido, String matricula, String contrasena) {
 
-        if (nombre.trim().isEmpty() || nombre == null || apellido.trim().isEmpty() || apellido == null){
+        if (nombre == null || nombre.trim().isEmpty() || apellido == null || apellido.trim().isEmpty() || matricula == null || matricula.trim().isEmpty() ||
+                contrasena == null || contrasena.trim().isEmpty()) {
             return null;
         }
         String regexMatricula = "^[0-9]{5}[a-zA-Z]{2}[0-9]{3}$";
-        if (contrasena.length() > 5 || contrasena.trim().isEmpty() || contrasena == null || matricula == null || matricula.trim().isEmpty() ||
-           !matricula.matches(regexMatricula)){
+        if (!matricula.trim().matches(regexMatricula)) {
             return null;
         }
 
-        return daoLoginAlumno.login(nombre.trim(), apellido.trim(), matricula.trim(), contrasena.trim());
+        BeanLoginAlumno alumno = daoLoginAlumno.findByMatricula(matricula.trim());
+
+        if (alumno != null) {
+            String hashIngresado = HashUtils.sha256(contrasena.trim());
+
+            if (hashIngresado.equalsIgnoreCase(alumno.getContrasena())) {
+
+                if (alumno.getNombre().equalsIgnoreCase(nombre.trim()) &&
+                        alumno.getApellido().equalsIgnoreCase(apellido.trim())) {
+                    return alumno;
+                }
+            }
+        }
+
+        return null;
     }
 }

@@ -48,13 +48,13 @@
     <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-3" style="max-height: 100px; margin-top: 50px">
     <div class="card shadow">
         <div class="card-header">
-            <h3 class="mb-0">Registro Exitoso</h3>
+            <h3 class="mb-0">¡Bienvenido!</h3>
         </div>
         <div class="card-body text-center">
             <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
-            <p class="mt-3">Su registro en la bitácora ha sido exitoso.</p>
+            <p class="mt-3">Se inicio sesión correctamente.</p>
 
-            <div class="text-start mt-4">
+            <div class="text-start mt-3">
                 <p><strong>Nombre:</strong> ${adminLogueado.nombre}</p>
                 <p><strong>Apellido:</strong> ${adminLogueado.apellido}</p>
             </div>

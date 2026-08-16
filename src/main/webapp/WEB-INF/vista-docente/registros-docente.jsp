@@ -5,8 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vista Docente - Registros</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -15,11 +17,12 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Evita barras de desplazamiento externas innecesarias */
+      overflow: hidden; /* Evita barras de desplazamiento innecesarias */
     }
     body {
-      background-color: #c6c4a8;
-      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #cbc8be;
+      color: #333333;
+      font-family: Arial, Helvetica, sans-serif;
       padding: 20px 40px;
       display: flex;
       flex-direction: column;
@@ -32,47 +35,71 @@
       width: 100%;
     }
 
-    /* Ajustado a columna para que el nuevo botón quede abajo */
+    /* Header con Logo y Botones */
+    .header-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      flex-shrink: 0;
+    }
+    .logo-img {
+      max-height: 80px;
+      width: auto;
+      object-fit: contain;
+    }
+
     .top-bar {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       gap: 8px;
-      margin-bottom: 10px;
-      flex-shrink: 0;
     }
     .btn-cerrar-sesion {
-      font-weight: 600;
+      background-color: #172c45;
+      color: #ffffff;
+      border-radius: 8px;
+      font-weight: 500;
+      padding: 6px 20px;
       border: none;
-      border-radius: 4px;
-      padding: 8px 16px;
-      font-size: 0.85rem;
-      background-color: #FF0000;
-      color: #fff;
+      font-size: 0.95rem;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .btn-cerrar-sesion:hover { background-color: #ED1515; }
+    .btn-cerrar-sesion:hover {
+      background-color: #0f1e30;
+      color: #ffffff;
+    }
 
     .btn-bitacora-docente {
-      font-weight: 600;
+      background-color: #172c45;
+      color: #ffffff;
+      border-radius: 8px;
+      font-weight: 500;
+      padding: 6px 20px;
       border: none;
-      border-radius: 4px;
-      padding: 8px 16px;
-      font-size: 0.85rem;
-      background-color: #1c2b4a;
-      color: #fff;
+      font-size: 0.95rem;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .btn-bitacora-docente:hover { background-color: #142038; }
+    .btn-bitacora-docente:hover {
+      background-color: #0f1e30;
+      color: #ffffff;
+    }
 
     .page-title {
-      text-align: center;
-      color: #1c8a6c;
+      color: #0d8065;
+      font-size: 2.5rem;
       font-weight: 700;
-      margin: 0 0 16px;
-      font-size: 2.2rem;
-      flex-shrink: 0;
+      margin: 0;
+      letter-spacing: 1px;
     }
+
+    /* Buscador estilo diseño 2 */
     .search-bar {
       width: 100%;
       margin: 0 auto 16px;
@@ -81,11 +108,13 @@
     }
     .search-bar input {
       width: 100%;
-      padding: 10px 44px 10px 18px;
+      padding: 10px 45px 10px 18px;
       border-radius: 20px;
-      border: none;
-      background-color: #efe9e2;
-      font-size: 0.9rem;
+      border: 1px solid #777777;
+      background-color: #ffffff;
+      font-size: 0.95rem;
+      color: #555555;
+      height: 42px;
     }
     .search-bar input:focus { outline: none; }
     .search-bar i {
@@ -93,17 +122,19 @@
       right: 18px;
       top: 50%;
       transform: translateY(-50%);
-      color: #555;
+      color: #333333;
+      font-size: 1.1rem;
     }
 
-    /* Tabla flexible que se ajusta a la pantalla */
+    /* Tabla adaptable basada en el diseño 2 */
     .table-container {
       width: 100%;
-      background-color: #efe9e2;
-      border-radius: 4px;
+      background-color: #e5ded8;
+      border-radius: 2px;
       overflow: hidden;
-      padding: 0 24px;
-      flex: 1; /* Ocupa dinámicamente el alto vertical sobrante */
+      padding: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      flex: 1;
       display: flex;
       flex-direction: column;
     }
@@ -114,41 +145,41 @@
       table-layout: fixed;
     }
     thead {
-      height: 45px;
+      height: 50px;
     }
     thead th {
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
-      color: #1c8a6c;
-      padding: 10px 8px;
+      color: #0d8065;
+      padding: 12px 8px;
       text-align: left;
-      border-bottom: 2px solid #cfc7ba;
-      letter-spacing: 0.4px;
+      border-bottom: 2px solid #444444;
+      letter-spacing: 0.5px;
       font-weight: 700;
     }
     tbody {
-      height: calc(100% - 95px); /* Descuenta encabezado y paginación */
+      height: calc(100% - 100px);
     }
     tbody tr {
-      height: 14.28%; /* Distribución pareja de las 7 filas */
+      height: 14.28%; /* Distribución idéntica para 7 filas */
     }
     tbody td {
-      padding: 8px;
-      font-size: 0.85rem;
-      color: #333;
-      border-bottom: 1px solid #d8d1c5;
+      padding: 8px 12px;
+      font-size: 0.95rem;
+      color: #222222;
+      border-bottom: 1px solid #777777;
       white-space: nowrap;
       vertical-align: middle;
     }
-    .badge-activo { color: #1c8a6c; font-weight: 600; }
+    .badge-activo { color: #0d8065; font-weight: 600; }
     .badge-inactivo { color: #b03a3a; font-weight: 600; }
     .icon-btn {
       border: none;
       background: none;
-      color: #333;
+      color: #222222;
       margin-right: 6px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 1.1rem;
       padding: 0;
     }
     .form-check.form-switch {
@@ -163,6 +194,8 @@
       height: 1.1em;
       cursor: pointer;
     }
+
+    /* Paginación estilo diseño 2 */
     .pagination-bar {
       display: flex;
       justify-content: center;
@@ -172,55 +205,80 @@
       flex-shrink: 0;
     }
     .pagination-bar button {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      border: none;
-      background-color: #c9c2b3;
-      font-size: 0.75rem;
-      color: #333;
+      border: 1.5px solid #333333;
+      background-color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: #333333;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .pagination-bar button.active { background-color: #1c8a6c; color: #fff; }
+    .pagination-bar button.active {
+      background-color: #0d8065;
+      color: #ffffff;
+      border-color: #0d8065;
+    }
 
+    /* Filtros inferiores */
     .filters {
       display: flex;
       gap: 20px;
       padding: 16px 0 0;
       flex-shrink: 0;
+      align-items: center;
     }
     .filters label {
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      font-weight: bold;
       color: #333;
       cursor: pointer;
     }
+    .filters input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      border: 1.5px solid #333;
+    }
 
-    /* Modales */
+    /* Modales rediseñados según vista 2 */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.15);
+      background: rgba(0, 0, 0, 0.25);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 10;
+      z-index: 1050;
       padding: 20px;
     }
     .modal-overlay.activo { display: flex; }
     .modal-box {
       background-color: #ffffff;
       padding: 28px 32px;
-      border-radius: 4px;
+      border-radius: 6px;
       width: 100%;
       max-width: 440px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     }
-    .modal-box label {
+    .modal-box h2 {
+      font-size: 1.1rem;
+      margin: 0 0 20px;
+      color: #2c2c2c;
+      text-align: center;
       font-weight: 700;
+    }
+    .modal-box label {
+      font-weight: 600;
       font-size: 0.8rem;
-      color: #1c8a6c;
+      color: #333;
       display: block;
       margin-bottom: 4px;
     }
@@ -230,7 +288,7 @@
       padding: 9px 10px;
       border: none;
       border-radius: 3px;
-      background-color: #d9d9d9;
+      background-color: #f0f0f0;
       margin-bottom: 16px;
       font-size: 0.85rem;
       color: #2c2c2c;
@@ -239,60 +297,68 @@
     .row-2 > div { flex: 1; }
     .modal-actions { display: flex; gap: 14px; margin-top: 8px; }
     .btn-salir {
-      background-color: #e6392e;
+      background-color: #c0392b;
       color: #fff;
       border: none;
-      padding: 12px;
+      padding: 11px;
       border-radius: 4px;
       font-weight: 700;
       flex: 1;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
     }
 
-    /* Modal confirmación */
+    /* Confirm box */
     .confirm-box {
       background-color: #ffffff;
       border-radius: 6px;
       overflow: hidden;
-      max-width: 340px;
+      max-width: 360px;
       width: 100%;
       text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     }
     .confirm-header {
-      background-color: #1c8a6c;
+      background-color: #0d8065;
       color: #fff;
       padding: 16px 20px;
       font-weight: 700;
       font-size: 1rem;
     }
-    .confirm-actions { display: flex; gap: 0; }
+    .confirm-actions { display: flex; gap: 14px; padding: 20px; }
     .confirm-actions button {
       flex: 1;
       border: none;
-      padding: 14px;
+      border-radius: 4px;
+      padding: 11px;
       font-weight: 700;
       font-size: 0.95rem;
       cursor: pointer;
     }
-    .confirm-actions .btn-no { background-color: #e6392e; color: #fff; }
-    .confirm-actions .btn-si { background-color: #1c2b4a; color: #fff; }
+    .confirm-actions .btn-no { background-color: #c0392b; color: #fff; }
+    .confirm-actions .btn-si { background-color: #172c45; color: #fff; }
   </style>
 </head>
 <body>
 
 <div class="main-wrapper">
-  <!-- Botones alineados uno arriba del otro -->
-  <div class="top-bar">
-    <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
-    <button type="button" class="btn-bitacora-docente" onclick="window.location.href='DocenteBitacoraServlet'">Bitacora</button>
-  </div>
+  <!-- Encabezado con Logo y Botones -->
+  <div class="header-section">
+    <div>
+      <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="UTEZ" class="logo-img">
+    </div>
 
-  <h1 class="page-title">Registros</h1>
+    <h1 class="page-title">Bitacora Alumnos</h1>
+
+    <div class="top-bar">
+      <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
+      <button type="button" class="btn-bitacora-docente" onclick="window.location.href='DocenteBitacoraServlet'">Bitacora</button>
+    </div>
+  </div>
 
   <div class="search-bar">
     <input type="text" id="buscarMatricula" placeholder="Introduzca la matricula para buscar en el registro....">
-    <i class="bi bi-search"></i>
+    <i class="fa-solid fa-magnifying-glass"></i>
   </div>
 
   <div class="table-container">
@@ -326,7 +392,7 @@
           </div>
           <button type="button" class="icon-btn" title="Ver mas"
                   onclick="verMas('20253DS196','Jonathan AlejandroLopez Benites','11/11/2026','15','11:00 AM','MAC9','13:00 PM','D4','Activo')">
-            <i class="bi bi-eye"></i>
+            <i class="fa-regular fa-eye"></i>
           </button>
         </td>
       </tr>
@@ -346,7 +412,7 @@
           </div>
           <button type="button" class="icon-btn" title="Ver mas"
                   onclick="verMas('20253DS034','Santiago Flores','20/02/2026','25.D4','—','A9','—','D3','Inactivo')">
-            <i class="bi bi-eye"></i>
+            <i class="fa-regular fa-eye"></i>
           </button>
         </td>
       </tr>
@@ -359,14 +425,14 @@
     </table>
 
     <div class="pagination-bar">
-      <button type="button">&laquo;</button>
-      <button type="button">&lsaquo;</button>
+      <button type="button"><i class="fa-solid fa-angles-left"></i></button>
+      <button type="button"><i class="fa-solid fa-angle-left"></i></button>
       <button type="button" class="active">5</button>
       <button type="button">6</button>
       <button type="button">7</button>
       <button type="button">8</button>
-      <button type="button">&rsaquo;</button>
-      <button type="button">&raquo;</button>
+      <button type="button"><i class="fa-solid fa-angle-right"></i></button>
+      <button type="button"><i class="fa-solid fa-angles-right"></i></button>
     </div>
   </div>
 
@@ -374,11 +440,11 @@
   <div class="filters">
     <label>
       <input type="radio" name="filtro" checked
-             onchange="window.location.href='docente-Alumno-servlet?tipo=A'"> UA
+             onchange="window.location.href='usuarios-Alumno-servlet'"> Usuarios-Alumnos
     </label>
     <label>
       <input type="radio" name="filtro"
-             onchange="window.location.href='docente-registro-servlet'"> RA
+             onchange="window.location.href='registros-alumnos-servlet'" checked disabled> Bitacora Alumnos
     </label>
   </div>
 </div>
@@ -386,6 +452,7 @@
 <!-- ===================== MODAL: VER MAS ===================== -->
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box">
+    <h2>Detalle del registro</h2>
     <label>Matricula:</label>
     <input type="text" id="vm-matricula" disabled>
 
@@ -460,7 +527,6 @@
       celda.classList.add('badge-inactivo');
     }
   }
-
 </script>
 
 </body>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- Tabla que muestra los registros de los docentes en la bitacora -->
 
 <!DOCTYPE html>
 <html lang="es">

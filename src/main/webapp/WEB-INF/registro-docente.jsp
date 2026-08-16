@@ -112,7 +112,7 @@
         </form>
 
         <div class="d-grid gap-20 col-3 mb-3">
-            <button type="button" onclick="window.location.href='login-docente-servlet'" class="btn-primary">Regresar</button>
+            <button type="button" onclick="window.location.href='admin-alumno-servlet'" class="btn-primary">Regresar</button>
         </div>
 
     </div>

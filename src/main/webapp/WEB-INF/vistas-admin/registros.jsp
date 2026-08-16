@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registros - UTEZ</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -113,13 +114,11 @@
       padding: 0;
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      flex: 1; /* Ocupa todo el espacio sobrante */
-      display: flex;
+      display: block;
       flex-direction: column;
     }
     .custom-table {
       width: 100%;
-      height: 100%;
       border-collapse: collapse;
       table-layout: fixed;
     }
@@ -143,11 +142,9 @@
     }
 
     /* El cuerpo distribuye de manera uniforme las filas para llenar la pantalla */
-    .custom-table tbody {
-      height: calc(100% - 50px);
-    }
+    .custom-table tbody {}
     .custom-table tbody tr {
-      height: 12.5%; /* Hace que las 8 filas ocupen exactamente el 100% del alto disponible */
+      height: 45px; /* Hace que las 8 filas ocupen exactamente el 100% del alto disponible */
     }
 
     .badge-activo { color: #0d8065; font-weight: 600; }
@@ -175,16 +172,24 @@
     .radio-group {
       justify-self: start;
       display: flex;
-      gap: 20px;
+      gap: 15px;
       align-items: center;
     }
-    .radio-group .form-check-input {
+    .radio-group-right {
+      justify-self: end;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .radio-group .form-check-input,
+    .radio-group-right .form-check-input {
       width: 18px;
       height: 18px;
       cursor: pointer;
       border: 1.5px solid #333;
     }
-    .radio-group .form-check-input:checked {
+    .radio-group .form-check-input:checked,
+    .radio-group-right .form-check-input:checked {
       background-color: #000;
       border-color: #000;
     }
@@ -360,31 +365,29 @@
     <table class="custom-table text-center">
       <thead>
       <tr>
-        <th style="width: 5%;">#</th>
-        <th style="width: 15%;">MATRICULA:</th>
-        <th style="width: 25%;">NOMBRE COMPLETO:</th>
-        <th style="width: 12%;">FECHA:</th>
-        <th style="width: 10%;">P.C.</th>
-        <th style="width: 10%;">DOCENCIA</th>
-        <th style="width: 10%;">ESTADO:</th>
-        <th style="width: 13%;">ACCIONES:</th>
+        <th style="width: 10%;">ID_REGISTRO</th>
+        <th style="width: 15%;">MATRÍCULA</th>
+        <th style="width: 20%;">NOMBRE DOCENTE</th>
+        <th style="width: 20%;">OBSERVACIONES</th>
+        <th style="width: 15%">ESTADO</th>
+        <th style="width: 20%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>0</td>
-        <td>20253DS196</td>
-        <td>Jonathan Alejandro...</td>
-        <td>11/11/2026</td>
-        <td>15</td>
-        <td>D4</td>
-        <td id="estadoTexto-0" class="badge-activo">Activo</td>
-        <td>
-          <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar" onclick="cambiarEstado(0, this)">
-            <i class="fa-solid fa-toggle-on"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Ver detalles"
-                  onclick="verMas({
+      <c:forEach items="${listaRegistroBtcAlumnos}" var="registroAlumnos" varStatus="estado">
+        <tr>
+          <th scope="row">${estado.count}</th>
+          <td>${registroAlumnos.matricula_usuario}</td>
+          <td>${registroAlumnos.nombreDocente}</td>
+          <td>${registroAlumnos.observaciones}</td>
+
+          <td id="estadoTexto-0" class="badge-activo">Activo</td>
+          <td>
+            <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar" onclick="cambiarEstado(0, this)">
+              <i class="fa-solid fa-toggle-on"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Ver detalles"
+                    onclick="verMas({
                     matricula: '20253DS196',
                     nombre: 'Jonathan AlejandroLopez Benitez',
                     fecha: '11/11/2026',
@@ -396,10 +399,10 @@
                     estado: 'Activo',
                     docente: ''
                   })">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Editar"
-                  onclick="editar(0, {
+              <i class="fa-regular fa-eye"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Editar"
+                    onclick="editar(0, {
                     matricula: '20253DS196',
                     nombre: 'Jonathan AlejandroLopez Benitez',
                     fecha: '11/11/2026',
@@ -411,86 +414,46 @@
                     estado: 'activo',
                     docente: ''
                   })">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(0)">
-            <i class="fa-regular fa-trash-can"></i>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>20253DS034</td>
-        <td>Santiago Flores</td>
-        <td>20/02/2026</td>
-        <td>25</td>
-        <td>D3</td>
-        <td id="estadoTexto-1" class="badge-inactivo">Inactivo</td>
-        <td>
-          <button type="button" class="icon-btn" id="estadoBtn-1" title="Activar/Desactivar" onclick="cambiarEstado(1, this)">
-            <i class="fa-solid fa-toggle-off"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Ver detalles"
-                  onclick="verMas({
-                    matricula: '20253DS034',
-                    nombre: 'Santiago Flores',
-                    fecha: '20/02/2026',
-                    pc: '25',
-                    horaEntrada: '',
-                    salon: '44',
-                    horaSalida: '',
-                    docencia: 'D3',
-                    estado: 'Inactivo',
-                    docente: ''
-                  })">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Editar"
-                  onclick="editar(1, {
-                    matricula: '20253DS034',
-                    nombre: 'Santiago Flores',
-                    fecha: '20/02/2026',
-                    pc: '25',
-                    horaEntrada: '',
-                    salon: '44',
-                    horaSalida: '',
-                    docencia: 'D3',
-                    estado: 'inactivo',
-                    docente: ''
-                  })">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(1)">
-            <i class="fa-regular fa-trash-can"></i>
-          </button>
-        </td>
-      </tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(0)">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </td>
+        </tr>
+
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+
+
+      </c:forEach>
+
       </tbody>
     </table>
   </div>
 
   <div class="footer-controls">
+    <!-- Esquina Izquierda: Filtros de Bitácora -->
     <div class="radio-group">
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='admin-alumno-servlet'">
-        <label class="form-check-label fw-bold ms-1" for="optA">A</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraAlumno" value="PC"  onchange="window.location.href='admin-pc-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraAlumno">Bitácora(PC)</label>
       </div>
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optD" value="D" onchange="window.location.href='admin-registrosDocente-servlet'">
-        <label class="form-check-label fw-bold ms-1" for="optD">D</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraDocente" value="D" onchange="window.location.href='admin-registrosDocente-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraDocente">Bitácora(Docente)</label>
       </div>
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtro" id="optA" value="A" onchange="window.location.href='vista-admin-servlet'" disabled>
-        <label class="form-check-label fw-bold ms-1" for="optA">T</label>
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraPC" value="A" checked onchange="window.location.href='admin-alumno-servlet'" disabled>
+        <label class="form-check-label fw-bold ms-1" for="optBitacoraPC">Bitácora(Alumnos)</label>
       </div>
     </div>
 
+    <!-- Centro: Paginación -->
     <div class="pagination-custom">
       <a class="page-btn"><i class="fa-solid fa-angles-left"></i></a>
       <a class="page-btn"><i class="fa-solid fa-angle-left"></i></a>
@@ -502,7 +465,17 @@
       <a class="page-btn"><i class="fa-solid fa-angles-right"></i></a>
     </div>
 
-    <div></div>
+    <!-- Esquina Derecha: Filtros de Usuarios -->
+    <div class="radio-group-right">
+      <div class="form-check form-check-inline m-0">
+        <input class="form-check-input" type="radio" name="filtroUsuarios" id="optUsuarioAlumno" value="UA" onchange="window.location.href='usuarios-alumnos-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optUsuarioAlumno">Usuarios Alumnos</label>
+      </div>
+      <div class="form-check form-check-inline m-0">
+        <input class="form-check-input" type="radio" name="filtroUsuarios" id="optUsuarioDocente" value="UD" onchange="window.location.href='usuarios-docentes-servlet'">
+        <label class="form-check-label fw-bold ms-1" for="optUsuarioDocente">Usuarios Docentes</label>
+      </div>
+    </div>
   </div>
 </div>
 

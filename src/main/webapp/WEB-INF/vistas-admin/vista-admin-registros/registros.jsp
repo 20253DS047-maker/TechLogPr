@@ -614,7 +614,7 @@
 
 <!-- Modal Agregar (Paso 1: Datos Alumno) -->
 <div class="modal-overlay" id="modalAgregar">
-  <form class="modal-box modal-white" onsubmit="abrirSiguienteModal(event)">
+  <form class="modal-box modal-white" action="bitacora-alumno-servlet">
     <h2>Agregar registro Alumno</h2>
     <label>Matrícula:</label>
     <input type="text" name="matricula_usuario" id="ag-matricula" placeholder="Introduzca su matrícula" required>

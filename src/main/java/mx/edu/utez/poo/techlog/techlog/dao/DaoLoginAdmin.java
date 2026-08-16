@@ -1,7 +1,6 @@
 package mx.edu.utez.poo.techlog.techlog.dao;
 
 import mx.edu.utez.poo.techlog.techlog.model.BeanLoginAdmin;
-import mx.edu.utez.poo.techlog.techlog.model.BeanLoginAlumno;
 import mx.edu.utez.poo.techlog.techlog.util.Conexion;
 
 import java.sql.Connection;
@@ -10,16 +9,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DaoLoginAdmin {
-    public BeanLoginAdmin login(String usuario, String contrasena) {
+    public BeanLoginAdmin findByUsuario(String usuario) {
 
         BeanLoginAdmin admin = null;
 
-        String sql = "SELECT * FROM ADMIN WHERE UPPER(USUARIO) = UPPER(?) AND CONTRASENA = ?";
+        String sql = "SELECT * FROM ADMIN WHERE UPPER(USUARIO) = UPPER(?)";
 
         try (Connection conexion = Conexion.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
                 ps.setString(1, usuario);
-                ps.setString(2, contrasena);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

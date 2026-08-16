@@ -7,7 +7,7 @@ public class ServiceLoginAdmin {
     public DaoLoginAdmin daoLoginAdmin = new DaoLoginAdmin();
     public BeanLoginAdmin autenticar(String username, String contrasena) {
         if (username == null || username.trim().isEmpty() || contrasena == null || contrasena.trim().isEmpty() ||
-                contrasena.length() > 5){
+                contrasena.length() < 5){
             return null;
         }
         return daoLoginAdmin.login(username.trim(), contrasena.trim());

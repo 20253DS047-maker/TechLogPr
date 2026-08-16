@@ -24,11 +24,14 @@ public class BitacoraAlumnoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         ServiceBitacoraAlumno serviceBitacoraAlumno = new ServiceBitacoraAlumno();
+        String nombre = req.getParameter("nombre");
+        String apellido = req.getParameter("apellido");
+        String nombre_completo = nombre.trim() + " " + apellido.trim();
         String matricula_usuario = req.getParameter("matricula_usuario");
         String nombre_docente = req.getParameter("nombre_docente");
         String observaciones = req.getParameter("observaciones");
 
-        BeanBitacoraAlumno registroAlumno = new BeanBitacoraAlumno(matricula_usuario, nombre_docente, observaciones);
+        BeanBitacoraAlumno registroAlumno = new BeanBitacoraAlumno(matricula_usuario, nombre_docente, observaciones, nombre_completo);
         DaoBitacoraAlumno dao = new DaoBitacoraAlumno();
         boolean guardado = serviceBitacoraAlumno.guardarRegistro(registroAlumno);
         if (guardado){

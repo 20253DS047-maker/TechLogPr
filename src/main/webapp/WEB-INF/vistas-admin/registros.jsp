@@ -387,18 +387,7 @@
               <i class="fa-solid fa-toggle-on"></i>
             </button>
             <button type="button" class="icon-btn" title="Ver detalles"
-                    onclick="verMas({
-                    matricula: '20253DS196',
-                    nombre: 'Jonathan AlejandroLopez Benitez',
-                    fecha: '11/11/2026',
-                    pc: '15',
-                    horaEntrada: '11:00 AM',
-                    salon: 'MAC9',
-                    horaSalida: '13:00 PM',
-                    docencia: 'D4',
-                    estado: 'Activo',
-                    docente: ''
-                  })">
+                    onclick="cargarYVerMas('${registroAlumnos.idRegistro}')">
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
@@ -484,45 +473,28 @@
 <!-- Modal Ver Más -->
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box modal-white">
-    <h2>Detalle del registro</h2>
-    <label>Matrícula:</label>
-    <input type="text" id="vm-matricula" disabled>
-    <label>Nombre Completo:</label>
+    <h2>Detalle del Docente</h2>
+
+    <label>ID:</label>
+    <input type="text" id="vm-id" disabled>
+
+    <label>Nombre(s):</label>
     <input type="text" id="vm-nombre" disabled>
+
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" id="vm-fecha" disabled>
+        <label>Apellido Paterno:</label>
+        <input type="text" id="vm-paterno" disabled>
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" id="vm-pc" disabled>
+        <label>Apellido Materno:</label>
+        <input type="text" id="vm-materno" disabled>
       </div>
     </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="vm-horaEntrada" disabled>
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="vm-salon" disabled>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="vm-horaSalida" disabled>
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <input type="text" id="vm-docencia" disabled>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <input type="text" id="vm-estado" disabled>
-    <label>Docente:</label>
-    <input type="text" id="vm-docente" disabled>
+
+    <label>Área / Docencia:</label>
+    <input type="text" id="vm-area" disabled>
+
     <div class="modal-actions">
       <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
@@ -720,18 +692,21 @@
     abrirModal('modalAgregar');
   }
 
-  function verMas(datos) {
-    document.getElementById('vm-matricula').value = datos.matricula;
-    document.getElementById('vm-nombre').value = datos.nombre;
-    document.getElementById('vm-fecha').value = datos.fecha;
-    document.getElementById('vm-pc').value = datos.pc;
-    document.getElementById('vm-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('vm-salon').value = datos.salon;
-    document.getElementById('vm-horaSalida').value = datos.horaSalida;
-    document.getElementById('vm-docencia').value = datos.docencia;
-    document.getElementById('vm-estado').value = datos.estado;
-    document.getElementById('vm-docente').value = datos.docente;
-    abrirModal('modalVerMas');
+  function cargarYVerMas(idRegistro) {
+    fetch(`DocentesVerMasServlet?action=getDetalle&id=${idRegisto}`)
+            .then(response => response.json())
+            .then(datos => {
+              // Inyectar datos en los inputs del modal
+              document.getElementById('vm-id').value = datos.id || '';
+              document.getElementById('vm-nombre').value = datos.nombre || '';
+              document.getElementById('vm-paterno').value = datos.apellidoPaterno || '';
+              document.getElementById('vm-materno').value = datos.apellidoMaterno || '';
+              document.getElementById('vm-area').value = datos.area || '';
+
+              // Mostrar modal
+              abrirModal('modalVerMas');
+            })
+            .catch(error => console.error('Error al cargar detalle:', error));
   }
 
   function editar(id, datos) {

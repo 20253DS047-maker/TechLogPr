@@ -1,11 +1,14 @@
 package mx.edu.utez.poo.techlog.techlog.model;
 
 public class BeanTablaUsuarioAlumno {
+    private String matricula;
     private String nombre;
     private String apellido;
-    private String contrasena;
     private String username;
-    private String matricula;
+
+    public String getMatricula() { return matricula; }
+
+    public void setMatricula(String matricula) { this.matricula = matricula; }
 
     public String getNombre() { return nombre; }
 
@@ -18,12 +21,4 @@ public class BeanTablaUsuarioAlumno {
     public String getUsername() { return username; }
 
     public void setUsername(String username) { this.username = username; }
-
-    public String getContrasena() { return contrasena; }
-
-    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
-
-    public String getMatricula() { return matricula; }
-
-    public void setMatricula(String matricula) { this.matricula = matricula; }
 }

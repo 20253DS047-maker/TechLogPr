@@ -44,7 +44,7 @@
         }
 
         .logoImg{
-            width: 170px;
+            width: 160px;
             height: 70px;
         }
         .btn-primary {
@@ -83,7 +83,7 @@
             <div class="col-8">
                 <div class="card border-0 shadow-lg p-4 text-center position-relative mb-5" id="div_card">
                     <div class="card-body">
-                        <h5 class="mb-3">¿Que tipo de cuenta eres?</h5>
+                        <h5 class="mb-3">¿Qué tipo de cuenta eres?</h5>
 
                         <div class="d-flex justify-content-center gap-3 mb-4">
                             <button type="button" onclick="window.location.href='login-alumno-servlet'" class="boton px-5 fw-bold" name="alumno">Alumno</button>

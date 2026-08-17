@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!-- Tabla que muestra los registros de las pc que hacen los alumnos -->
 <!DOCTYPE html>
@@ -372,11 +373,13 @@
         <table class="custom-table text-center">
             <thead>
             <tr>
-                <th style="width: 10%;">ID_PC</th>
-                <th style="width: 15%;">MESA / ISLA</th>
-                <th style="width: 15%;">SALÓN</th>
+                <th style="width: 5%;">ID PC</th>
+                <th style="width: 15%;">ID REGISTRO ALUMNO</th>
+                <th style="width: 10%;">COMPUTO</th>
                 <th style="width: 15%;">DOCENCIA</th>
-                <th style="width: 20%;">MODELO</th>
+                <th style="width: 5%;">NÚMERO PC</th>
+                <th style="width: 15%;">MODELO</th>
+                <th style="width: 10%;">ISLA / MESA</th>
                 <th style="width: 10%;">ESTADO</th>
                 <th style="width: 15%;">ACCIONES</th>
             </tr>
@@ -384,11 +387,13 @@
             <tbody>
             <c:forEach items="${listaRegistrosPC}" var="pc" varStatus="estado">
                 <tr>
-                    <th scope="row">${pc.id_pc}</th>
-                    <td>${pc.mesa}</td>
-                    <td>${pc.salon_computo}</td>
+                    <td>${pc.id}</td>
+                    <td>${pc.idRegistroAlumno}</td>
+                    <td>${pc.salonComputo}</td>
                     <td>${pc.docencia}</td>
+                    <td>${pc.numeroPc}</td>
                     <td>${pc.modelo}</td>
+                    <td>${pc.islaMesa}</td>
                     <td id="estadoTexto-${estado.index}" class="${pc.estado == 'activo' ? 'badge-activo' : 'badge-inactivo'}">
                             ${pc.estado}
                     </td>
@@ -424,47 +429,6 @@
                     </td>
                 </tr>
             </c:forEach>
-
-            <!-- Filas vacías por defecto en caso de no haber iteraciones Java -->
-            <tr>
-                <th scope="row">15</th>
-                <td>Mesa 2</td>
-                <td>CC7</td>
-                <td>D4</td>
-                <td>HP EliteDesk</td>
-                <td id="estadoTexto-0" class="badge-activo">Activo</td>
-                <td>
-                    <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar" onclick="cambiarEstado(0, this)">
-                        <i class="fa-solid fa-toggle-on"></i>
-                    </button>
-                    <button type="button" class="icon-btn" title="Ver detalles"
-                            onclick="verMas({
-                  id_pc: '15',
-                  mesa: 'Mesa 2',
-                  salon: 'CC7',
-                  docencia: 'D4',
-                  modelo: 'HP EliteDesk',
-                  estado: 'Activo'
-                })">
-                        <i class="fa-regular fa-eye"></i>
-                    </button>
-                    <button type="button" class="icon-btn" title="Editar"
-                            onclick="editar(0, {
-                  id_pc: '15',
-                  mesa: 'Mesa 2',
-                  salon: 'CC7',
-                  docencia: 'D4',
-                  modelo: 'HP EliteDesk',
-                  estado: 'Activo'
-                })">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                    </button>
-                    <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(0)">
-                        <i class="fa-regular fa-trash-can"></i>
-                    </button>
-                </td>
-            </tr>
-
             </tbody>
         </table>
     </div>

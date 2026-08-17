@@ -1,11 +1,14 @@
 package mx.edu.utez.poo.techlog.techlog.model;
 
-public class BeanTablaBtcDocentes {
+import java.sql.Date;
+
+public class BeanTablaBtcDocente {
     private int id;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String area;
+    private Date fechaRegistro;
 
     public int getId() { return id; }
 
@@ -26,4 +29,8 @@ public class BeanTablaBtcDocentes {
     public String getArea() { return area; }
 
     public void setArea(String area) { this.area = area; }
+
+    public Date getFechaRegistro() { return fechaRegistro; }
+
+    public void setFechaRegistro(Date fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 }

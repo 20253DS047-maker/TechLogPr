@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!-- Tabla que muestra los registros de los docentes en la bitacora -->
 
 <!DOCTYPE html>
@@ -369,20 +369,20 @@
         <th style="width: 15%;">APELLIDO PATERNO</th>
         <th style="width: 15%;">APELLIDO MATERNO</th>
         <th style="width: 15%;">ÁREA</th>
-        <th style="width: 15%;">ESTADO</th>
+        <th style="width: 15%">FECHA REGISTRO</th>
         <th style="width: 20%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
-      <c:forEach items="${listaRegistroBtcDocente}" var="registroBtcDocente" varStatus="estado">
+      <c:forEach items="${listaRegistrosBtcDocentes}" var="registroBtcDocente">
         <tr>
           <td>${registroBtcDocente.id}</td>
           <td>${registroBtcDocente.nombre}</td>
           <td>${registroBtcDocente.apellidoPaterno}</td>
           <td>${registroBtcDocente.apellidoMaterno}</td>
           <td>${registroBtcDocente.area}</td>
+          <td>${registroBtcDocente.fechaRegistro}</td>
 
-          <td id="estadoTexto-${estado.index}" class="badge-activo">Activo</td>
           <td>
             <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado(${estado.index}, this)">
               <i class="fa-solid fa-toggle-on"></i>

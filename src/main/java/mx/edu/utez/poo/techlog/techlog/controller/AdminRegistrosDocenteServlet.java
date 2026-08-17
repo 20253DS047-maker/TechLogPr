@@ -5,8 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import mx.edu.utez.poo.techlog.techlog.model.BeanTablaBtcDocentes;
-import mx.edu.utez.poo.techlog.techlog.service.ServiceTablaBtcDocentes;
+import mx.edu.utez.poo.techlog.techlog.model.BeanTablaBtcDocente;
+import mx.edu.utez.poo.techlog.techlog.service.ServiceTablaBtcDocente;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,11 +16,10 @@ import java.util.List;
 public class AdminRegistrosDocenteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServiceTablaBtcDocente service = new ServiceTablaBtcDocente();
+        List<BeanTablaBtcDocente> listaRegistrosBtcDocentes = service.consultarRegistrosBtcDocentes();
 
-        ServiceTablaBtcDocentes servicio = new ServiceTablaBtcDocentes();
-        List<BeanTablaBtcDocentes> listaRegistroBtcDocentes = servicio.consultarBtcDocentes();
-
-        req.setAttribute("listaRegistroBtcDocente", listaRegistroBtcDocentes);
+        req.setAttribute("listaRegistrosBtcDocentes", listaRegistrosBtcDocentes);
         req.getRequestDispatcher("WEB-INF/vistas-admin/registrodocente.jsp").forward(req, resp);
     }
 }

@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Iniciar sesion</title>
+    <title>Iniciar sesión - Alumno</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa&display=swap" rel="stylesheet">
@@ -37,6 +37,15 @@
             margin: 0;
             background-color: #CBCABE;
             font-family: 'Lexend Exa', sans-serif;
+        }
+        /* Estilos para el botón del ojo */
+        .toggle-password {
+            cursor: pointer;
+            background-color: #fff;
+            border-left: none;
+        }
+        .toggle-password:hover {
+            background-color: #f8f9fa;
         }
     </style>
 </head>
@@ -71,14 +80,19 @@
                 <label for="matricula" class="form-label">Matricula:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control"name="matricula" id="matricula" placeholder="Ingrese su matricula">
+                    <input type="text" class="form-control" name="matricula" id="matricula" placeholder="Ingrese su matricula">
                 </div>
             </div>
+
+            <!-- Campo de Contraseña con el icono del ojo -->
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="contrasena" class="form-label">Contraseña:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
                     <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ej: 12345">
+                    <button type="button" class="input-group-text toggle-password" id="togglePassword">
+                        <i class="bi bi-eye" id="iconoOjo"></i>
+                    </button>
                 </div>
             </div>
 
@@ -92,7 +106,21 @@
     </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+<!-- Script para la interacción del ojo -->
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const contrasenaInput = document.getElementById('contrasena');
+    const iconoOjo = document.getElementById('iconoOjo');
+
+    togglePassword.addEventListener('click', function () {
+        const esPassword = contrasenaInput.getAttribute('type') === 'password';
+        contrasenaInput.setAttribute('type', esPassword ? 'text' : 'password');
+
+        iconoOjo.classList.toggle('bi-eye');
+        iconoOjo.classList.toggle('bi-eye-slash');
+    });
+</script>
 </body>
 </html>

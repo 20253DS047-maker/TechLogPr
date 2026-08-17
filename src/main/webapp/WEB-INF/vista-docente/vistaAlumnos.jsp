@@ -397,7 +397,7 @@
     </label>
     <label>
       <input type="radio" name="filtro"
-             onchange="window.location.href='registros-alumnos-servlet'"> Bitacora-Alumnos
+             onchange="window.location.href='registros-alumnos-servlet '"> Bitacora-Alumnos
     </label>
   </div>
 </div>

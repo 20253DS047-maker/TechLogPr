@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<!-- Tabla que muestra los registros de las pc que hacen los alumnos -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,7 +26,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Evita barras de desplazamiento innecesarias */
+            overflow: hidden;
         }
         body {
             background-color: #cbc8be;
@@ -116,7 +115,6 @@
             cursor: pointer;
         }
 
-        /* Tabla flexible que ocupa todo el alto restante */
         .table-container {
             background-color: #e5ded8;
             border-radius: 2px;
@@ -150,7 +148,6 @@
             vertical-align: middle;
         }
 
-        /* Filas con altura fija */
         .custom-table tbody tr {
             height: 45px;
         }
@@ -158,7 +155,6 @@
         .badge-activo { color: #0d8065; font-weight: 600; }
         .badge-inactivo { color: #b03a3a; font-weight: 600; }
 
-        /* Iconos de acciones */
         .icon-btn {
             border: none;
             background: none;
@@ -169,7 +165,6 @@
             padding: 0;
         }
 
-        /* Footer y paginación al final */
         .footer-controls {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
@@ -353,7 +348,6 @@
 
         <h1 class="main-title">Registros Equipos / PC</h1>
 
-        <!-- Únicamente botón para cerrar sesión (Sin botón agregar) -->
         <div class="d-flex flex-column gap-2 align-items-end">
             <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
         </div>
@@ -394,36 +388,39 @@
                     <td>${pc.numeroPc}</td>
                     <td>${pc.modelo}</td>
                     <td>${pc.islaMesa}</td>
-                    <td id="estadoTexto-${estado.index}" class="${pc.estado == 'activo' ? 'badge-activo' : 'badge-inactivo'}">
+                    <td id="estadoTexto-${estado.index}" class="${pc.estado == 'Activo' || pc.estado == 'activo' ? 'badge-activo' : 'badge-inactivo'}">
                             ${pc.estado}
                     </td>
                     <td>
                         <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado('${estado.index}', this)">
-                            <i class="fa-solid ${pc.estado == 'activo' ? 'fa-toggle-on' : 'fa-toggle-off'}"></i>
+                            <i class="fa-solid ${pc.estado == 'Activo' || pc.estado == 'activo' ? 'fa-toggle-on' : 'fa-toggle-off'}"></i>
                         </button>
+
                         <button type="button" class="icon-btn" title="Ver detalles"
                                 onclick="verMas({
-                                        id_pc: '${pc.id_pc}',
-                                        mesa: '${pc.mesa}',
-                                        salon: '${pc.salon_computo}',
+                                        id_pc: '${pc.numeroPc}',
+                                        mesa: '${pc.islaMesa}',
+                                        salon: '${pc.salonComputo}',
                                         docencia: '${pc.docencia}',
                                         modelo: '${pc.modelo}',
                                         estado: '${pc.estado}'
                                         })">
                             <i class="fa-regular fa-eye"></i>
                         </button>
+
                         <button type="button" class="icon-btn" title="Editar"
                                 onclick="editar('${estado.index}', {
-                                        id_pc: '${pc.id_pc}',
-                                        mesa: '${pc.mesa}',
-                                        salon: '${pc.salon_computo}',
+                                        id_pc: '${pc.numeroPc}',
+                                        mesa: '${pc.islaMesa}',
+                                        salon: '${pc.salonComputo}',
                                         docencia: '${pc.docencia}',
                                         modelo: '${pc.modelo}',
                                         estado: '${pc.estado}'
                                         })">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
-                        <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${estado.index}')">
+
+                        <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${pc.id}')">
                             <i class="fa-regular fa-trash-can"></i>
                         </button>
                     </td>
@@ -478,7 +475,7 @@
 
 <!-- MODALES -->
 
-<!-- Modal Ver Más (Datos del Equipo PC) -->
+<!-- Modal Ver Más -->
 <div class="modal-overlay" id="modalVerMas">
     <div class="modal-box modal-white">
         <h2>Detalle del Equipo PC</h2>
@@ -512,7 +509,7 @@
     </div>
 </div>
 
-<!-- Modal Editar (Datos del Equipo PC) -->
+<!-- Modal Editar -->
 <div class="modal-overlay" id="modalEditar">
     <form class="modal-box modal-white" onsubmit="return false;">
         <h2>Editar Equipo PC</h2>
@@ -537,7 +534,6 @@
                 <select name="docencia" id="ed-docencia">
                     <option value="D4">D4</option>
                     <option value="D3">D3</option>
-
                     <option value="D2">D2</option>
                     <option value="CECADEC">CECADEC</option>
                 </select>
@@ -592,23 +588,23 @@
     }
 
     function verMas(datos) {
-        document.getElementById('vm-id-pc').value = datos.id_pc;
-        document.getElementById('vm-mesa').value = datos.mesa;
-        document.getElementById('vm-salon').value = datos.salon;
-        document.getElementById('vm-docencia').value = datos.docencia;
-        document.getElementById('vm-modelo').value = datos.modelo;
-        document.getElementById('vm-estado').value = datos.estado;
+        document.getElementById('vm-id-pc').value = datos.id_pc || '';
+        document.getElementById('vm-mesa').value = datos.mesa || '';
+        document.getElementById('vm-salon').value = datos.salon || '';
+        document.getElementById('vm-docencia').value = datos.docencia || '';
+        document.getElementById('vm-modelo').value = datos.modelo || '';
+        document.getElementById('vm-estado').value = datos.estado || '';
         abrirModal('modalVerMas');
     }
 
     function editar(id, datos) {
         document.getElementById('ed-id').value = id;
-        document.getElementById('ed-id-pc').value = datos.id_pc;
-        document.getElementById('ed-mesa').value = datos.mesa;
-        document.getElementById('ed-salon').value = datos.salon;
-        document.getElementById('ed-docencia').value = datos.docencia;
-        document.getElementById('ed-modelo').value = datos.modelo;
-        document.getElementById('ed-estado').value = datos.estado;
+        document.getElementById('ed-id-pc').value = datos.id_pc || '';
+        document.getElementById('ed-mesa').value = datos.mesa || '';
+        document.getElementById('ed-salon').value = datos.salon || '';
+        document.getElementById('ed-docencia').value = datos.docencia || '';
+        document.getElementById('ed-modelo').value = datos.modelo || '';
+        document.getElementById('ed-estado').value = datos.estado || '';
         abrirModal('modalEditar');
     }
 

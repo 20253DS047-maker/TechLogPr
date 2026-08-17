@@ -366,21 +366,24 @@
     <table class="custom-table text-center">
       <thead>
       <tr>
-        <th style="width: 10%;">ID_REGISTRO</th>
-        <th style="width: 15%;">MATRÍCULA</th>
-        <th style="width: 20%;">NOMBRE DOCENTE</th>
+        <th style="width: 7%;">ID</th>
+        <th style="width: 10%;">MATRÍCULA</th>
+        <th style="width: 18%;">NOMBRE ALUMNO</th>
+        <th style="width: 18%;">NOMBRE DOCENTE</th>
+        <th style="width: 7%;">ID PC</th>
         <th style="width: 20%;">OBSERVACIONES</th>
-        <th style="width: 15%">ESTADO</th>
         <th style="width: 20%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
-      <c:forEach items="${listaRegistroBtcAlumnos}" var="registroAlumnos" varStatus="estado">
+      <c:forEach items="${listaRegistroBtcAlumnos}" var="registroBtcAlumno" varStatus="estado">
         <tr>
-          <th scope="row">${estado.count}</th>
-          <td>${registroAlumnos.matricula_usuario}</td>
-          <td>${registroAlumnos.nombreDocente}</td>
-          <td>${registroAlumnos.observaciones}</td>
+          <td>${registroBtcAlumno.id}</td>
+          <td>${registroBtcAlumno.matricula}</td>
+          <td>${registroBtcAlumno.nombre} ${registroBtcAlumno.apellidoPaterno} ${registroBtcAlumno.apellidoMaterno}</td>
+          <td>${registroBtcAlumno.nombreDocente}</td>
+          <td>${registroBtcAlumno.idPc}</td>
+          <td>${registroBtcAlumno.observaciones}</td>
 
           <td id="estadoTexto-0" class="badge-activo">Activo</td>
           <td>
@@ -423,16 +426,7 @@
           </td>
         </tr>
 
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-        <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-
-
       </c:forEach>
-
       </tbody>
     </table>
   </div>

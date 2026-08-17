@@ -360,9 +360,9 @@
       <thead>
       <tr>
         <th style="width: 20%;">MATRÍCULA</th>
+        <th style="width: 15%;">USERNAME</th>
         <th style="width: 25%;">NOMBRE</th>
         <th style="width: 25%;">APELLIDO</th>
-        <th style="width: 15%;">USERNAME</th>
         <th style="width: 15%;">ACCIONES</th>
       </tr>
       </thead>
@@ -370,9 +370,9 @@
       <c:forEach items="${listaUsuariosAlumnos}" var="usuarioAlumno">
         <tr>
           <td>${usuarioAlumno.matricula}</td>
+          <td>${usuarioAlumno.username}</td>
           <td>${usuarioAlumno.nombre}</td>
           <td>${usuarioAlumno.apellido}</td>
-          <td>${usuarioAlumno.username}</td>
           <td>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!-- Tabla que muestra usuarios de docentes (login) -->
 
 <!DOCTYPE html>
@@ -356,23 +357,23 @@
     <table class="custom-table text-center">
       <thead>
       <tr>
-        <th style="width: 12%;">ID DOCENTE</th>
-        <th style="width: 15%;">USERNAME</th>
-        <th style="width: 18%;">NOMBRE</th>
-        <th style="width: 18%;">APELLIDO PATERNO</th>
-        <th style="width: 18%;">APELLIDO MATERNO</th>
+        <th style="width: 10%;">ID DOCENTE</th>
+        <th style="width: 20%;">USERNAME</th>
+        <th style="width: 15%;">NOMBRE</th>
+        <th style="width: 15%;">APELLIDO PATERNO</th>
+        <th style="width: 15%;">APELLIDO MATERNO</th>
         <th style="width: 10%;">ÁREA</th>
-        <th style="width: 11%;">ACCIONES</th>
+        <th style="width: 15%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
       <c:forEach items="${listaUsuariosDocentes}" var="usuarioDocente">
         <tr>
-          <td>${usuarioDocente.id_docente}</td>
+          <td>${usuarioDocente.id}</td>
           <td>${usuarioDocente.username}</td>
           <td>${usuarioDocente.nombre}</td>
-          <td>${usuarioDocente.apellido_paterno}</td>
-          <td>${usuarioDocente.apellido_materno}</td>
+          <td>${usuarioDocente.apellidoPaterno}</td>
+          <td>${usuarioDocente.apellidoMaterno}</td>
           <td>${usuarioDocente.area}</td>
           <td>
             <button type="button" class="icon-btn" title="Ver detalles"

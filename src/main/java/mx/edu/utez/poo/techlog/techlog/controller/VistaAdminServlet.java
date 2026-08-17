@@ -16,8 +16,8 @@ import java.util.List;
 public class VistaAdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ServiceTablaBtcAlumnos servicio = new ServiceTablaBtcAlumnos();
-        List<BeanTablaBtcAlumnos> listaRegistroBtcAlumno = servicio.consultarRegistroBtcAlum();
+        ServiceTablaBtcAlumnos service = new ServiceTablaBtcAlumnos();
+        List<BeanTablaBtcAlumnos> listaRegistroBtcAlumno = service.consultarRegistrosBtcAlumnos();
 
         req.setAttribute("listaRegistroBtcAlumnos", listaRegistroBtcAlumno);
         req.getRequestDispatcher("WEB-INF/vistas-admin/registros.jsp").forward(req,resp);

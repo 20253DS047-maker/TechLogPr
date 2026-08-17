@@ -10,25 +10,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DaoTablaBtcAlumnos {
-    public List<BeanTablaBtcAlumnos> consultarRegistroBtcAlum() {
-        List <BeanTablaBtcAlumnos> listaRegistroBtcAlumno = new ArrayList<>();
+    public List<BeanTablaBtcAlumnos> consultarRegistrosBtcAlumnos() {
+        List<BeanTablaBtcAlumnos> listaRegistroBtcAlumnos = new ArrayList<>();
         try(Connection conexion = Conexion.getConexion()){
             Statement statement = conexion.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Registro_alumno");
+            ResultSet rs = statement.executeQuery("SELECT * FROM REGISTRO_ALUMNO ORDER BY id_registro");
             while(rs.next()){
-                BeanTablaBtcAlumnos btcAlumnos = new BeanTablaBtcAlumnos();
-                btcAlumnos.setId(rs.getInt("id_registro"));
-                btcAlumnos.setMatricula_usuario(rs.getString("matricula_usuario"));
-                btcAlumnos.setFechaEntrada(rs.getDate("fecha_hora_entrada"));
-                btcAlumnos.setFechaSalida(rs.getDate("fecha_hora_salida"));
-                btcAlumnos.setNombreDocente(rs.getString("nombre_docente"));
-                btcAlumnos.setObservaciones(rs.getString("observaciones"));
-                listaRegistroBtcAlumno.add(btcAlumnos);
+                BeanTablaBtcAlumnos registroBtcAlumno = new BeanTablaBtcAlumnos();
+                registroBtcAlumno.setId(rs.getInt("ID_REGISTRO"));
+                registroBtcAlumno.setMatricula(rs.getString("MATRICULA_USUARIO"));
+                registroBtcAlumno.setNombre(rs.getString("PRIMER_NOMBRE_ALU"));
+                registroBtcAlumno.setApellidoPaterno(rs.getString("APELLIDO_PATERNO_ALU"));
+                registroBtcAlumno.setApellidoMaterno(rs.getString("APELLIDO_MATERNO_ALU"));
+                registroBtcAlumno.setNombreDocente(rs.getString("NOMBRE_DOCENTE"));
+                registroBtcAlumno.setFechaRegistro(rs.getDate("FECHA_REGISTRO"));
+                registroBtcAlumno.setObservaciones(rs.getString("OBSERVACIONES"));
+                registroBtcAlumno.setIdPc(rs.getInt("ID_PC"));
+
+                listaRegistroBtcAlumnos.add(registroBtcAlumno);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return listaRegistroBtcAlumno;
+        return listaRegistroBtcAlumnos;
     }
+
+
 }
+

@@ -75,4 +75,48 @@ public class DaoBitacoraPc {
             return false;
         }
     }
+
+    // AGREGADO: actualiza un registro. numeroPcOriginal identifica la fila a modificar
+    // (por si el usuario cambia el numero_pc en el propio formulario de edicion)
+    public boolean actualizar(BeanBitacoraPc registroPc, String numeroPcOriginal) {
+        String sql = "UPDATE REGISTRO_PC SET salon_computo = ?, docencia = ?, numero_pc = ?, modelo = ?, isla_mesa = ?, estado = ? WHERE numero_pc = ?";
+
+        try (Connection conexion = Conexion.getConexion();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setString(1, registroPc.getSalon_computo());
+            ps.setString(2, registroPc.getDocencia());
+            ps.setString(3, registroPc.getNumero_pc());
+            ps.setString(4, registroPc.getModelo());
+            ps.setString(5, registroPc.getIsla_mesa());
+            ps.setString(6, registroPc.getEstado());
+            ps.setString(7, numeroPcOriginal);
+
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // AGREGADO: cambia unicamente el estado (activo/inactivo) de un PC
+    public boolean cambiarEstado(String numeroPc, String nuevoEstado) {
+        String sql = "UPDATE REGISTRO_PC SET estado = ? WHERE numero_pc = ?";
+
+        try (Connection conexion = Conexion.getConexion();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setString(1, nuevoEstado);
+            ps.setString(2, numeroPc);
+
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

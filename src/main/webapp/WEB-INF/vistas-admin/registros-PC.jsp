@@ -391,7 +391,7 @@
                             ${pc.estado}
                     </td>
                     <td>
-                        <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado('${estado.index}', this)">
+                        <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado('${estado.index}', this, '${pc.numero_pc}')">
                             <i class="fa-solid ${pc.estado == 'activo' ? 'fa-toggle-on' : 'fa-toggle-off'}"></i>
                         </button>
                         <button type="button" class="icon-btn" title="Ver detalles"
@@ -406,14 +406,14 @@
                             <i class="fa-regular fa-eye"></i>
                         </button>
                         <button type="button" class="icon-btn" title="Editar"
-                                onclick="editar('${estado.index}', {
-                                        id_pc: '${pc.id_pc}',
+                                onclick="editar('${pc.numero_pc}', {
+                                        id_pc: '${pc.numero_pc}',
                                         mesa: '${pc.mesa}',
                                         salon: '${pc.salon_computo}',
                                         docencia: '${pc.docencia}',
                                         modelo: '${pc.modelo}',
                                         estado: '${pc.estado}'
-                                        })">
+                                        }, this)">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                         <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${pc.numero_pc}', this)">
@@ -637,8 +637,8 @@
         abrirModal('modalVerMas');
     }
 
-    function editar(id, datos) {
-        document.getElementById('ed-id').value = id;
+    function editar(numeroPc, datos, boton) {
+        document.getElementById('ed-id').value = numeroPc;
         document.getElementById('ed-id-pc').value = datos.id_pc;
         document.getElementById('ed-mesa').value = datos.mesa;
         document.getElementById('ed-salon').value = datos.salon;
@@ -649,27 +649,89 @@
     }
 
     function guardarEdicion() {
-        cerrarModal('modalEditar');
+        var numeroPcOriginal = document.getElementById('ed-id').value;
+        var body = 'numero_pc_original=' + encodeURIComponent(numeroPcOriginal) +
+            '&numero_pc=' + encodeURIComponent(document.getElementById('ed-id-pc').value) +
+            '&salon_computo=' + encodeURIComponent(document.getElementById('ed-salon').value) +
+            '&docencia=' + encodeURIComponent(document.getElementById('ed-docencia').value) +
+            '&modelo=' + encodeURIComponent(document.getElementById('ed-modelo').value) +
+            '&isla_mesa=' + encodeURIComponent(document.getElementById('ed-mesa').value) +
+            '&estado=' + encodeURIComponent(document.getElementById('ed-estado').value);
+
+        fetch('editar-pc-servlet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('No se pudo editar: ' + (data.message || 'Error desconocido'));
+                    cerrarModal('modalEditar');
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+                alert('Error de conexión al editar el equipo.');
+                cerrarModal('modalEditar');
+            });
     }
 
-    function cambiarEstado(id, boton) {
+    function cambiarEstado(id, boton, numeroPc) {
         var celda = document.getElementById('estadoTexto-' + id);
         var icono = boton.querySelector('i');
         var activo = icono.classList.contains('fa-toggle-on');
+        var nuevoEstado;
 
         if (activo) {
             icono.classList.remove('fa-toggle-on');
             icono.classList.add('fa-toggle-off');
-            celda.textContent = 'Inactivo';
+            nuevoEstado = 'Inactivo';
             celda.classList.remove('badge-activo');
             celda.classList.add('badge-inactivo');
         } else {
             icono.classList.remove('fa-toggle-off');
             icono.classList.add('fa-toggle-on');
-            celda.textContent = 'Activo';
+            nuevoEstado = 'Activo';
             celda.classList.remove('badge-inactivo');
             celda.classList.add('badge-activo');
         }
+        celda.textContent = nuevoEstado;
+
+        if (!numeroPc) {
+            return;
+        }
+
+        fetch('cambiar-estado-pc-servlet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'numero_pc=' + encodeURIComponent(numeroPc) + '&estado=' + encodeURIComponent(nuevoEstado)
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                if (!data.success) {
+                    if (nuevoEstado === 'Inactivo') {
+                        icono.classList.remove('fa-toggle-off');
+                        icono.classList.add('fa-toggle-on');
+                        celda.textContent = 'Activo';
+                        celda.classList.remove('badge-inactivo');
+                        celda.classList.add('badge-activo');
+                    } else {
+                        icono.classList.remove('fa-toggle-on');
+                        icono.classList.add('fa-toggle-off');
+                        celda.textContent = 'Inactivo';
+                        celda.classList.remove('badge-activo');
+                        celda.classList.add('badge-inactivo');
+                    }
+                    alert('No se pudo cambiar el estado: ' + (data.message || 'Error desconocido'));
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+                alert('Error de conexión al cambiar el estado.');
+            });
     }
 
     function eliminar(numeroPc, boton) {

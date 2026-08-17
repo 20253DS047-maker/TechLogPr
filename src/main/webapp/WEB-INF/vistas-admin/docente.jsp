@@ -378,27 +378,27 @@
           <td>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
-                            id_docente: '${usuarioDocente.id_docente}',
+                            id_docente: '${usuarioDocente.id}',
                             username: '${usuarioDocente.username}',
                             nombre: '${usuarioDocente.nombre}',
-                            apellido_paterno: '${usuarioDocente.apellido_paterno}',
-                            apellido_materno: '${usuarioDocente.apellido_materno}',
+                            apellido_paterno: '${usuarioDocente.apellidoPaterno}',
+                            apellido_materno: '${usuarioDocente.apellidoMaterno}',
                             area: '${usuarioDocente.area}'
                             })">
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
-                    onclick="editar('${usuarioDocente.id_docente}', {
-                            id_docente: '${usuarioDocente.id_docente}',
+                    onclick="editar('${usuarioDocente.id}', {
+                            id_docente: '${usuarioDocente.id}',
                             username: '${usuarioDocente.username}',
                             nombre: '${usuarioDocente.nombre}',
-                            apellido_paterno: '${usuarioDocente.apellido_paterno}',
-                            apellido_materno: '${usuarioDocente.apellido_materno}',
+                            apellido_paterno: '${usuarioDocente.apellidoPaterno}',
+                            apellido_materno: '${usuarioDocente.apellidoMaterno}',
                             area: '${usuarioDocente.area}'
                             })">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${usuarioDocente.id_docente}')">
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${usuarioDocente.id}')">
               <i class="fa-regular fa-trash-can"></i>
             </button>
           </td>

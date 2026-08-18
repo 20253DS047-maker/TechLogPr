@@ -12,7 +12,7 @@ public class DaoAlumnosVerMas {
 
     public BeanTablaBtcAlumnos findById(int id) {
         BeanTablaBtcAlumnos registro = null;
-        String sql = "SELECT * FROM REGISTRO_DOCENTE WHERE id = ?";
+        String sql = "SELECT * FROM REGISTRO_ALUMNO WHERE id_registro = ?";
 
         try (Connection conexion = Conexion.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
@@ -24,8 +24,8 @@ public class DaoAlumnosVerMas {
                     registro = new BeanTablaBtcAlumnos();
                     registro.setId(rs.getInt("id"));
                     registro.setNombre(rs.getString("nombre"));
-                    registro.setApellidoPaterno(rs.getString("apellido_paterno"));
-                    registro.setApellidoMaterno(rs.getString("apellido_materno"));
+                    registro.setNombreDocente(rs.getString("nombre_docente"));
+                    registro.setObservaciones(rs.getString("observaciones"));
                 }
             }
         } catch (Exception e) {

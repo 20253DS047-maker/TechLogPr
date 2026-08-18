@@ -32,9 +32,8 @@ public class AlumnosVerMasServlet extends HttpServlet {
                         String json = "{"
                                 + "\"id\":" + registro.getId() + ","
                                 + "\"nombre\":\"" + (registro.getNombre() != null ? registro.getNombre() : "") + "\","
-                                + "\"apellidoPaterno\":\"" + (registro.getApellidoPaterno() != null ? registro.getApellidoPaterno() : "") + "\","
-                                + "\"apellidoMaterno\":\"" + (registro.getApellidoMaterno() != null ? registro.getApellidoMaterno() : "") + "\","
-                                + "\"area\":\"" + (registro.getArea() != null ? registro.getArea() : "") + "\""
+                                + "\"nombre_docente\":\"" + (registro.getNombreDocente() != null ? registro.getNombreDocente() : "") + "\","
+                                + "\"observaciones\":\"" + (registro.getObservaciones() != null ? registro.getObservaciones() : "") + "\""
                                 + "}";
                         resp.getWriter().write(json);
                     } else {
@@ -52,7 +51,7 @@ public class AlumnosVerMasServlet extends HttpServlet {
             }
 
         } else {
-            List<BeanTablaBtcAlumnos> listaRegistroBtcDocentes = servicio.consultarBtcDocentes();
+            List<BeanTablaBtcAlumnos> listaRegistroBtcDocentes = servicio.consultarBtcAlumnos();
             req.setAttribute("listaRegistroBtcDocente", listaRegistroBtcDocentes);
             req.getRequestDispatcher("/WEB-INF/vistas-admin/registros.jsp").forward(req, resp);
         }

@@ -551,42 +551,25 @@
 
 <!-- Modal Agregar -->
 <div class="modal-overlay" id="modalAgregar">
-  <form class="modal-box modal-white" onsubmit="return false;">
+  <form class="modal-box modal-white" action="AgregarRegistroDocenteServlet">
     <h2>Agregar registro</h2>
-    <label>Matrícula:</label>
-    <input type="text" id="ag-matricula" placeholder="Introduzca su matrícula">
-    <label>Nombre Completo:</label>
-    <input type="text" id="ag-nombre" placeholder="Introduzca su nombre completo">
-    <div class="row-2">
-      <div>
-        <label>Fecha:</label>
-        <input type="text" id="ag-fecha" placeholder="Seleccione...">
-      </div>
-      <div>
-        <label>PC:</label>
-        <input type="text" id="ag-pc" placeholder="Introduzca N. de PC">
-      </div>
-    </div>
-    <label>Salón:</label>
-    <input type="text" id="ag-salon" placeholder="Introduzca su salón">
-    <label>Docencia:</label>
-    <select id="ag-docencia">
-      <option value="" disabled selected hidden>Seleccione su Docencia</option>
-      <option value="D2">D2</option>
-      <option value="D4">D4</option>
-      <option value="CECADEC">CECADEC</option>
+    <label>Nombre:</label>
+    <input type="text" name="nombre" id="ag-nombre" placeholder="Introduzca su nombre">
+    <label>Apellido Paterno:</label>
+    <input type="text" name="apellido_paterno" id="ag-salon" placeholder="Introduzca su apellido paterno">
+    <label>Apellido Materno:</label>
+    <input type="text" name="apellido_materno" id="ag-docente" placeholder="Ingrese su apellido materno">
+    <label for="area" class="form-label">Área:</label>
+    <select class="form-select" id="area" name="area" aria-label="Default select example">
+      <option selected disabled>Seleccione una opción</option>
+      <option value="DATID">DATID</option>
+      <option value="DAMI">DAMI</option>
+      <option value="DACEA">DACEA</option>
+      <option value="DATEFI">DATEFI</option>
     </select>
-    <label>Estado:</label>
-    <select id="ag-estado">
-      <option value="" disabled selected hidden>Seleccione su estado</option>
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
-    <label>Docente:</label>
-    <input type="text" id="ag-docente" placeholder="Ingrese su Docente">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
-      <button type="button" class="btn-confirmar" onclick="guardarNuevo()">Confirmar</button>
+      <button type="submit" class="btn-confirmar">Confirmar</button>
     </div>
   </form>
 </div>

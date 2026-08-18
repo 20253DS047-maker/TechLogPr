@@ -3,25 +3,16 @@ package mx.edu.utez.poo.techlog.techlog.model;
 public class BeanBitacoraAlumno {
     private String nombre;
     private String apellido;
-    private String nombre_completo;
     private String matricula_usuario;
     private String nombre_docente;
     private String observaciones;
 
-
-    public String getNombre_completo() {
-        return nombre_completo;
-    }
-
-    public void setNombre_completo(String nombre_completo) {
-        this.nombre_completo = nombre_completo;
-    }
-
-    public BeanBitacoraAlumno(String matriculaUsuario, String nombreDocente, String observaciones, String nombre_completo) {
+    public BeanBitacoraAlumno(String matriculaUsuario, String nombre, String apellido, String nombreDocente, String observaciones) {
         this.matricula_usuario = matriculaUsuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
         this.nombre_docente = nombreDocente;
         this.observaciones = observaciones;
-        this.nombre_completo = nombre_completo;
     }
 
     public String getObservaciones() {
@@ -63,4 +54,6 @@ public class BeanBitacoraAlumno {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+
 }

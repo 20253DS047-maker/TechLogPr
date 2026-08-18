@@ -21,7 +21,25 @@
         .btn-primary:hover{
             background-color: #20477E;
             border: #20477E;
+            color: white;
         }
+
+        /* Estilo específico para el botón enlace de la esquina */
+        .btn-corner {
+            background-color: #183052;
+            color: white;
+            border-radius: 4px;
+            border: 1px solid #183052;
+            text-decoration: none;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        .btn-corner:hover {
+            background-color: #20477E;
+            border-color: #20477E;
+            color: white;
+        }
+
         .text-title{
             color: #534646;
             text-align: center;
@@ -43,13 +61,22 @@
 <body>
 <div class="d-flex flex-column justify-content-start align-items-center vh-100">
     <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-4" style="margin-top: 30px">
-    <div class="card p-4 shadow" style="width: auto">
-        <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
-            <h2 class="text-title">REGISTRO DOCENTE</h2>
+
+    <div class="card p-4 shadow position-relative" style="width: auto">
+
+        <!-- Botón en la esquina superior derecha con la clase .btn-corner -->
+        <a href="registro-alumno-servlet" class="btn-corner position-absolute top-0 end-0 m-3 d-flex align-items-center gap-1">
+            <i class="bi bi-person-plus"></i> Registrar alumno
+        </a>
+
+        <div class="col-sm-6 col-md-8 mx-auto text-center mb-4 mt-2">
+            <h2 class="text-title">REGISTRO DOCENTES</h2>
         </div>
+
         <c:if test="${not empty requestScope.error}">
             <div class="alert alert-danger">${requestScope.error}</div>
         </c:if>
+
         <form action="registro-docente-servlet" method="post">
             <div class="row mb-4 g-4">
                 <div class="col-md-4">
@@ -78,8 +105,8 @@
             <div class="row mb-4 g-4">
                 <div class="col-md-4">
                     <label for="area" class="form-label">Área:</label>
-                    <select class="form-select" id="area" name="area" aria-label="Default select example">
-                        <option selected disabled>Seleccione una opción</option>
+                    <select class="form-select" id="area" name="area" aria-label="Default select example" required>
+                        <option selected disabled value="">Seleccione una opción</option>
                         <option value="DATID">DATID</option>
                         <option value="DAMI">DAMI</option>
                         <option value="DACEA">DACEA</option>
@@ -102,10 +129,6 @@
                 </div>
             </div>
 
-            <div class="mt-3 text-start">
-                <a href="registro-alumno-servlet" class="text-decoration-none small">¿Quieres registrar a un alumno?</a>
-            </div>
-
             <div class="d-grid gap-20 col-8 mx-auto mb-4">
                 <button type="submit" class="btn-primary">Iniciar</button>
             </div>
@@ -117,7 +140,6 @@
 
     </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>

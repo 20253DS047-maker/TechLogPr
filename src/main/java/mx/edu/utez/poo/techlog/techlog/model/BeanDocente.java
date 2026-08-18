@@ -1,22 +1,19 @@
 package mx.edu.utez.poo.techlog.techlog.model;
 
 public class BeanDocente {
+
     private String nombre;
     private String apellido_paterno;
     private String apellido_materno;
     private String area;
     private String password;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     private String username;
 
+    // Constructor vacío (Indispensable para Java / Servlets)
+    public BeanDocente() {
+    }
+
+    // Constructor con parámetros
     public BeanDocente(String nombre, String apellidoPaterno, String apellidoMaterno, String area, String password, String username) {
         this.nombre = nombre;
         this.apellido_paterno = apellidoPaterno;
@@ -24,14 +21,6 @@ public class BeanDocente {
         this.area = area;
         this.password = password;
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getNombre() {
@@ -66,5 +55,19 @@ public class BeanDocente {
         this.area = area;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

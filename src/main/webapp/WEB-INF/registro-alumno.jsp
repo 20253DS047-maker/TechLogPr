@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -27,7 +28,25 @@
         .btn-primary:hover{
             background-color: #20477E;
             border: #20477E;
+            color: white;
         }
+
+        /* Estilo para el botón de la esquina superior derecha */
+        .btn-corner {
+            background-color: #183052;
+            color: white;
+            border-radius: 4px;
+            border: 1px solid #183052;
+            text-decoration: none;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        .btn-corner:hover {
+            background-color: #20477E;
+            border-color: #20477E;
+            color: white;
+        }
+
         .text-title{
             color: #534646;
             text-align: center;
@@ -48,59 +67,78 @@
 </head>
 <body>
 <div class="d-flex flex-column justify-content-start align-items-center vh-100">
-    <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-4" style="margin-top: 50px">
-    <div class="card p-4 shadow" style="width: 798px">
-        <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
+    <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="Logo UTEZ" class="img-fluid mb-4" style="margin-top: 30px">
+
+    <div class="card p-4 shadow position-relative" style="width: auto">
+
+        <!-- Botón en la esquina superior derecha para navegar al registro docente -->
+        <a href="registro-docente-servlet" class="btn-corner position-absolute top-0 end-0 m-3 d-flex align-items-center gap-1">
+            <i class="bi bi-person-badge"></i> Registrar docente
+        </a>
+
+        <div class="col-sm-6 col-md-8 mx-auto text-center mb-4 mt-2">
             <h2 class="text-title">REGISTRO ALUMNOS</h2>
         </div>
+
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger">${requestScope.error}</div>
+        </c:if>
+
         <form action="registro-alumno-servlet" method="post">
-            <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="nombre" class="form-label">Nombre:</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese su nombre">
+            <!-- Fila 1: Datos personales básicos -->
+            <div class="row mb-4 g-4">
+                <div class="col-md-4">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese su nombre" required>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="apellido" class="form-label">Apellido:</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Ingrese su apellido">
+                <div class="col-md-4">
+                    <label for="apellido" class="form-label">Apellido:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Ingrese su apellido" required>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="matricula" class="form-label">Matrícula:</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi  bi-card-text"></i></span>
-                    <input type="text" class="form-control" name="matricula" id="matricula" placeholder="Ej: 20253ds047">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="contrasena" class="form-label">Contraseña:</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Ej: MAx. 5 caracteres">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-8 mx-auto mb-3">
-                <label for="username" class="form-label">Username:</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese su correo institucional" required>
+                <div class="col-md-4">
+                    <label for="matricula" class="form-label">Matrícula:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                        <input type="text" class="form-control" name="matricula" id="matricula" placeholder="Ej: 20253ds047" required>
+                    </div>
                 </div>
             </div>
 
-            <div class="d-grid gap-20 col-8 mx-auto mb-3">
+            <!-- Fila 2: Credenciales de acceso -->
+            <div class="row mb-4 g-4">
+                <div class="col-md-6">
+                    <label for="contrasena" class="form-label">Contraseña:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Max. 5 caracteres" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="username" class="form-label">Username:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese su correo o usuario" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-20 col-8 mx-auto mb-4">
                 <button type="submit" class="btn-primary">Iniciar</button>
             </div>
         </form>
+
         <div class="d-grid gap-20 col-3 mb-3">
-            <button type="button" onclick="window.location.href='registro-docente-servlet'" class="btn-primary">Regresar</button>
+            <button type="button" onclick="window.location.href='admin-alumno-servlet'" class="btn-primary">Regresar</button>
         </div>
 
     </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>

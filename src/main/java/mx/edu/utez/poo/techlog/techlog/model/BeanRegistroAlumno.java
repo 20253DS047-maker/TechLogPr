@@ -7,12 +7,14 @@ public class BeanRegistroAlumno {
     private String contrasena;
     private String username;
 
+    public BeanRegistroAlumno() {}
+
     public BeanRegistroAlumno(String matricula, String nombre, String apellido, String contrasena, String username) {
-       this.matricula = matricula;
-       this.nombre = nombre;
-       this.apellido = apellido;
-       this.contrasena = contrasena;
-       this.username = username;
+        this.matricula = matricula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.contrasena = contrasena;
+        this.username = username;
     }
 
     public String getMatricula() { return matricula; }
@@ -29,7 +31,8 @@ public class BeanRegistroAlumno {
 
     public String getContrasena() { return contrasena; }
 
-    public void setContrasena(String contraseña) { this.contrasena = contrasena; }
+    // CORREGIDO: El parámetro ahora coincide con la asignación
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
     public String getUsername() { return username; }
 

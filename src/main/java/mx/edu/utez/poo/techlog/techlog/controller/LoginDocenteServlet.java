@@ -7,9 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mx.edu.utez.poo.techlog.techlog.model.BeanLoginDocente;
+import mx.edu.utez.poo.techlog.techlog.model.BeanTablaBtcAlumnos;
 import mx.edu.utez.poo.techlog.techlog.service.ServiceLoginDocente;
+import mx.edu.utez.poo.techlog.techlog.service.ServiceTablaBtcAlumnos;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet (name="LoginDocenteServlet", value="/login-docente-servlet")
 public class LoginDocenteServlet extends HttpServlet {
@@ -26,6 +29,9 @@ public class LoginDocenteServlet extends HttpServlet {
         ServiceLoginDocente serviceLoginDocente = new ServiceLoginDocente();
         BeanLoginDocente docente = serviceLoginDocente.autenticar(username, password);
 
+        ServiceTablaBtcAlumnos service = new ServiceTablaBtcAlumnos();
+        List<BeanTablaBtcAlumnos> listaRegistroBtcAlumnos = service.consultarRegistrosBtcAlumnos();
+
         if (docente != null) {
             // 1. Prevenir Session Fixation
             HttpSession oldSession = req.getSession(false);
@@ -37,6 +43,7 @@ public class LoginDocenteServlet extends HttpServlet {
             HttpSession newSession = req.getSession(true);
             newSession.setAttribute("docenteLogueado", docente);
 
+            req.setAttribute("listaRegistroBtcAlumnos", listaRegistroBtcAlumnos);
             req.getRequestDispatcher("WEB-INF/vista-docente/registros-docente.jsp").forward(req, resp);
         }else {
             req.setAttribute("error", "Credenciales incorrectas.");

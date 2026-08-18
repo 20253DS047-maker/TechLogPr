@@ -1,10 +1,12 @@
+<!-- Muestra la tabla de los usuarios de login de los alumnos-->
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vista Docente - Alumnos</title>
+  <title>Registros Alumnos</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -14,10 +16,10 @@
       box-sizing: border-box;
     }
     html, body {
-      height: 100%;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Evita barras de desplazamiento innecesarias */
+      overflow-y: auto;
     }
     body {
       background-color: #cbc8be;
@@ -31,8 +33,8 @@
     .main-wrapper {
       display: flex;
       flex-direction: column;
-      height: 100%;
       width: 100%;
+      min-height: 100vh;
     }
 
     /* Header con Logo y Botones */
@@ -55,8 +57,7 @@
       align-items: flex-end;
       gap: 8px;
     }
-    .btn-cerrar-sesion,
-    .btn-bitacora-docente {
+    .btn-cerrar-sesion, .btn-bitacora-docente {
       background-color: #172c45;
       color: #ffffff;
       border-radius: 8px;
@@ -69,8 +70,7 @@
       align-items: center;
       gap: 6px;
     }
-    .btn-cerrar-sesion:hover,
-    .btn-bitacora-docente:hover {
+    .btn-cerrar-sesion:hover, .btn-bitacora-docente:hover {
       background-color: #0f1e30;
       color: #ffffff;
     }
@@ -83,7 +83,7 @@
       letter-spacing: 1px;
     }
 
-    /* Buscador estilo consistente */
+    /* Buscador */
     .search-bar {
       width: 100%;
       margin: 0 auto 16px;
@@ -115,37 +115,26 @@
       width: 100%;
       background-color: #e5ded8;
       border-radius: 2px;
-      overflow: hidden;
-      padding: 0;
+      overflow-x: auto;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+      margin-bottom: 10px;
     }
     table {
       width: 100%;
-      height: 100%;
       border-collapse: collapse;
       table-layout: fixed;
-    }
-    thead {
-      height: 50px;
     }
     thead th {
       font-size: 0.85rem;
       text-transform: uppercase;
       color: #0d8065;
       padding: 12px 8px;
-      text-align: left;
       border-bottom: 2px solid #444444;
       letter-spacing: 0.5px;
       font-weight: 700;
     }
-    tbody {
-      height: calc(100% - 100px);
-    }
     tbody tr {
-      height: 14.28%; /* Distribución uniforme de filas */
+      height: 48px; /* Altura compacta fija por fila */
     }
     tbody td {
       padding: 8px 12px;
@@ -155,6 +144,8 @@
       white-space: nowrap;
       vertical-align: middle;
     }
+    .badge-activo { color: #0d8065; font-weight: 700; }
+    .badge-inactivo { color: #b03a3a; font-weight: 700; }
     .icon-btn {
       border: none;
       background: none;
@@ -165,13 +156,13 @@
       padding: 0;
     }
 
-    /* Paginación estilo consistente */
+    /* Paginación */
     .pagination-bar {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 6px;
-      height: 50px;
+      padding: 10px 0;
       flex-shrink: 0;
     }
     .pagination-bar button {
@@ -198,7 +189,7 @@
     .filters {
       display: flex;
       gap: 20px;
-      padding: 16px 0 0;
+      padding: 10px 0;
       flex-shrink: 0;
       align-items: center;
     }
@@ -218,7 +209,7 @@
       border: 1.5px solid #333;
     }
 
-    /* Modales rediseñados */
+    /* Modales */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -238,6 +229,13 @@
       max-width: 440px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     }
+    .modal-box h2 {
+      font-size: 1.1rem;
+      margin: 0 0 20px;
+      color: #2c2c2c;
+      text-align: center;
+      font-weight: 700;
+    }
     .modal-box label {
       font-weight: 600;
       font-size: 0.8rem;
@@ -245,8 +243,7 @@
       display: block;
       margin-bottom: 4px;
     }
-    .modal-box input,
-    .modal-box select {
+    .modal-box input, .modal-box select {
       width: 100%;
       padding: 9px 10px;
       border: none;
@@ -271,7 +268,6 @@
       cursor: pointer;
     }
 
-    /* Confirm box */
     .confirm-box {
       background-color: #ffffff;
       border-radius: 6px;
@@ -311,7 +307,7 @@
       <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="UTEZ" class="logo-img">
     </div>
 
-    <h1 class="page-title">Alumnos</h1>
+    <h1 class="page-title">Usuarios Alumnos</h1>
 
     <div class="top-bar">
       <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
@@ -325,75 +321,69 @@
   </div>
 
   <div class="table-container">
-    <table>
+    <table class="custom-table text-center">
       <thead>
       <tr>
-        <th style="width: 5%;">#</th>
-        <th style="width: 20%;">Matricula:</th>
-        <th style="width: 20%;">Nombre:</th>
-        <th style="width: 25%;">Apellido:</th>
-        <th style="width: 18%;">Username:</th>
-        <th style="width: 12%;">Acciones:</th>
+        <th style="width: 20%;">MATRÍCULA</th>
+        <th style="width: 15%;">USERNAME</th>
+        <th style="width: 25%;">NOMBRE</th>
+        <th style="width: 25%;">APELLIDO</th>
+        <th style="width: 15%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>0</td>
-        <td>20253DS196</td>
-        <td>Jonathan</td>
-        <td>Lopez Benites</td>
-        <td>jlopezb</td>
-        <td>
-          <button type="button" class="icon-btn" title="Ver mas"
-                  onclick="verMas('20253DS196','Jonathan','Lopez Benites','jlopezb')">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Editar">
-            <i class="fa-solid fa-pen-to-square"></i>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>20253DS034</td>
-        <td>Santiago</td>
-        <td>Flores</td>
-        <td>sfloresr</td>
-        <td>
-          <button type="button" class="icon-btn" title="Ver mas"
-                  onclick="verMas('20253DS034','Santiago','Flores','sfloresr')">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-          <button type="button" class="icon-btn" title="Editar">
-            <i class="fa-solid fa-pen-to-square"></i>
-          </button>
-        </td>
-      </tr>
-      <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="6">&nbsp;</td></tr>
+      <c:forEach items="${listaUsuariosAlumnos}" var="usuarioAlumno">
+        <tr>
+          <td>${usuarioAlumno.matricula}</td>
+          <td>${usuarioAlumno.username}</td>
+          <td>${usuarioAlumno.nombre}</td>
+          <td>${usuarioAlumno.apellido}</td>
+          <td>
+            <button type="button" class="icon-btn" title="Ver detalles"
+                    onclick="verMas({
+                            matricula: '${usuarioAlumno.matricula}',
+                            nombre: '${usuarioAlumno.nombre}',
+                            apellido: '${usuarioAlumno.apellido}',
+                            username: '${usuarioAlumno.username}'
+                            })">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Editar"
+                    onclick="editar('${usuarioAlumno.matricula}', {
+                            matricula: '${usuarioAlumno.matricula}',
+                            nombre: '${usuarioAlumno.nombre}',
+                            apellido: '${usuarioAlumno.apellido}',
+                            username: '${usuarioAlumno.username}'
+                            })">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${usuarioAlumno.matricula}')">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </td>
+        </tr>
+      </c:forEach>
       </tbody>
     </table>
-
-    <div class="pagination-bar">
-      <button type="button"><i class="fa-solid fa-angles-left"></i></button>
-      <button type="button"><i class="fa-solid fa-angle-left"></i></button>
-      <button type="button" class="active">1</button>
-      <button type="button">2</button>
-      <button type="button">3</button>
-      <button type="button">4</button>
-      <button type="button"><i class="fa-solid fa-angle-right"></i></button>
-      <button type="button"><i class="fa-solid fa-angles-right"></i></button>
-    </div>
   </div>
 
-  <!-- Filtros -->
+  <!-- Paginadores -->
+  <div class="pagination-bar">
+    <button type="button"><i class="fa-solid fa-angles-left"></i></button>
+    <button type="button"><i class="fa-solid fa-angle-left"></i></button>
+    <button type="button" class="active">1</button>
+    <button type="button">2</button>
+    <button type="button">3</button>
+    <button type="button">4</button>
+    <button type="button"><i class="fa-solid fa-angle-right"></i></button>
+    <button type="button"><i class="fa-solid fa-angles-right"></i></button>
+  </div>
+
+  <!--Filtros -->
   <div class="filters">
     <label>
-      <input type="radio" name="filtro" checked
-             onchange="window.location.href='usuarios-Alumno-servlet?tipo=A'"> Usuarios-Alumnos
+      <input type="radio" name="filtro"
+             onchange="window.location.href='usuarios-Alumno-servlet?tipo=A'" checked disabled> Usuarios-Alumnos
     </label>
     <label>
       <input type="radio" name="filtro"

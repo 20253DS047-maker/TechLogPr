@@ -17,13 +17,12 @@ public class ServiceRegistroAlumno {
             return false;
         }
 
-        // CORREGIDO: Cancela sólo si la contraseña es menor a 5 caracteres
         if (nuevoAlumno.getContrasena() == null || nuevoAlumno.getContrasena().trim().isEmpty() ||
                 nuevoAlumno.getContrasena().trim().length() < 5 ){
             return false;
         }
 
-        // ENCRIPTACIÓN: Se guarda el hash en el bean antes de llamar al DAO
+        // Genera el Hash SHA-256 oficial (64 caracteres en minúsculas) en Java
         String contrasenaEncriptada = HashUtils.sha256(nuevoAlumno.getContrasena().trim());
         nuevoAlumno.setContrasena(contrasenaEncriptada);
 

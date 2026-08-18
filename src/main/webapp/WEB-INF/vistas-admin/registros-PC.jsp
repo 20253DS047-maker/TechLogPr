@@ -350,6 +350,7 @@
 
         <div class="d-flex flex-column gap-2 align-items-end">
             <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
+            <button type="button" class="btn-custom-dark" onclick="abrirModal('modalAgregar')"><i class="fa-solid fa-square-plus"></i> Agregar</button>
         </div>
     </div>
 
@@ -509,6 +510,72 @@
     </div>
 </div>
 
+<!-- Modal Agregar -->
+<div class="modal-overlay" id="modalAgregar">
+    <form class="modal-box modal-white" action="AgregarRegistroPcServlet">
+        <h2>Agregar registro</h2>
+        <label for="salon" class="form-label form-label-custom">Salon de computo:</label>
+        <input type="text" class="form-control form-control-custom" name="salon_computo" id="salon" placeholder="Ej: CC7" required>
+
+            <label for="docencia" class="form-label">Docencia:</label>
+            <select id="docencia" name="docencia" class="form-select">
+                <option selected disabled>Selecciona una opción</option>
+                <option value="D2">Docencia 2</option>
+                <option value="D4">Docencia 4</option>
+                <option value="CECADEC">Cecadec</option>
+            </select>
+        <label for="numero_pc" class="form-label form-label-custom">PC:</label>
+        <input type="text" class="form-control form-control-custom" name="numero_pc" id="numero_pc" placeholder="Ej: 12" required>
+        <label for="modelo" class="form-label form-label-custom">Modelo:</label>
+        <input type="text" class="form-control form-control-custom" id="modelo" name="modelo" placeholder="Ej: HP" required>
+        <label for="isla_mesa" class="form-label">Isla/Mesa:</label>
+        <select id="isla_mesa" name="isla_mesa" class="form-select">
+            <option selected>Selecciona una opción</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <label for="estado" class="form-label">Estado</label>
+        <select id="estado" name="estado" class="form-select">
+            <option selected disabled>Selecciona una opcion</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+        </select>
+
+        <div class="modal-actions">
+            <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
+            <button type="submit" class="btn-confirmar">Confirmar</button>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Eliminar -->
+<div class="modal-overlay" id="modalEliminar">
+    <div class="confirm-box">
+        <div class="confirm-header">Eliminar PC</div>
+        <div class="confirm-icon"><i class="bi bi-question-lg"></i></div>
+        <div class="confirm-text">¿Estás seguro que quieres eliminar este equipo del registro?</div>
+        <input type="hidden" id="el-id">
+        <div class="confirm-actions">
+            <button type="button" class="btn-no" onclick="cerrarModal('modalEliminar')">No</button>
+            <button type="button" class="btn-si" onclick="confirmarEliminar()">Sí</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Cerrar Sesión -->
+<div class="modal-overlay" id="modalCerrarSesion">
+    <div class="confirm-box">
+        <div class="confirm-header">¿Estás seguro de cerrar sesión?</div>
+        <div class="confirm-actions">
+            <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
+            <button type="button" class="btn-si" onclick="window.location.href='logout-admin-servlet'">Sí</button>
+        </div>
+    </div>
+</div>
+
 <!-- Modal Editar -->
 <div class="modal-overlay" id="modalEditar">
     <form class="modal-box modal-white" onsubmit="return false;">
@@ -551,31 +618,6 @@
             <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
         </div>
     </form>
-</div>
-
-<!-- Modal Eliminar -->
-<div class="modal-overlay" id="modalEliminar">
-    <div class="confirm-box">
-        <div class="confirm-header">Eliminar PC</div>
-        <div class="confirm-icon"><i class="bi bi-question-lg"></i></div>
-        <div class="confirm-text">¿Estás seguro que quieres eliminar este equipo del registro?</div>
-        <input type="hidden" id="el-id">
-        <div class="confirm-actions">
-            <button type="button" class="btn-no" onclick="cerrarModal('modalEliminar')">No</button>
-            <button type="button" class="btn-si" onclick="confirmarEliminar()">Sí</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Cerrar Sesión -->
-<div class="modal-overlay" id="modalCerrarSesion">
-    <div class="confirm-box">
-        <div class="confirm-header">¿Estás seguro de cerrar sesión?</div>
-        <div class="confirm-actions">
-            <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
-            <button type="button" class="btn-si" onclick="window.location.href='logout-admin-servlet'">Sí</button>
-        </div>
-    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

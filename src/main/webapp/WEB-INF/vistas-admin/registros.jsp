@@ -481,42 +481,14 @@
     <h2>Detalle del registro</h2>
     <label>Matrícula:</label>
     <input type="text" id="vm-matricula" disabled>
-    <label>Nombre Completo:</label>
+    <label>Nombre:</label>
     <input type="text" id="vm-nombre" disabled>
-    <div class="row-2">
-      <div>
-        <label>Fecha:</label>
-        <input type="text" id="vm-fecha" disabled>
-      </div>
-      <div>
-        <label>PC:</label>
-        <input type="text" id="vm-pc" disabled>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="vm-horaEntrada" disabled>
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="vm-salon" disabled>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="vm-horaSalida" disabled>
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <input type="text" id="vm-docencia" disabled>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <input type="text" id="vm-estado" disabled>
     <label>Docente:</label>
     <input type="text" id="vm-docente" disabled>
+    <label>Observaciones:</label>
+    <input type="text" id="vm-observaciones" disabled>
+    <label>Estado:</label>
+    <input type="text" id="vm-estado" disabled>
     <div class="modal-actions">
       <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
@@ -716,18 +688,25 @@
     abrirModal('modalAgregar');
   }
 
-  function verMas(datos) {
-    document.getElementById('vm-matricula').value = datos.matricula;
-    document.getElementById('vm-nombre').value = datos.nombre;
-    document.getElementById('vm-fecha').value = datos.fecha;
-    document.getElementById('vm-pc').value = datos.pc;
-    document.getElementById('vm-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('vm-salon').value = datos.salon;
-    document.getElementById('vm-horaSalida').value = datos.horaSalida;
-    document.getElementById('vm-docencia').value = datos.docencia;
-    document.getElementById('vm-estado').value = datos.estado;
-    document.getElementById('vm-docente').value = datos.docente;
-    abrirModal('modalVerMas');
+  function cargarYVerMas(id) {
+    console.log("ID recibido en la función:", id);
+    fetch(`AlumnosVerMasServlet?action=getDetalle&id=\${id}`)
+            .then(response => {
+              if (!response.ok) throw new Error("Error en la respuesta");
+              return response.json();
+            })
+            .then(datos => {
+              document.getElementById('vm-id').value = datos.id || '';
+              document.getElementById('vm-nombre').value = datos.nombre || '';
+              document.getElementById('vm-paterno').value = datos.apellidoPaterno || '';
+              document.getElementById('vm-materno').value = datos.apellidoMaterno || '';
+
+              const inputArea = document.getElementById('vm-area');
+              if (inputArea) inputArea.value = datos.area || '';
+
+              abrirModal('modalVerMas');
+            })
+            .catch(error => console.error('Error al cargar detalle:', error));
   }
 
   function editar(id, datos) {

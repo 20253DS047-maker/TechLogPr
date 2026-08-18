@@ -25,7 +25,6 @@ public class DaoTablaBtcAlumnos {
                 registroBtcAlumno.setNombreDocente(rs.getString("NOMBRE_DOCENTE"));
                 registroBtcAlumno.setFechaRegistro(rs.getDate("FECHA_REGISTRO"));
                 registroBtcAlumno.setObservaciones(rs.getString("OBSERVACIONES"));
-                registroBtcAlumno.setIdPc(rs.getInt("ID_PC"));
 
                 listaRegistroBtcAlumnos.add(registroBtcAlumno);
             }

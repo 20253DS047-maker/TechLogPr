@@ -21,18 +21,19 @@ public class ServiceLoginAlumno {
         }
 
         BeanLoginAlumno alumno = daoLoginAlumno.findByMatricula(matricula.trim());
+        String hashIngresado = HashUtils.sha256(contrasena.trim());
 
         if (alumno != null) {
-            String hashIngresado = HashUtils.sha256(contrasena.trim());
-
             if (hashIngresado.equalsIgnoreCase(alumno.getContrasena())) {
-
-                if (alumno.getNombre().equalsIgnoreCase(nombre.trim()) &&
-                        alumno.getApellido().equalsIgnoreCase(apellido.trim())) {
-                    return alumno;
-                }
+                return alumno;
             }
         }
+
+        System.out.println("Hash ingresado: " + hashIngresado);
+        System.out.println("Hash en BD: " + alumno.getContrasena());
+        System.out.println("Matricula ingresada: " + matricula);
+        System.out.println("Matricula en BD: " + alumno.getMatricula());
+
 
         return null;
     }

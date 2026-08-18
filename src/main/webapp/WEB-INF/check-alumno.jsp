@@ -69,7 +69,7 @@
             </div>
 
             <div class="d-grid gap-20 col-3 mx-auto mb-3">
-                <button type="button" class="btn btn-primary">Volver</button>
+                <button type="button" onclick="window.location.href='vista-admin-servlet'" class="btn btn-primary">Volver</button>
             </div>
         </div>
 

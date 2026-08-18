@@ -19,7 +19,7 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Evita barras de desplazamiento innecesarias */
+      overflow: hidden;
     }
     body {
       background-color: #cbc8be;
@@ -142,10 +142,8 @@
       vertical-align: middle;
     }
 
-    /* El cuerpo distribuye de manera uniforme las filas para llenar la pantalla */
-    .custom-table tbody {}
     .custom-table tbody tr {
-      height: 45px; /* Hace que las 8 filas ocupen exactamente el 100% del alto disponible */
+      height: 45px;
     }
 
     .badge-activo { color: #0d8065; font-weight: 600; }
@@ -368,10 +366,11 @@
       <tr>
         <th style="width: 7%;">ID</th>
         <th style="width: 10%;">MATRÍCULA</th>
-        <th style="width: 18%;">NOMBRE ALUMNO</th>
-        <th style="width: 18%;">NOMBRE DOCENTE</th>
+        <th style="width: 15%;">NOMBRE ALUMNO</th>
+        <th style="width: 15%;">NOMBRE DOCENTE</th>
         <th style="width: 7%;">ID PC</th>
-        <th style="width: 20%;">OBSERVACIONES</th>
+        <th style="width: 15%;">OBSERVACIONES</th>
+        <th style="width: 10%;">ESTADO</th>
         <th style="width: 20%;">ACCIONES</th>
       </tr>
       </thead>

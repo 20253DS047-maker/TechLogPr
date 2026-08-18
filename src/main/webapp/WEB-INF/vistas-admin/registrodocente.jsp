@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!-- Tabla que muestra los registros de los docentes en la bitacora -->
 
 <!DOCTYPE html>
@@ -370,11 +370,12 @@
         <th style="width: 15%;">APELLIDO MATERNO</th>
         <th style="width: 15%;">ÁREA</th>
         <th style="width: 15%">FECHA REGISTRO</th>
-        <th style="width: 20%;">ACCIONES</th>
+        <th style="width: 8%;">ESTADO</th>
+        <th style="width: 12%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
-      <c:forEach items="${listaRegistrosBtcDocentes}" var="registroBtcDocente">
+      <c:forEach items="${listaRegistrosBtcDocentes}" var="registroBtcDocente" varStatus="estado">
         <tr>
           <td>${registroBtcDocente.id}</td>
           <td>${registroBtcDocente.nombre}</td>
@@ -382,42 +383,32 @@
           <td>${registroBtcDocente.apellidoMaterno}</td>
           <td>${registroBtcDocente.area}</td>
           <td>${registroBtcDocente.fechaRegistro}</td>
+          <td id="estadoTexto-${estado.index}" class="badge-activo">Activo</td>
 
           <td>
-            <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado(${estado.index}, this)">
+            <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado('${estado.index}', this)">
               <i class="fa-solid fa-toggle-on"></i>
             </button>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
-                      matricula: '20253DS196',
-                      nombre: 'Jonathan AlejandroLopez Benitez',
-                      fecha: '11/11/2026',
-                      pc: '15',
-                      horaEntrada: '11:00 AM',
-                      salon: 'MAC9',
-                      horaSalida: '13:00 PM',
-                      docencia: 'D4',
-                      estado: 'Activo',
-                      docente: ''
-                    })">
+                            nombre: '${registroBtcDocente.nombre}',
+                            apellidoPaterno: '${registroBtcDocente.apellidoPaterno}',
+                            apellidoMaterno: '${registroBtcDocente.apellidoMaterno}',
+                            area: '${registroBtcDocente.area}',
+                            fecha: '${registroBtcDocente.fechaRegistro}'
+                            })">
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
-                    onclick="editar(${estado.index}, {
-                            matricula: '20253DS196',
-                            nombre: 'Jonathan AlejandroLopez Benitez',
-                            fecha: '11/11/2026',
-                            pc: '15',
-                            horaEntrada: '11:00 AM',
-                            salon: 'MAC9',
-                            horaSalida: '13:00 PM',
-                            docencia: 'D4',
-                            estado: 'activo',
-                            docente: ''
+                    onclick="editar('${registroBtcDocente.id}', {
+                            nombre: '${registroBtcDocente.nombre}',
+                            apellidoPaterno: '${registroBtcDocente.apellidoPaterno}',
+                            apellidoMaterno: '${registroBtcDocente.apellidoMaterno}',
+                            area: '${registroBtcDocente.area}'
                             })">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(${estado.index})">
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${registroBtcDocente.id}')">
               <i class="fa-regular fa-trash-can"></i>
             </button>
           </td>
@@ -476,45 +467,23 @@
 <!-- Modal Ver Más -->
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box modal-white">
-    <h2>Detalle del registro</h2>
-    <label>Matrícula:</label>
-    <input type="text" id="vm-matricula" disabled>
-    <label>Nombre Completo:</label>
+    <h2>Detalle del docente</h2>
+    <label>Nombre:</label>
     <input type="text" id="vm-nombre" disabled>
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" id="vm-fecha" disabled>
+        <label>Apellido Paterno:</label>
+        <input type="text" id="vm-apellidoPaterno" disabled>
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" id="vm-pc" disabled>
+        <label>Apellido Materno:</label>
+        <input type="text" id="vm-apellidoMaterno" disabled>
       </div>
     </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="vm-horaEntrada" disabled>
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="vm-salon" disabled>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="vm-horaSalida" disabled>
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <input type="text" id="vm-docencia" disabled>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <input type="text" id="vm-estado" disabled>
-    <label>Docente:</label>
-    <input type="text" id="vm-docente" disabled>
+    <label>Área:</label>
+    <input type="text" id="vm-area" disabled>
+    <label>Fecha de registro:</label>
+    <input type="text" id="vm-fecha" disabled>
     <div class="modal-actions">
       <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
@@ -524,52 +493,22 @@
 <!-- Modal Editar -->
 <div class="modal-overlay" id="modalEditar">
   <form class="modal-box modal-white" onsubmit="return false;">
-    <h2>Editar registro</h2>
+    <h2>Editar docente</h2>
     <input type="hidden" id="ed-id">
-    <label>Matrícula:</label>
-    <input type="text" id="ed-matricula">
-    <label>Nombre Completo:</label>
+    <label>Nombre:</label>
     <input type="text" id="ed-nombre">
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" id="ed-fecha">
+        <label>Apellido Paterno:</label>
+        <input type="text" id="ed-apellidoPaterno">
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" id="ed-pc">
+        <label>Apellido Materno:</label>
+        <input type="text" id="ed-apellidoMaterno">
       </div>
     </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="ed-horaEntrada">
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="ed-salon">
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="ed-horaSalida">
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <select id="ed-docencia">
-          <option value="D4">D4</option>
-          <option value="D3">D3</option>
-        </select>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <select id="ed-estado">
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
-    <label>Docente:</label>
-    <input type="text" id="ed-docente" placeholder="Ingrese su Docente">
+    <label>Área:</label>
+    <input type="text" id="ed-area">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
       <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
@@ -646,6 +585,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  var filaAEliminar = null;
+
   function abrirModal(idModal) {
     document.getElementById(idModal).classList.add('activo');
   }
@@ -654,36 +595,50 @@
   }
 
   function verMas(datos) {
-    document.getElementById('vm-matricula').value = datos.matricula;
-    document.getElementById('vm-nombre').value = datos.nombre;
-    document.getElementById('vm-fecha').value = datos.fecha;
-    document.getElementById('vm-pc').value = datos.pc;
-    document.getElementById('vm-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('vm-salon').value = datos.salon;
-    document.getElementById('vm-horaSalida').value = datos.horaSalida;
-    document.getElementById('vm-docencia').value = datos.docencia;
-    document.getElementById('vm-estado').value = datos.estado;
-    document.getElementById('vm-docente').value = datos.docente;
+    document.getElementById('vm-nombre').value = datos.nombre || '';
+    document.getElementById('vm-apellidoPaterno').value = datos.apellidoPaterno || '';
+    document.getElementById('vm-apellidoMaterno').value = datos.apellidoMaterno || '';
+    document.getElementById('vm-area').value = datos.area || '';
+    document.getElementById('vm-fecha').value = datos.fecha || '';
     abrirModal('modalVerMas');
   }
 
   function editar(id, datos) {
     document.getElementById('ed-id').value = id;
-    document.getElementById('ed-matricula').value = datos.matricula;
-    document.getElementById('ed-nombre').value = datos.nombre;
-    document.getElementById('ed-fecha').value = datos.fecha;
-    document.getElementById('ed-pc').value = datos.pc;
-    document.getElementById('ed-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('ed-salon').value = datos.salon;
-    document.getElementById('ed-horaSalida').value = datos.horaSalida;
-    document.getElementById('ed-docencia').value = datos.docencia;
-    document.getElementById('ed-estado').value = datos.estado;
-    document.getElementById('ed-docente').value = datos.docente;
+    document.getElementById('ed-nombre').value = datos.nombre || '';
+    document.getElementById('ed-apellidoPaterno').value = datos.apellidoPaterno || '';
+    document.getElementById('ed-apellidoMaterno').value = datos.apellidoMaterno || '';
+    document.getElementById('ed-area').value = datos.area || '';
     abrirModal('modalEditar');
   }
 
   function guardarEdicion() {
-    cerrarModal('modalEditar');
+    var idOriginal = document.getElementById('ed-id').value;
+    var body = 'id_original=' + encodeURIComponent(idOriginal) +
+            '&nombre=' + encodeURIComponent(document.getElementById('ed-nombre').value) +
+            '&apellido_paterno=' + encodeURIComponent(document.getElementById('ed-apellidoPaterno').value) +
+            '&apellido_materno=' + encodeURIComponent(document.getElementById('ed-apellidoMaterno').value) +
+            '&area=' + encodeURIComponent(document.getElementById('ed-area').value);
+
+    fetch('editar-docente-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                location.reload();
+              } else {
+                alert('No se pudo editar: ' + (data.message || 'Error desconocido'));
+                cerrarModal('modalEditar');
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al editar el registro.');
+              cerrarModal('modalEditar');
+            });
   }
 
   function guardarNuevo() {
@@ -710,12 +665,36 @@
     }
   }
 
-  function eliminar(id) {
+  function eliminar(id, boton) {
     document.getElementById('el-id').value = id;
+    filaAEliminar = boton ? boton.closest('tr') : null;
     abrirModal('modalEliminar');
   }
+
   function confirmarEliminar() {
-    cerrarModal('modalEliminar');
+    var id = document.getElementById('el-id').value;
+
+    fetch('eliminar-docente-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'id=' + encodeURIComponent(id)
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                if (filaAEliminar) {
+                  filaAEliminar.remove();
+                }
+              } else {
+                alert('No se pudo eliminar: ' + (data.message || 'Error desconocido'));
+              }
+              cerrarModal('modalEliminar');
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al eliminar el registro.');
+              cerrarModal('modalEliminar');
+            });
   }
 </script>
 

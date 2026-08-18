@@ -378,27 +378,27 @@
           <td>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
-                            id_docente: '${usuarioDocente.id_docente}',
+                            id_docente: '${usuarioDocente.id}',
                             username: '${usuarioDocente.username}',
                             nombre: '${usuarioDocente.nombre}',
-                            apellido_paterno: '${usuarioDocente.apellido_paterno}',
-                            apellido_materno: '${usuarioDocente.apellido_materno}',
+                            apellido_paterno: '${usuarioDocente.apellidoPaterno}',
+                            apellido_materno: '${usuarioDocente.apellidoMaterno}',
                             area: '${usuarioDocente.area}'
                             })">
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
-                    onclick="editar('${usuarioDocente.id_docente}', {
-                            id_docente: '${usuarioDocente.id_docente}',
+                    onclick="editar('${usuarioDocente.id}', {
+                            id_docente: '${usuarioDocente.id}',
                             username: '${usuarioDocente.username}',
                             nombre: '${usuarioDocente.nombre}',
-                            apellido_paterno: '${usuarioDocente.apellido_paterno}',
-                            apellido_materno: '${usuarioDocente.apellido_materno}',
+                            apellido_paterno: '${usuarioDocente.apellidoPaterno}',
+                            apellido_materno: '${usuarioDocente.apellidoMaterno}',
                             area: '${usuarioDocente.area}'
                             })">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${usuarioDocente.id_docente}')">
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${usuarioDocente.id}')">
               <i class="fa-regular fa-trash-can"></i>
             </button>
           </td>
@@ -527,6 +527,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  var filaAEliminar = null;
+
   function abrirModal(idModal) {
     document.getElementById(idModal).classList.add('activo');
   }
@@ -556,16 +558,65 @@
   }
 
   function guardarEdicion() {
-    cerrarModal('modalEditar');
+    var idOriginal = document.getElementById('ed-id').value;
+    var body = 'id_original=' + encodeURIComponent(idOriginal) +
+            '&username=' + encodeURIComponent(document.getElementById('ed-username').value) +
+            '&nombre=' + encodeURIComponent(document.getElementById('ed-nombre').value) +
+            '&apellido_paterno=' + encodeURIComponent(document.getElementById('ed-apellido-paterno').value) +
+            '&apellido_materno=' + encodeURIComponent(document.getElementById('ed-apellido-materno').value) +
+            '&area=' + encodeURIComponent(document.getElementById('ed-area').value);
+
+    fetch('editar-usuario-docente-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                location.reload();
+              } else {
+                alert('No se pudo editar: ' + (data.message || 'Error desconocido'));
+                cerrarModal('modalEditar');
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al editar el usuario.');
+              cerrarModal('modalEditar');
+            });
   }
 
-  function eliminar(id) {
+  function eliminar(id, boton) {
     document.getElementById('el-id').value = id;
+    filaAEliminar = boton ? boton.closest('tr') : null;
     abrirModal('modalEliminar');
   }
 
   function confirmarEliminar() {
-    cerrarModal('modalEliminar');
+    var id = document.getElementById('el-id').value;
+
+    fetch('eliminar-usuario-docente-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'id=' + encodeURIComponent(id)
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                if (filaAEliminar) {
+                  filaAEliminar.remove();
+                }
+              } else {
+                alert('No se pudo eliminar: ' + (data.message || 'Error desconocido'));
+              }
+              cerrarModal('modalEliminar');
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al eliminar el usuario.');
+              cerrarModal('modalEliminar');
+            });
   }
 </script>
 

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!-- Tabla que muestra los registros de los alumnos en la bitacora -->
 <!DOCTYPE html>
 <html lang="es">
@@ -371,8 +371,9 @@
         <th style="width: 18%;">NOMBRE ALUMNO</th>
         <th style="width: 18%;">NOMBRE DOCENTE</th>
         <th style="width: 7%;">ID PC</th>
-        <th style="width: 20%;">OBSERVACIONES</th>
-        <th style="width: 20%;">ACCIONES</th>
+        <th style="width: 15%;">OBSERVACIONES</th>
+        <th style="width: 8%;">ESTADO</th>
+        <th style="width: 15%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
@@ -384,43 +385,34 @@
           <td>${registroBtcAlumno.nombreDocente}</td>
           <td>${registroBtcAlumno.idPc}</td>
           <td>${registroBtcAlumno.observaciones}</td>
-
-          <td id="estadoTexto-0" class="badge-activo">Activo</td>
+          <td id="estadoTexto-${estado.index}" class="badge-activo">Activo</td>
           <td>
-            <button type="button" class="icon-btn" id="estadoBtn-0" title="Activar/Desactivar" onclick="cambiarEstado(0, this)">
+            <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado('${estado.index}', this)">
               <i class="fa-solid fa-toggle-on"></i>
             </button>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
-                    matricula: '20253DS196',
-                    nombre: 'Jonathan AlejandroLopez Benitez',
-                    fecha: '11/11/2026',
-                    pc: '15',
-                    horaEntrada: '11:00 AM',
-                    salon: 'MAC9',
-                    horaSalida: '13:00 PM',
-                    docencia: 'D4',
-                    estado: 'Activo',
-                    docente: ''
-                  })">
+                            matricula: '${registroBtcAlumno.matricula}',
+                            nombre: '${registroBtcAlumno.nombre} ${registroBtcAlumno.apellidoPaterno} ${registroBtcAlumno.apellidoMaterno}',
+                            fecha: '${registroBtcAlumno.fechaRegistro}',
+                            pc: '${registroBtcAlumno.idPc}',
+                            observaciones: '${registroBtcAlumno.observaciones}',
+                            docente: '${registroBtcAlumno.nombreDocente}'
+                            })">
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
-                    onclick="editar(0, {
-                    matricula: '20253DS196',
-                    nombre: 'Jonathan AlejandroLopez Benitez',
-                    fecha: '11/11/2026',
-                    pc: '15',
-                    horaEntrada: '11:00 AM',
-                    salon: 'MAC9',
-                    horaSalida: '13:00 PM',
-                    docencia: 'D4',
-                    estado: 'activo',
-                    docente: ''
-                  })">
+                    onclick="editar('${registroBtcAlumno.id}', {
+                            matricula: '${registroBtcAlumno.matricula}',
+                            nombre: '${registroBtcAlumno.nombre}',
+                            apellidoPaterno: '${registroBtcAlumno.apellidoPaterno}',
+                            apellidoMaterno: '${registroBtcAlumno.apellidoMaterno}',
+                            observaciones: '${registroBtcAlumno.observaciones}',
+                            docente: '${registroBtcAlumno.nombreDocente}'
+                            })">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(0)">
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${registroBtcAlumno.id}')">
               <i class="fa-regular fa-trash-can"></i>
             </button>
           </td>
@@ -494,28 +486,8 @@
         <input type="text" id="vm-pc" disabled>
       </div>
     </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="vm-horaEntrada" disabled>
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="vm-salon" disabled>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="vm-horaSalida" disabled>
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <input type="text" id="vm-docencia" disabled>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <input type="text" id="vm-estado" disabled>
+    <label>Observaciones:</label>
+    <input type="text" id="vm-observaciones" disabled>
     <label>Docente:</label>
     <input type="text" id="vm-docente" disabled>
     <div class="modal-actions">
@@ -531,46 +503,20 @@
     <input type="hidden" id="ed-id">
     <label>Matrícula:</label>
     <input type="text" name="matricula" id="ed-matricula">
-    <label>Nombre Completo:</label>
-    <input type="text" name="nombre_completo" id="ed-nombre">
+    <label>Nombre:</label>
+    <input type="text" name="nombre" id="ed-nombre">
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" name="fecha" id="ed-fecha">
+        <label>Apellido Paterno:</label>
+        <input type="text" name="apellido_paterno" id="ed-apellidoPaterno">
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" name="numero_pc" id="ed-pc">
+        <label>Apellido Materno:</label>
+        <input type="text" name="apellido_materno" id="ed-apellidoMaterno">
       </div>
     </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" name="hora_entrada" id="ed-horaEntrada">
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" name="salon_computo" id="ed-salon">
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" name="hora_salida" id="ed-horaSalida">
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <select name="docencia" id="ed-docencia">
-          <option value="D4">D4</option>
-          <option value="D3">D3</option>
-        </select>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <select name="estado" id="ed-estado">
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
+    <label>Observaciones:</label>
+    <input type="text" name="observaciones" id="ed-observaciones">
     <label>Docente:</label>
     <input type="text" name="nombre_docente" id="ed-docente" placeholder="Ingrese su Docente">
     <div class="modal-actions">
@@ -687,6 +633,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  var filaAEliminar = null;
+
   function abrirModal(idModal) {
     document.getElementById(idModal).classList.add('activo');
   }
@@ -716,36 +664,55 @@
   }
 
   function verMas(datos) {
-    document.getElementById('vm-matricula').value = datos.matricula;
-    document.getElementById('vm-nombre').value = datos.nombre;
-    document.getElementById('vm-fecha').value = datos.fecha;
-    document.getElementById('vm-pc').value = datos.pc;
-    document.getElementById('vm-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('vm-salon').value = datos.salon;
-    document.getElementById('vm-horaSalida').value = datos.horaSalida;
-    document.getElementById('vm-docencia').value = datos.docencia;
-    document.getElementById('vm-estado').value = datos.estado;
-    document.getElementById('vm-docente').value = datos.docente;
+    document.getElementById('vm-matricula').value = datos.matricula || '';
+    document.getElementById('vm-nombre').value = datos.nombre || '';
+    document.getElementById('vm-fecha').value = datos.fecha || '';
+    document.getElementById('vm-pc').value = datos.pc || '';
+    document.getElementById('vm-observaciones').value = datos.observaciones || '';
+    document.getElementById('vm-docente').value = datos.docente || '';
     abrirModal('modalVerMas');
   }
 
   function editar(id, datos) {
     document.getElementById('ed-id').value = id;
-    document.getElementById('ed-matricula').value = datos.matricula;
-    document.getElementById('ed-nombre').value = datos.nombre;
-    document.getElementById('ed-fecha').value = datos.fecha;
-    document.getElementById('ed-pc').value = datos.pc;
-    document.getElementById('ed-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('ed-salon').value = datos.salon;
-    document.getElementById('ed-horaSalida').value = datos.horaSalida;
-    document.getElementById('ed-docencia').value = datos.docencia;
-    document.getElementById('ed-estado').value = datos.estado;
-    document.getElementById('ed-docente').value = datos.docente;
+    document.getElementById('ed-apellidoPaterno').value = datos.apellidoPaterno || '';
+    document.getElementById('ed-apellidoMaterno').value = datos.apellidoMaterno || '';
+    document.getElementById('ed-matricula').value = datos.matricula || '';
+    document.getElementById('ed-nombre').value = datos.nombre || '';
+    document.getElementById('ed-observaciones').value = datos.observaciones || '';
+    document.getElementById('ed-docente').value = datos.docente || '';
     abrirModal('modalEditar');
   }
 
   function guardarEdicion() {
-    cerrarModal('modalEditar');
+    var idOriginal = document.getElementById('ed-id').value;
+    var body = 'id_original=' + encodeURIComponent(idOriginal) +
+            '&matricula=' + encodeURIComponent(document.getElementById('ed-matricula').value) +
+            '&nombre=' + encodeURIComponent(document.getElementById('ed-nombre').value) +
+            '&apellido_paterno=' + encodeURIComponent(document.getElementById('ed-apellidoPaterno').value) +
+            '&apellido_materno=' + encodeURIComponent(document.getElementById('ed-apellidoMaterno').value) +
+            '&nombre_docente=' + encodeURIComponent(document.getElementById('ed-docente').value) +
+            '&observaciones=' + encodeURIComponent(document.getElementById('ed-observaciones').value);
+
+    fetch('editar-alumno-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                location.reload();
+              } else {
+                alert('No se pudo editar: ' + (data.message || 'Error desconocido'));
+                cerrarModal('modalEditar');
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al editar el registro.');
+              cerrarModal('modalEditar');
+            });
   }
 
   function cambiarEstado(id, boton) {
@@ -768,12 +735,36 @@
     }
   }
 
-  function eliminar(id) {
+  function eliminar(id, boton) {
     document.getElementById('el-id').value = id;
+    filaAEliminar = boton ? boton.closest('tr') : null;
     abrirModal('modalEliminar');
   }
+
   function confirmarEliminar() {
-    cerrarModal('modalEliminar');
+    var id = document.getElementById('el-id').value;
+
+    fetch('eliminar-alumno-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'id=' + encodeURIComponent(id)
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                if (filaAEliminar) {
+                  filaAEliminar.remove();
+                }
+              } else {
+                alert('No se pudo eliminar: ' + (data.message || 'Error desconocido'));
+              }
+              cerrarModal('modalEliminar');
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al eliminar el registro.');
+              cerrarModal('modalEliminar');
+            });
   }
 </script>
 

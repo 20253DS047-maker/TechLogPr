@@ -2,10 +2,11 @@ package mx.edu.utez.poo.techlog.techlog.service;
 
 import mx.edu.utez.poo.techlog.techlog.dao.DaoRegistroAlumno;
 import mx.edu.utez.poo.techlog.techlog.model.BeanRegistroAlumno;
+import mx.edu.utez.poo.techlog.techlog.util.HashUtils;
 
 public class ServiceRegistroAlumno {
 
-    private DaoRegistroAlumno DaoRegistroAlumno = new DaoRegistroAlumno();
+    private DaoRegistroAlumno daoRegistroAlumno = new DaoRegistroAlumno();
 
     public boolean registrarRegistroAlumno(BeanRegistroAlumno nuevoAlumno){
 
@@ -13,15 +14,19 @@ public class ServiceRegistroAlumno {
                 nuevoAlumno.getNombre() == null || nuevoAlumno.getNombre().trim().isEmpty() ||
                 nuevoAlumno.getApellido() == null || nuevoAlumno.getApellido().trim().isEmpty() ||
                 nuevoAlumno.getUsername() == null || nuevoAlumno.getUsername().trim().isEmpty()){
-                return false;
+            return false;
         }
 
+        // CORREGIDO: Cancela sólo si la contraseña es menor a 5 caracteres
         if (nuevoAlumno.getContrasena() == null || nuevoAlumno.getContrasena().trim().isEmpty() ||
-                nuevoAlumno.getContrasena().length() > 5 ){
-                return false;
+                nuevoAlumno.getContrasena().trim().length() < 5 ){
+            return false;
         }
 
-        return DaoRegistroAlumno.insertar(nuevoAlumno);
-    }
+        // ENCRIPTACIÓN: Se guarda el hash en el bean antes de llamar al DAO
+        String contrasenaEncriptada = HashUtils.sha256(nuevoAlumno.getContrasena().trim());
+        nuevoAlumno.setContrasena(contrasenaEncriptada);
 
+        return daoRegistroAlumno.insertar(nuevoAlumno);
+    }
 }

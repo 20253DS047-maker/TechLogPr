@@ -1,10 +1,12 @@
+<!-- Muestra la tabla de los registros alumnos en la bitacora -->
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vista Docente - Registros</title>
+  <title>Registros Alumnos</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -14,10 +16,10 @@
       box-sizing: border-box;
     }
     html, body {
-      height: 100%;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Evita barras de desplazamiento innecesarias */
+      overflow-y: auto;
     }
     body {
       background-color: #cbc8be;
@@ -31,8 +33,8 @@
     .main-wrapper {
       display: flex;
       flex-direction: column;
-      height: 100%;
       width: 100%;
+      min-height: 100vh;
     }
 
     /* Header con Logo y Botones */
@@ -55,7 +57,7 @@
       align-items: flex-end;
       gap: 8px;
     }
-    .btn-cerrar-sesion {
+    .btn-cerrar-sesion, .btn-bitacora-docente {
       background-color: #172c45;
       color: #ffffff;
       border-radius: 8px;
@@ -68,25 +70,7 @@
       align-items: center;
       gap: 6px;
     }
-    .btn-cerrar-sesion:hover {
-      background-color: #0f1e30;
-      color: #ffffff;
-    }
-
-    .btn-bitacora-docente {
-      background-color: #172c45;
-      color: #ffffff;
-      border-radius: 8px;
-      font-weight: 500;
-      padding: 6px 20px;
-      border: none;
-      font-size: 0.95rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .btn-bitacora-docente:hover {
+    .btn-cerrar-sesion:hover, .btn-bitacora-docente:hover {
       background-color: #0f1e30;
       color: #ffffff;
     }
@@ -99,7 +83,7 @@
       letter-spacing: 1px;
     }
 
-    /* Buscador estilo diseño 2 */
+    /* Buscador */
     .search-bar {
       width: 100%;
       margin: 0 auto 16px;
@@ -126,42 +110,31 @@
       font-size: 1.1rem;
     }
 
-    /* Tabla adaptable basada en el diseño 2 */
+    /* Tabla adaptable */
     .table-container {
       width: 100%;
       background-color: #e5ded8;
       border-radius: 2px;
-      overflow: hidden;
-      padding: 0;
+      overflow-x: auto;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+      margin-bottom: 10px;
     }
     table {
       width: 100%;
-      height: 100%;
       border-collapse: collapse;
       table-layout: fixed;
-    }
-    thead {
-      height: 50px;
     }
     thead th {
       font-size: 0.85rem;
       text-transform: uppercase;
       color: #0d8065;
       padding: 12px 8px;
-      text-align: left;
       border-bottom: 2px solid #444444;
       letter-spacing: 0.5px;
       font-weight: 700;
     }
-    tbody {
-      height: calc(100% - 100px);
-    }
     tbody tr {
-      height: 14.28%; /* Distribución idéntica para 7 filas */
+      height: 48px; /* Altura compacta fija por fila */
     }
     tbody td {
       padding: 8px 12px;
@@ -171,8 +144,8 @@
       white-space: nowrap;
       vertical-align: middle;
     }
-    .badge-activo { color: #0d8065; font-weight: 600; }
-    .badge-inactivo { color: #b03a3a; font-weight: 600; }
+    .badge-activo { color: #0d8065; font-weight: 700; }
+    .badge-inactivo { color: #b03a3a; font-weight: 700; }
     .icon-btn {
       border: none;
       background: none;
@@ -182,26 +155,14 @@
       font-size: 1.1rem;
       padding: 0;
     }
-    .form-check.form-switch {
-      display: inline-block;
-      margin: 0 6px 0 0;
-      min-height: auto;
-      padding-left: 2.2em;
-      vertical-align: middle;
-    }
-    .form-check.form-switch .form-check-input {
-      width: 2em;
-      height: 1.1em;
-      cursor: pointer;
-    }
 
-    /* Paginación estilo diseño 2 */
+    /* Paginación */
     .pagination-bar {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 6px;
-      height: 50px;
+      padding: 10px 0;
       flex-shrink: 0;
     }
     .pagination-bar button {
@@ -228,7 +189,7 @@
     .filters {
       display: flex;
       gap: 20px;
-      padding: 16px 0 0;
+      padding: 10px 0;
       flex-shrink: 0;
       align-items: center;
     }
@@ -248,7 +209,7 @@
       border: 1.5px solid #333;
     }
 
-    /* Modales rediseñados según vista 2 */
+    /* Modales */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -282,8 +243,7 @@
       display: block;
       margin-bottom: 4px;
     }
-    .modal-box input,
-    .modal-box select {
+    .modal-box input, .modal-box select {
       width: 100%;
       padding: 9px 10px;
       border: none;
@@ -308,7 +268,6 @@
       cursor: pointer;
     }
 
-    /* Confirm box */
     .confirm-box {
       background-color: #ffffff;
       border-radius: 6px;
@@ -362,78 +321,83 @@
   </div>
 
   <div class="table-container">
-    <table>
+    <table class="custom-table text-center">
       <thead>
       <tr>
-        <th style="width: 5%;">#</th>
-        <th style="width: 15%;">Matricula:</th>
-        <th style="width: 25%;">Nombre completo:</th>
-        <th style="width: 12%;">Fecha:</th>
-        <th style="width: 8%;">P.C.</th>
-        <th style="width: 15%;">Salon/Docencia</th>
-        <th style="width: 10%;">Estado:</th>
-        <th style="width: 10%;">Acciones:</th>
+        <th style="width: 7%;">ID</th>
+        <th style="width: 12%;">MATRÍCULA</th>
+        <th style="width: 18%;">NOMBRE ALUMNO</th>
+        <th style="width: 18%;">NOMBRE DOCENTE</th>
+        <th style="width: 8%;">ID PC</th>
+        <th style="width: 19%;">OBSERVACIONES</th>
+        <th style="width: 8%;">ESTADO</th>
+        <th style="width: 10%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>0</td>
-        <td>20253DS196</td>
-        <td>Jonathan Alejandro...</td>
-        <td>11/11/2026</td>
-        <td>15</td>
-        <td>D4</td>
-        <td id="estadoTexto-0" class="badge-activo">Activo</td>
-        <td>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch"
-                   id="estadoSwitch-0" checked
-                   onchange="cambiarEstado(0, this)">
-          </div>
-          <button type="button" class="icon-btn" title="Ver mas"
-                  onclick="verMas('20253DS196','Jonathan AlejandroLopez Benites','11/11/2026','15','11:00 AM','MAC9','13:00 PM','D4','Activo')">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>20253DS034</td>
-        <td>Santiago Flores</td>
-        <td>20/02/2026</td>
-        <td>25</td>
-        <td>D2</td>
-        <td id="estadoTexto-1" class="badge-inactivo">Inactivo</td>
-        <td>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch"
-                   id="estadoSwitch-1"
-                   onchange="cambiarEstado(1, this)">
-          </div>
-          <button type="button" class="icon-btn" title="Ver mas"
-                  onclick="verMas('20253DS034','Santiago Flores','20/02/2026','25.D4','—','A9','—','D3','Inactivo')">
-            <i class="fa-regular fa-eye"></i>
-          </button>
-        </td>
-      </tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
-      <tr class="empty-row"><td colspan="8">&nbsp;</td></tr>
+      <c:forEach items="${listaRegistroBtcAlumnos}" var="registroBtcAlumno" varStatus="estado">
+        <tr>
+          <td>${registroBtcAlumno.id}</td>
+          <td>${registroBtcAlumno.matricula}</td>
+          <td>${registroBtcAlumno.nombre} ${registroBtcAlumno.apellidoPaterno} ${registroBtcAlumno.apellidoMaterno}</td>
+          <td>${registroBtcAlumno.nombreDocente}</td>
+          <td>${registroBtcAlumno.idPc}</td>
+          <td>${registroBtcAlumno.observaciones}</td>
+          <td>
+            <span id="estadoTexto-${estado.index}" class="badge-activo">Activo</span>
+          </td>
+          <td>
+            <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado(${estado.index}, this)">
+              <i class="fa-solid fa-toggle-on"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Ver detalles"
+                    onclick="verMas({
+                            matricula: '${registroBtcAlumno.matricula}',
+                            nombre: '${registroBtcAlumno.nombre}',
+                            fecha: '11/11/2026',
+                            pc: '${registroBtcAlumno.idPc}',
+                            horaEntrada: '11:00 AM',
+                            salon: 'MAC9',
+                            horaSalida: '13:00 PM',
+                            docencia: 'D4',
+                            estado: 'Activo'
+                            })">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Editar"
+                    onclick="editar(${estado.index}, {
+                            matricula: '${registroBtcAlumno.matricula}',
+                            nombre: '${registroBtcAlumno.nombre}',
+                            fecha: '11/11/2026',
+                            pc: '${registroBtcAlumno.idPc}',
+                            horaEntrada: '11:00 AM',
+                            salon: 'MAC9',
+                            horaSalida: '13:00 PM',
+                            docencia: 'D4',
+                            estado: 'activo'
+                            })">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(${estado.index})">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </td>
+        </tr>
+      </c:forEach>
       </tbody>
     </table>
+  </div>
 
-    <div class="pagination-bar">
-      <button type="button"><i class="fa-solid fa-angles-left"></i></button>
-      <button type="button"><i class="fa-solid fa-angle-left"></i></button>
-      <button type="button" class="active">5</button>
-      <button type="button">6</button>
-      <button type="button">7</button>
-      <button type="button">8</button>
-      <button type="button"><i class="fa-solid fa-angle-right"></i></button>
-      <button type="button"><i class="fa-solid fa-angles-right"></i></button>
-    </div>
+  <!-- Paginadores -->
+  <div class="pagination-bar">
+    <button type="button"><i class="fa-solid fa-angles-left"></i></button>
+    <button type="button"><i class="fa-solid fa-angle-left"></i></button>
+    <button type="button" class="active">1</button>
+    <button type="button">2</button>
+    <button type="button">3</button>
+    <button type="button">4</button>
+    <button type="button"><i class="fa-solid fa-angle-right"></i></button>
+    <button type="button"><i class="fa-solid fa-angles-right"></i></button>
   </div>
 
   <!-- Filtros -->

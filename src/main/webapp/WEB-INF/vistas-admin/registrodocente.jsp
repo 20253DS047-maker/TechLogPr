@@ -352,7 +352,7 @@
 
   <!-- Buscador -->
   <div class="search-bar-container">
-    <button class="btn btn-custom-dark px-4" onclick="window.location.href='registro-docente-servlet'">Usuarios</button>
+    <button class="btn btn-custom-dark px-4" onclick="window.location.href='registro-docente-servlet'">Registrar Usuarios</button>
     <div class="search-input-group">
       <input type="text" id="buscarMatricula" class="form-control" placeholder="Introduzca la matricula para buscar en el registro....">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>

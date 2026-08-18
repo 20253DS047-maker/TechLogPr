@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import mx.edu.utez.poo.techlog.techlog.dao.DaoDocente;
 import mx.edu.utez.poo.techlog.techlog.model.BeanDocente;
 import mx.edu.utez.poo.techlog.techlog.service.ServiceDocente;
 
@@ -15,12 +14,12 @@ import java.io.IOException;
 public class RegistroDocenteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         req.getRequestDispatcher("WEB-INF/registro-docente.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
 
         ServiceDocente serviceDocente = new ServiceDocente();
         String nombre = req.getParameter("nombre");
@@ -30,18 +29,17 @@ public class RegistroDocenteServlet extends HttpServlet {
         String password = req.getParameter("password");
         String username = req.getParameter("username");
 
-
         BeanDocente nuevoDocente = new BeanDocente(nombre, apellidoPaterno, apellidoMaterno, area, password, username);
-        DaoDocente dao = new DaoDocente();
-        boolean guardado = serviceDocente.registrarDocente(nuevoDocente);
-        if (guardado){
 
+        // El servicio se encargará de validar y aplicar HashUtils.sha256() antes de insertar
+        boolean guardado = serviceDocente.registrarDocente(nuevoDocente);
+
+        if (guardado){
             req.setAttribute("docente", nuevoDocente);
             req.getRequestDispatcher("WEB-INF/check-docente.jsp").forward(req, resp);
-        }else {
+        } else {
             req.setAttribute("error", "No se pudo registrar el docente");
             req.getRequestDispatcher("WEB-INF/registro-docente.jsp").forward(req, resp);
         }
-
     }
 }

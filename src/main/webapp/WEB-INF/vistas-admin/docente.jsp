@@ -345,7 +345,7 @@
 
   <!-- Buscador -->
   <div class="search-bar-container">
-    <button class="btn btn-custom-dark px-4" onclick="window.location.href='usuarios-docentes-servlet'">Usuarios</button>
+    <button class="btn btn-custom-dark px-4" onclick="window.location.href='usuarios-docentes-servlet'">Registrar Usuarios</button>
     <div class="search-input-group">
       <input type="text" id="buscarIdDocente" class="form-control" placeholder="Introduzca el ID del docente para buscar...">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>

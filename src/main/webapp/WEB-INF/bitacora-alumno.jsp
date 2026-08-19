@@ -197,7 +197,7 @@
 <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center position-relative" style="z-index: 2;">
 
     <div class="text-center mb-4">
-        <h2 class="fw-bold mb-1" style="color: #000;">Registro Bitacora</h2>
+        <h2 class="fw-bold mb-1" style="color: #000;">Registro Bitácora</h2>
         <h5 class="fw-normal" style="color: #000;">(ALUMNOS)</h5>
     </div>
 
@@ -218,7 +218,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="matricula" class="form-label form-label-custom">Matricula</label>
+                <label for="matricula" class="form-label form-label-custom">Matrícula</label>
                 <input type="text" class="form-control form-control-custom" name="matricula_usuario" id="matricula" placeholder="Ej: 20253ds046" required>
             </div>
 
@@ -251,7 +251,7 @@
             <div class="icon-question">?</div>
 
             <div class="modal-text">
-                ¿Estas seguro que quieres<br>cancelar este registro?
+                ¿Estás seguro que quieres<br>cancelar este registro?
             </div>
 
             <div class="modal-actions">

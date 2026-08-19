@@ -218,7 +218,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="matricula" class="form-label form-label-custom">Matricula</label>
+                <label for="matricula" class="form-label form-label-custom">Matrícula</label>
                 <input type="text" class="form-control form-control-custom" id="matricula" placeholder="Ej: 20253ds046" required>
             </div>
 

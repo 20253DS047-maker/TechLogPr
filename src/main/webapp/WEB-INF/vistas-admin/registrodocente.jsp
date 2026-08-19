@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!-- Tabla que muestra los registros de los docentes en la bitacora -->
 
 <!DOCTYPE html>
@@ -345,7 +345,7 @@
     <h1 class="main-title">Registros Docentes</h1>
 
     <div class="d-flex flex-column gap-2 align-items-end">
-      <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
+      <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesión</button>
       <button type="button" class="btn-custom-dark" onclick="abrirModal('modalAgregar')"><i class="fa-solid fa-square-plus"></i> Agregar</button>
     </div>
   </div>
@@ -354,7 +354,7 @@
   <div class="search-bar-container">
     <button class="btn btn-custom-dark px-4" onclick="window.location.href='registro-docente-servlet'">Registrar Usuarios</button>
     <div class="search-input-group">
-      <input type="text" id="buscarMatricula" class="form-control" placeholder="Introduzca la matricula para buscar en el registro....">
+      <input type="text" id="buscarMatricula" class="form-control" placeholder="Introduzca la matrícula para buscar en el registro....">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
     </div>
   </div>
@@ -370,11 +370,12 @@
         <th style="width: 15%;">APELLIDO MATERNO</th>
         <th style="width: 15%;">ÁREA</th>
         <th style="width: 15%">FECHA REGISTRO</th>
-        <th style="width: 20%;">ACCIONES</th>
+        <th style="width: 8%;">ESTADO</th>
+        <th style="width: 12%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
-      <c:forEach items="${listaRegistrosBtcDocentes}" var="registroBtcDocente">
+      <c:forEach items="${listaRegistrosBtcDocentes}" var="registroBtcDocente" varStatus="estado">
         <tr>
           <td>${registroBtcDocente.id}</td>
           <td>${registroBtcDocente.nombre}</td>
@@ -382,9 +383,10 @@
           <td>${registroBtcDocente.apellidoMaterno}</td>
           <td>${registroBtcDocente.area}</td>
           <td>${registroBtcDocente.fechaRegistro}</td>
+          <td id="estadoTexto-${estado.index}" class="badge-activo">Activo</td>
 
           <td>
-            <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado(${estado.index}, this)">
+            <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado('${estado.index}', this)">
               <i class="fa-solid fa-toggle-on"></i>
             </button>
             <button type="button" class="icon-btn" title="Ver detalles"
@@ -392,21 +394,15 @@
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
-                    onclick="editar(${estado.index}, {
-                            matricula: '20253DS196',
-                            nombre: 'Jonathan AlejandroLopez Benitez',
-                            fecha: '11/11/2026',
-                            pc: '15',
-                            horaEntrada: '11:00 AM',
-                            salon: 'MAC9',
-                            horaSalida: '13:00 PM',
-                            docencia: 'D4',
-                            estado: 'activo',
-                            docente: ''
+                    onclick="editar('${registroBtcDocente.id}', {
+                            nombre: '${registroBtcDocente.nombre}',
+                            apellidoPaterno: '${registroBtcDocente.apellidoPaterno}',
+                            apellidoMaterno: '${registroBtcDocente.apellidoMaterno}',
+                            area: '${registroBtcDocente.area}'
                             })">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(${estado.index})">
+            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${registroBtcDocente.id}')">
               <i class="fa-regular fa-trash-can"></i>
             </button>
           </td>
@@ -496,52 +492,22 @@
 <!-- Modal Editar -->
 <div class="modal-overlay" id="modalEditar">
   <form class="modal-box modal-white" onsubmit="return false;">
-    <h2>Editar registro</h2>
+    <h2>Editar docente</h2>
     <input type="hidden" id="ed-id">
-    <label>Matrícula:</label>
-    <input type="text" id="ed-matricula">
-    <label>Nombre Completo:</label>
+    <label>Nombre:</label>
     <input type="text" id="ed-nombre">
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" id="ed-fecha">
+        <label>Apellido Paterno:</label>
+        <input type="text" id="ed-apellidoPaterno">
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" id="ed-pc">
+        <label>Apellido Materno:</label>
+        <input type="text" id="ed-apellidoMaterno">
       </div>
     </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="ed-horaEntrada">
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="ed-salon">
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="ed-horaSalida">
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <select id="ed-docencia">
-          <option value="D4">D4</option>
-          <option value="D3">D3</option>
-        </select>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <select id="ed-estado">
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
-    <label>Docente:</label>
-    <input type="text" id="ed-docente" placeholder="Ingrese su Docente">
+    <label>Área:</label>
+    <input type="text" id="ed-area">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
       <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
@@ -601,50 +567,71 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  var filaAEliminar = null;
+
   function abrirModal(idModal) {
     document.getElementById(idModal).classList.add('activo');
   }
   function cerrarModal(idModal) {
     document.getElementById(idModal).classList.remove('activo');
   }
+
   function cargarYVerMas(id) {
-    console.log("ID recibido en la función:", id);
-    fetch(`DocentesVerMasServlet?action=getDetalle&id=\${id}`)
-            .then(response => {
+    fetch(`DocentesVerMasServlet?action=getDetalle&id=${id}`)
+            .then(function (response) {
               if (!response.ok) throw new Error("Error en la respuesta");
               return response.json();
             })
-            .then(datos => {
+            .then(function (datos) {
               document.getElementById('vm-id').value = datos.id || '';
               document.getElementById('vm-nombre').value = datos.nombre || '';
               document.getElementById('vm-paterno').value = datos.apellidoPaterno || '';
               document.getElementById('vm-materno').value = datos.apellidoMaterno || '';
 
-              const inputArea = document.getElementById('vm-area');
+              var inputArea = document.getElementById('vm-area');
               if (inputArea) inputArea.value = datos.area || '';
 
               abrirModal('modalVerMas');
             })
-            .catch(error => console.error('Error al cargar detalle:', error));
+            .catch(function (error) { console.error('Error al cargar detalle:', error); });
   }
 
   function editar(id, datos) {
     document.getElementById('ed-id').value = id;
-    document.getElementById('ed-matricula').value = datos.matricula;
-    document.getElementById('ed-nombre').value = datos.nombre;
-    document.getElementById('ed-fecha').value = datos.fecha;
-    document.getElementById('ed-pc').value = datos.pc;
-    document.getElementById('ed-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('ed-salon').value = datos.salon;
-    document.getElementById('ed-horaSalida').value = datos.horaSalida;
-    document.getElementById('ed-docencia').value = datos.docencia;
-    document.getElementById('ed-estado').value = datos.estado;
-    document.getElementById('ed-docente').value = datos.docente;
+    document.getElementById('ed-nombre').value = datos.nombre || '';
+    document.getElementById('ed-apellidoPaterno').value = datos.apellidoPaterno || '';
+    document.getElementById('ed-apellidoMaterno').value = datos.apellidoMaterno || '';
+    document.getElementById('ed-area').value = datos.area || '';
     abrirModal('modalEditar');
   }
 
   function guardarEdicion() {
-    cerrarModal('modalEditar');
+    var idOriginal = document.getElementById('ed-id').value;
+    var body = 'id_original=' + encodeURIComponent(idOriginal) +
+            '&nombre=' + encodeURIComponent(document.getElementById('ed-nombre').value) +
+            '&apellido_paterno=' + encodeURIComponent(document.getElementById('ed-apellidoPaterno').value) +
+            '&apellido_materno=' + encodeURIComponent(document.getElementById('ed-apellidoMaterno').value) +
+            '&area=' + encodeURIComponent(document.getElementById('ed-area').value);
+
+    fetch('editar-docente-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                location.reload();
+              } else {
+                alert('No se pudo editar: ' + (data.message || 'Error desconocido'));
+                cerrarModal('modalEditar');
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al editar el registro.');
+              cerrarModal('modalEditar');
+            });
   }
 
   function guardarNuevo() {
@@ -671,12 +658,36 @@
     }
   }
 
-  function eliminar(id) {
+  function eliminar(id, boton) {
     document.getElementById('el-id').value = id;
+    filaAEliminar = boton ? boton.closest('tr') : null;
     abrirModal('modalEliminar');
   }
+
   function confirmarEliminar() {
-    cerrarModal('modalEliminar');
+    var id = document.getElementById('el-id').value;
+
+    fetch('eliminar-docente-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'id=' + encodeURIComponent(id)
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                if (filaAEliminar) {
+                  filaAEliminar.remove();
+                }
+              } else {
+                alert('No se pudo eliminar: ' + (data.message || 'Error desconocido'));
+              }
+              cerrarModal('modalEliminar');
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al eliminar el registro.');
+              cerrarModal('modalEliminar');
+            });
   }
 </script>
 

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!-- Tabla que muestra usuarios de alumnos (login) -->
 
 <!DOCTYPE html>
@@ -341,7 +341,7 @@
     <h1 class="main-title">Usuarios Alumnos</h1>
 
     <div class="d-flex flex-column gap-2 align-items-end">
-      <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
+      <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesión</button>
     </div>
   </div>
 
@@ -513,6 +513,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  var filaAEliminar = null;
+
   function abrirModal(idModal) {
     document.getElementById(idModal).classList.add('activo');
   }
@@ -538,16 +540,63 @@
   }
 
   function guardarEdicion() {
-    cerrarModal('modalEditar');
+    var matriculaOriginal = document.getElementById('ed-id').value;
+    var body = 'matricula_original=' + encodeURIComponent(matriculaOriginal) +
+            '&nombre=' + encodeURIComponent(document.getElementById('ed-nombre').value) +
+            '&apellido=' + encodeURIComponent(document.getElementById('ed-apellido').value) +
+            '&username=' + encodeURIComponent(document.getElementById('ed-username').value);
+
+    fetch('editar-usuario-alumno-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                location.reload();
+              } else {
+                alert('No se pudo editar: ' + (data.message || 'Error desconocido'));
+                cerrarModal('modalEditar');
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al editar el usuario.');
+              cerrarModal('modalEditar');
+            });
   }
 
-  function eliminar(id) {
+  function eliminar(id, boton) {
     document.getElementById('el-id').value = id;
+    filaAEliminar = boton ? boton.closest('tr') : null;
     abrirModal('modalEliminar');
   }
 
   function confirmarEliminar() {
-    cerrarModal('modalEliminar');
+    var matricula = document.getElementById('el-id').value;
+
+    fetch('eliminar-usuario-alumno-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'matricula=' + encodeURIComponent(matricula)
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                if (filaAEliminar) {
+                  filaAEliminar.remove();
+                }
+              } else {
+                alert('No se pudo eliminar: ' + (data.message || 'Error desconocido'));
+              }
+              cerrarModal('modalEliminar');
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al eliminar el usuario.');
+              cerrarModal('modalEliminar');
+            });
   }
 </script>
 

@@ -392,8 +392,10 @@
                             ${pc.estado}
                     </td>
                     <td>
-                        <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado('${estado.index}', this)">
+
+                        <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado('${estado.index}', this, '${pc.id}')">
                             <i class="fa-solid ${pc.estado == 'Activo' || pc.estado == 'activo' ? 'fa-toggle-on' : 'fa-toggle-off'}"></i>
+
                         </button>
 
                         <button type="button" class="icon-btn" title="Ver detalles"
@@ -409,16 +411,19 @@
                         </button>
 
                         <button type="button" class="icon-btn" title="Editar"
-                                onclick="editar('${estado.index}', {
+
+                                onclick="editar('${pc.id}', {
                                         id_pc: '${pc.numeroPc}',
                                         mesa: '${pc.islaMesa}',
                                         salon: '${pc.salonComputo}',
+
                                         docencia: '${pc.docencia}',
                                         modelo: '${pc.modelo}',
                                         estado: '${pc.estado}'
-                                        })">
+                                        }, this)">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
+
 
                         <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${pc.id}')">
                             <i class="fa-regular fa-trash-can"></i>
@@ -580,6 +585,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    var filaAEliminar = null;
+
     function abrirModal(idModal) {
         document.getElementById(idModal).classList.add('activo');
     }
@@ -597,6 +604,7 @@
         abrirModal('modalVerMas');
     }
 
+
     function editar(id, datos) {
         document.getElementById('ed-id').value = id;
         document.getElementById('ed-id-pc').value = datos.id_pc || '';
@@ -609,35 +617,121 @@
     }
 
     function guardarEdicion() {
-        cerrarModal('modalEditar');
+        var idOriginal = document.getElementById('ed-id').value;
+        var body = 'id_original=' + encodeURIComponent(idOriginal) +
+            '&numero_pc=' + encodeURIComponent(document.getElementById('ed-id-pc').value) +
+            '&salon_computo=' + encodeURIComponent(document.getElementById('ed-salon').value) +
+            '&docencia=' + encodeURIComponent(document.getElementById('ed-docencia').value) +
+            '&modelo=' + encodeURIComponent(document.getElementById('ed-modelo').value) +
+            '&isla_mesa=' + encodeURIComponent(document.getElementById('ed-mesa').value) +
+            '&estado=' + encodeURIComponent(document.getElementById('ed-estado').value);
+
+        fetch('editar-pc-servlet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('No se pudo editar: ' + (data.message || 'Error desconocido'));
+                    cerrarModal('modalEditar');
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+                alert('Error de conexión al editar el equipo.');
+                cerrarModal('modalEditar');
+            });
     }
 
-    function cambiarEstado(id, boton) {
-        var celda = document.getElementById('estadoTexto-' + id);
+    function cambiarEstado(indexFila, boton, id) {
+        var celda = document.getElementById('estadoTexto-' + indexFila);
         var icono = boton.querySelector('i');
         var activo = icono.classList.contains('fa-toggle-on');
+        var nuevoEstado;
 
         if (activo) {
             icono.classList.remove('fa-toggle-on');
             icono.classList.add('fa-toggle-off');
-            celda.textContent = 'Inactivo';
+            nuevoEstado = 'Inactivo';
             celda.classList.remove('badge-activo');
             celda.classList.add('badge-inactivo');
         } else {
             icono.classList.remove('fa-toggle-off');
             icono.classList.add('fa-toggle-on');
-            celda.textContent = 'Activo';
+            nuevoEstado = 'Activo';
             celda.classList.remove('badge-inactivo');
             celda.classList.add('badge-activo');
         }
+        celda.textContent = nuevoEstado;
+
+        if (!id) {
+            return;
+        }
+
+        fetch('cambiar-estado-pc-servlet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'id=' + encodeURIComponent(id) + '&estado=' + encodeURIComponent(nuevoEstado)
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                if (!data.success) {
+                    if (nuevoEstado === 'Inactivo') {
+                        icono.classList.remove('fa-toggle-off');
+                        icono.classList.add('fa-toggle-on');
+                        celda.textContent = 'Activo';
+                        celda.classList.remove('badge-inactivo');
+                        celda.classList.add('badge-activo');
+                    } else {
+                        icono.classList.remove('fa-toggle-on');
+                        icono.classList.add('fa-toggle-off');
+                        celda.textContent = 'Inactivo';
+                        celda.classList.remove('badge-activo');
+                        celda.classList.add('badge-inactivo');
+                    }
+                    alert('No se pudo cambiar el estado: ' + (data.message || 'Error desconocido'));
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+                alert('Error de conexión al cambiar el estado.');
+            });
     }
 
-    function eliminar(id) {
+    function eliminar(id, boton) {
         document.getElementById('el-id').value = id;
+        filaAEliminar = boton ? boton.closest('tr') : null;
         abrirModal('modalEliminar');
     }
+
     function confirmarEliminar() {
-        cerrarModal('modalEliminar');
+        var id = document.getElementById('el-id').value;
+
+        fetch('eliminar-pc-servlet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'id=' + encodeURIComponent(id)
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                if (data.success) {
+                    if (filaAEliminar) {
+                        filaAEliminar.remove();
+                    }
+                } else {
+                    alert('No se pudo eliminar: ' + (data.message || 'Error desconocido'));
+                }
+                cerrarModal('modalEliminar');
+            })
+            .catch(function (error) {
+                console.error(error);
+                alert('Error de conexión al eliminar el equipo.');
+                cerrarModal('modalEliminar');
+            });
     }
 </script>
 

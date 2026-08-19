@@ -394,20 +394,18 @@
 
 <!-- ===================== MODAL: VER MAS ===================== -->
 <div class="modal-overlay" id="modalVerMas">
-  <div class="modal-box">
-    <label>Matricula:</label>
+  <div class="modal-box modal-white">
+    <h2>Detalle del Usuario Alumno</h2>
+    <label>Matrícula:</label>
     <input type="text" id="vm-matricula" disabled>
-
-    <div class="row-2">
-      <div><label>Nombre:</label><input type="text" id="vm-nombre" disabled></div>
-      <div><label>Apellido:</label><input type="text" id="vm-apellido" disabled></div>
-    </div>
-
+    <label>Nombre:</label>
+    <input type="text" id="vm-nombre" disabled>
+    <label>Apellido:</label>
+    <input type="text" id="vm-apellido" disabled>
     <label>Username:</label>
     <input type="text" id="vm-username" disabled>
-
     <div class="modal-actions">
-      <button type="button" class="btn-salir" onclick="cerrarModal('modalVerMas')">Salir</button>
+      <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
   </div>
 </div>
@@ -418,7 +416,7 @@
     <div class="confirm-header">¿Estas seguro de cerrar sesion?</div>
     <div class="confirm-actions">
       <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
-      <button type="button" class="btn-si" onclick="confirmarCerrarSesion()">Si</button>
+      <button type="button" class="btn-si" onclick="window.location.href='login-docente-servlet'">Si</button>
     </div>
   </div>
 </div>
@@ -433,11 +431,11 @@
   }
 
   // ---------- Ver mas: muestra los datos del alumno en el modal ----------
-  function verMas(matricula, nombre, apellido, username) {
-    document.getElementById('vm-matricula').value = matricula;
-    document.getElementById('vm-nombre').value = nombre;
-    document.getElementById('vm-apellido').value = apellido;
-    document.getElementById('vm-username').value = username;
+  function verMas(datos) {
+    document.getElementById('vm-matricula').value = datos.matricula || '';
+    document.getElementById('vm-nombre').value = datos.nombre || '';
+    document.getElementById('vm-apellido').value = datos.apellido || '';
+    document.getElementById('vm-username').value = datos.username || '';
     abrirModal('modalVerMas');
   }
 

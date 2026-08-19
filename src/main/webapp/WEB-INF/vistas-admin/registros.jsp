@@ -391,19 +391,17 @@
             </button>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
-                    matricula: '20253DS196',
-                    nombre: 'Jonathan AlejandroLopez Benitez',
-                    fecha: '11/11/2026',
-                    pc: '15',
-                    horaEntrada: '11:00 AM',
-                    salon: 'MAC9',
-                    horaSalida: '13:00 PM',
-                    docencia: 'D4',
-                    estado: 'Activo',
-                    docente: ''
-                  })">
+                            id: '${registroBtcAlumno.id}',
+                            matricula: '${registroBtcAlumno.matricula}',
+                            nombre: '${registroBtcAlumno.nombre}',
+                            paterno: '${registroBtcAlumno.apellidoPaterno}',
+                            materno: '${registroBtcAlumno.apellidoMaterno}',
+                            docente: '${registroBtcAlumno.nombreDocente}',
+                            observaciones: '${registroBtcAlumno.observaciones}'
+                            })">
               <i class="fa-regular fa-eye"></i>
             </button>
+
             <button type="button" class="icon-btn" title="Editar"
                     onclick="editar(0, {
                     matricula: '20253DS196',
@@ -479,16 +477,27 @@
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box modal-white">
     <h2>Detalle del registro</h2>
-    <label>Matrícula:</label>
-    <input type="text" id="vm-matricula" disabled>
+
+      <label>ID:</label>
+      <input type="text" id="vm-id" disabled>
+      <label>Matrícula:</label>
+      <input type="text" id="vm-matricula" disabled>
     <label>Nombre:</label>
     <input type="text" id="vm-nombre" disabled>
+    <div class="row-2">
+      <div>
+        <label>Apellido Paterno:</label>
+        <input type="text" id="vm-paterno" disabled>
+      </div>
+      <div>
+        <label>Apellido Materno:</label>
+        <input type="text" id="vm-materno" disabled>
+      </div>
+    </div>
     <label>Docente:</label>
     <input type="text" id="vm-docente" disabled>
     <label>Observaciones:</label>
     <input type="text" id="vm-observaciones" disabled>
-    <label>Estado:</label>
-    <input type="text" id="vm-estado" disabled>
     <div class="modal-actions">
       <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
@@ -688,25 +697,15 @@
     abrirModal('modalAgregar');
   }
 
-  function cargarYVerMas(id) {
-    console.log("ID recibido en la función:", id);
-    fetch(`AlumnosVerMasServlet?action=getDetalle&id=\${id}`)
-            .then(response => {
-              if (!response.ok) throw new Error("Error en la respuesta");
-              return response.json();
-            })
-            .then(datos => {
-              document.getElementById('vm-id').value = datos.id || '';
-              document.getElementById('vm-nombre').value = datos.nombre || '';
-              document.getElementById('vm-paterno').value = datos.apellidoPaterno || '';
-              document.getElementById('vm-materno').value = datos.apellidoMaterno || '';
-
-              const inputArea = document.getElementById('vm-area');
-              if (inputArea) inputArea.value = datos.area || '';
-
-              abrirModal('modalVerMas');
-            })
-            .catch(error => console.error('Error al cargar detalle:', error));
+  function verMas(datos) {
+    document.getElementById('vm-id').value = datos.id || '';
+    document.getElementById('vm-matricula').value = datos.matricula || '';
+    document.getElementById('vm-nombre').value = datos.nombre || '';
+    document.getElementById('vm-paterno').value = datos.paterno || '';
+    document.getElementById('vm-materno').value = datos.materno || '';
+    document.getElementById('vm-docente').value = datos.docente || '';
+    document.getElementById('vm-observaciones').value = datos.observaciones || '';
+    abrirModal('modalVerMas');
   }
 
   function editar(id, datos) {

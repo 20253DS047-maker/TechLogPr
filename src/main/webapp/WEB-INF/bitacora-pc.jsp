@@ -197,7 +197,7 @@
 <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center position-relative" style="z-index: 2;">
 
     <div class="text-center mb-4">
-        <h2 class="fw-bold mb-1" style="color: #000;">Registro Bitacora</h2>
+        <h2 class="fw-bold mb-1" style="color: #000;">Registro Bitácora</h2>
         <h5 class="fw-normal" style="color: #000;">(PC)</h5>
     </div>
 
@@ -208,7 +208,7 @@
         <form action="bitacora-pc-servlet" method="post">
 
             <div class="mb-3">
-                <label for="salon" class="form-label form-label-custom">Salon de computo:</label>
+                <label for="salon" class="form-label form-label-custom">Salón de computo:</label>
                 <input type="text" class="form-control form-control-custom" name="salon_computo" id="salon" placeholder="Ej: CC7" required>
             </div>
 
@@ -270,7 +270,7 @@
             <div class="icon-question">?</div>
 
             <div class="modal-text">
-                ¿Estas seguro que quieres<br>regresar?
+                ¿Estás seguro que quieres<br>regresar?
             </div>
 
             <div class="modal-actions">

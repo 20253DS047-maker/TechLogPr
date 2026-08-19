@@ -2,7 +2,6 @@ package mx.edu.utez.poo.techlog.techlog.service;
 
 import mx.edu.utez.poo.techlog.techlog.dao.DaoDocentesVerMas;
 import mx.edu.utez.poo.techlog.techlog.dao.DaoTablaBtcAlumnos;
-import mx.edu.utez.poo.techlog.techlog.dao.DaoTablaBtcDocente;
 import mx.edu.utez.poo.techlog.techlog.model.BeanTablaBtcAlumnos;
 import mx.edu.utez.poo.techlog.techlog.model.BeanTablaBtcDocente;
 
@@ -17,10 +16,13 @@ public class AlumnosVerMasService {
         return daoTablaBtcAlumnos.consultarRegistrosBtcAlumnos();
     }
 
-    public BeanTablaBtcAlumnos consultarPorId(int id) {
+    public BeanTablaBtcDocente consultarPorId(int id) {
         return dao.findById(id);
     }
 
+    public List<BeanTablaBtcAlumnos> consultarBtcDocentes() {
+        return null;
+    }
 }
 
 

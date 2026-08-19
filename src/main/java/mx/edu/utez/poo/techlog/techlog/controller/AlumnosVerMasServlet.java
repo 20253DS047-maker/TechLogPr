@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import mx.edu.utez.poo.techlog.techlog.model.BeanTablaBtcAlumnos;
+import mx.edu.utez.poo.techlog.techlog.model.BeanTablaBtcDocente;
 import mx.edu.utez.poo.techlog.techlog.service.AlumnosVerMasService;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class AlumnosVerMasServlet extends HttpServlet {
 
                 if (idParam != null && !idParam.trim().isEmpty()) {
                     int id = Integer.parseInt(idParam);
-                    BeanTablaBtcAlumnos registro = servicio.consultarPorId(id);
+                    BeanTablaBtcDocente registro = servicio.consultarPorId(id);
 
                     if (registro != null) {
                         String json = "{"

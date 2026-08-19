@@ -307,16 +307,16 @@
       <img src="imagenes/Logotipo-UTEZ-scaled.png" alt="UTEZ" class="logo-img">
     </div>
 
-    <h1 class="page-title">Bitacora Alumnos</h1>
+    <h1 class="page-title">Bitácora Alumnos</h1>
 
     <div class="top-bar">
-      <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
-      <button type="button" class="btn-bitacora-docente" onclick="window.location.href='DocenteBitacoraServlet'">Bitacora</button>
+      <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesión</button>
+      <button type="button" class="btn-bitacora-docente" onclick="window.location.href='DocenteBitacoraServlet'">Bitácora</button>
     </div>
   </div>
 
   <div class="search-bar">
-    <input type="text" id="buscarMatricula" placeholder="Introduzca la matricula para buscar en el registro....">
+    <input type="text" id="buscarMatricula" placeholder="Introduzca la matrícula para buscar en el registro....">
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
 
@@ -324,13 +324,12 @@
     <table class="custom-table text-center">
       <thead>
       <tr>
-        <th style="width: 7%;">ID</th>
+        <th style="width: 9%;">ID</th>
         <th style="width: 12%;">MATRÍCULA</th>
-        <th style="width: 18%;">NOMBRE ALUMNO</th>
-        <th style="width: 18%;">NOMBRE DOCENTE</th>
-        <th style="width: 8%;">ID PC</th>
-        <th style="width: 19%;">OBSERVACIONES</th>
-        <th style="width: 8%;">ESTADO</th>
+        <th style="width: 20%;">NOMBRE ALUMNO</th>
+        <th style="width: 20%;">NOMBRE DOCENTE</th>
+        <th style="width: 9%;">ID PC</th>
+        <th style="width: 20%;">OBSERVACIONES</th>
         <th style="width: 10%;">ACCIONES</th>
       </tr>
       </thead>
@@ -343,13 +342,8 @@
           <td>${registroBtcAlumno.nombreDocente}</td>
           <td>${registroBtcAlumno.idPc}</td>
           <td>${registroBtcAlumno.observaciones}</td>
+
           <td>
-            <span id="estadoTexto-${estado.index}" class="badge-activo">Activo</span>
-          </td>
-          <td>
-            <button type="button" class="icon-btn" id="estadoBtn-${estado.index}" title="Activar/Desactivar" onclick="cambiarEstado(${estado.index}, this)">
-              <i class="fa-solid fa-toggle-on"></i>
-            </button>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
                             matricula: '${registroBtcAlumno.matricula}',
@@ -364,23 +358,7 @@
                             })">
               <i class="fa-regular fa-eye"></i>
             </button>
-            <button type="button" class="icon-btn" title="Editar"
-                    onclick="editar(${estado.index}, {
-                            matricula: '${registroBtcAlumno.matricula}',
-                            nombre: '${registroBtcAlumno.nombre}',
-                            fecha: '11/11/2026',
-                            pc: '${registroBtcAlumno.idPc}',
-                            horaEntrada: '11:00 AM',
-                            salon: 'MAC9',
-                            horaSalida: '13:00 PM',
-                            docencia: 'D4',
-                            estado: 'activo'
-                            })">
-              <i class="fa-regular fa-pen-to-square"></i>
-            </button>
-            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar(${estado.index})">
-              <i class="fa-regular fa-trash-can"></i>
-            </button>
+
           </td>
         </tr>
       </c:forEach>
@@ -417,7 +395,7 @@
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box">
     <h2>Detalle del registro</h2>
-    <label>Matricula:</label>
+    <label>Matrícula:</label>
     <input type="text" id="vm-matricula" disabled>
 
     <label>Nombre Completo:</label>
@@ -430,7 +408,7 @@
 
     <div class="row-2">
       <div><label>Hora Entrada:</label><input type="text" id="vm-entrada" disabled></div>
-      <div><label>Salon:</label><input type="text" id="vm-salon" disabled></div>
+      <div><label>Salón:</label><input type="text" id="vm-salon" disabled></div>
     </div>
 
     <div class="row-2">
@@ -450,7 +428,7 @@
 <!-- ===================== MODAL: CERRAR SESION ===================== -->
 <div class="modal-overlay" id="modalCerrarSesion">
   <div class="confirm-box">
-    <div class="confirm-header">¿Estas seguro de cerrar sesion?</div>
+    <div class="confirm-header">¿Estás seguro de cerrar sesión?</div>
     <div class="confirm-actions">
       <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
       <button type="button" class="btn-si" onclick="window.location.href='login-docente-servlet'">Si</button>

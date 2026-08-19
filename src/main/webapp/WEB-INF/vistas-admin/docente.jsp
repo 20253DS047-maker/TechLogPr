@@ -339,7 +339,7 @@
     <h1 class="main-title">Usuarios Docentes</h1>
 
     <div class="d-flex flex-column gap-2 align-items-end">
-      <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
+      <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesión</button>
     </div>
   </div>
 

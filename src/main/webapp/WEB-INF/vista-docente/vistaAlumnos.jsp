@@ -310,13 +310,13 @@
     <h1 class="page-title">Usuarios Alumnos</h1>
 
     <div class="top-bar">
-      <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
-      <button type="button" class="btn-bitacora-docente" onclick="window.location.href='DocenteBitacoraServlet'">Bitacora</button>
+      <button type="button" class="btn-cerrar-sesion" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesión</button>
+      <button type="button" class="btn-bitacora-docente" onclick="window.location.href='DocenteBitacoraServlet'">Bitácora</button>
     </div>
   </div>
 
   <div class="search-bar">
-    <input type="text" id="buscarMatricula" placeholder="Introduzca la matricula para buscar en el registro....">
+    <input type="text" id="buscarMatricula" placeholder="Introduzca la matrícula para buscar en el registro....">
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
 
@@ -325,10 +325,10 @@
       <thead>
       <tr>
         <th style="width: 20%;">MATRÍCULA</th>
-        <th style="width: 15%;">USERNAME</th>
+        <th style="width: 20%;">USERNAME</th>
         <th style="width: 25%;">NOMBRE</th>
         <th style="width: 25%;">APELLIDO</th>
-        <th style="width: 15%;">ACCIONES</th>
+        <th style="width: 10%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
@@ -348,18 +348,7 @@
                             })">
               <i class="fa-regular fa-eye"></i>
             </button>
-            <button type="button" class="icon-btn" title="Editar"
-                    onclick="editar('${usuarioAlumno.matricula}', {
-                            matricula: '${usuarioAlumno.matricula}',
-                            nombre: '${usuarioAlumno.nombre}',
-                            apellido: '${usuarioAlumno.apellido}',
-                            username: '${usuarioAlumno.username}'
-                            })">
-              <i class="fa-regular fa-pen-to-square"></i>
-            </button>
-            <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${usuarioAlumno.matricula}')">
-              <i class="fa-regular fa-trash-can"></i>
-            </button>
+
           </td>
         </tr>
       </c:forEach>
@@ -395,7 +384,7 @@
 <!-- ===================== MODAL: VER MAS ===================== -->
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box">
-    <label>Matricula:</label>
+    <label>Matrícula:</label>
     <input type="text" id="vm-matricula" disabled>
 
     <div class="row-2">
@@ -415,7 +404,7 @@
 <!-- ===================== MODAL: CERRAR SESION ===================== -->
 <div class="modal-overlay" id="modalCerrarSesion">
   <div class="confirm-box">
-    <div class="confirm-header">¿Estas seguro de cerrar sesion?</div>
+    <div class="confirm-header">¿Estás seguro de cerrar sesión?</div>
     <div class="confirm-actions">
       <button type="button" class="btn-no" onclick="cerrarModal('modalCerrarSesion')">No</button>
       <button type="button" class="btn-si" onclick="confirmarCerrarSesion()">Si</button>

@@ -572,13 +572,13 @@
     <input type="text" name="apellido" id="ag-nombre" placeholder="Introduzca su apellido" required>
     <div>
       <label>Observaciones</label>
-      <input type="text" name="Observaciones" id="observaciones" placeholder="Ej. Manchas en la pantalla">
+      <input type="text" name="observaciones" id="observaciones" placeholder="Ej. Manchas en la pantalla">
     </div>
     <label>Docente:</label>
     <input type="text" name="nombre_docente" id="ag-docente" placeholder="Ingrese su Docente" required>
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
-      <button type="submit" class="btn-confirmar">Siguiente</button>
+      <button type="submit" class="btn-confirmar">Guardar</button>
     </div>
   </form>
 </div>

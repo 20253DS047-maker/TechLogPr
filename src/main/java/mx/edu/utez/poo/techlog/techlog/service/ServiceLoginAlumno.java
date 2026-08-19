@@ -8,25 +8,19 @@ public class ServiceLoginAlumno {
 
     public DaoLoginAlumno daoLoginAlumno = new DaoLoginAlumno();
 
-    public BeanLoginAlumno autenticar(String nombre, String apellido, String matricula, String contrasena) {
+    public BeanLoginAlumno autenticar(String usuario, String contrasena) {
 
         // CORREGIDO: Se remueve la validacion obligatoria de nombre y apellido para el Login.
         // Solo se valida que matricula y contrasena contengan datos.
-        if (matricula == null || matricula.trim().isEmpty() ||
+        if (usuario == null || usuario.trim().isEmpty() ||
                 contrasena == null || contrasena.trim().isEmpty()) {
             return null;
         }
 
-        String regexMatricula = "^[0-9]{5}[a-zA-Z]{2}[0-9]{3}$";
-        if (!matricula.trim().matches(regexMatricula)) {
-            System.out.println("La matrícula no cumple con el formato requerido: " + matricula);
-            return null;
-        }
-
-        BeanLoginAlumno alumno = daoLoginAlumno.findByMatricula(matricula.trim());
+        BeanLoginAlumno alumno = daoLoginAlumno.findByUsuario(usuario.trim());
 
         if (alumno == null) {
-            System.out.println("No se encontró ningún alumno con la matrícula: " + matricula);
+            System.out.println("No se encontró ningún alumno con el usuario: " + usuario);
             return null;
         }
 
@@ -34,8 +28,6 @@ public class ServiceLoginAlumno {
 
         System.out.println("Hash ingresado: " + hashIngresado);
         System.out.println("Hash en BD:        " + alumno.getContrasena());
-        System.out.println("Matricula ingresada: " + matricula);
-        System.out.println("Matricula en BD:        " + alumno.getMatricula());
 
         // Comparación segura ignorando mayúsculas/minúsculas y eliminando espacios en blanco (.trim())
         if (hashIngresado != null && alumno.getContrasena() != null

@@ -1,35 +1,17 @@
 package mx.edu.utez.poo.techlog.techlog.model;
 
 public class BeanLoginAlumno {
-    private String nombre;
-    private String apellido;
-    private String matricula;
+    private String usuario;
     private String contrasena;
 
-
-    public String getNombre() {
-        return nombre;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
 
     public String getContrasena() {
         return contrasena;

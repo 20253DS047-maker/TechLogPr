@@ -33,7 +33,7 @@ public class RegistroAgregarServlet extends HttpServlet {
 
             if (guardado){
                 req.setAttribute("bitacoraAlumno", registroAlumno);
-                req.getRequestDispatcher("WEB-INF/check-alumno.jsp").forward(req, resp);
+                req.getRequestDispatcher("WEB-INF/agregar-alumno-check.jsp").forward(req, resp);
             }else {
                 req.setAttribute("error", "No se pudo registrar en la bitacora");
                 req.getRequestDispatcher("WEB-INF/vistas-admin/registros.jsp").forward(req, resp);

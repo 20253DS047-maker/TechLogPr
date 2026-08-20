@@ -22,13 +22,11 @@ public class LoginAlumnoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String nombre = req.getParameter("nombre");
-        String apellido = req.getParameter("apellido");
-        String matricula = req.getParameter("matricula");
+        String usuario = req.getParameter("usuario");
         String contrasena = req.getParameter("contrasena");
 
         ServiceLoginAlumno serviceLoginAlumno = new ServiceLoginAlumno();
-        BeanLoginAlumno alumno = serviceLoginAlumno.autenticar(nombre, apellido, matricula, contrasena);
+        BeanLoginAlumno alumno = serviceLoginAlumno.autenticar(usuario,contrasena);
 
         if (alumno != null) {
             HttpSession oldSession = req.getSession(false);

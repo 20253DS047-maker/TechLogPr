@@ -391,17 +391,14 @@
             </button>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
-                    matricula: '20253DS196',
-                    nombre: 'Jonathan AlejandroLopez Benitez',
-                    fecha: '11/11/2026',
-                    pc: '15',
-                    horaEntrada: '11:00 AM',
-                    salon: 'MAC9',
-                    horaSalida: '13:00 PM',
-                    docencia: 'D4',
-                    estado: 'Activo',
-                    docente: ''
-                  })">
+                            id: '${registroBtcAlumno.id}',
+                            matricula: '${registroBtcAlumno.matricula}',
+                            nombre: '${registroBtcAlumno.nombre}',
+                            paterno: '${registroBtcAlumno.apellidoPaterno}',
+                            materno: '${registroBtcAlumno.apellidoMaterno}',
+                            docente: '${registroBtcAlumno.nombreDocente}',
+                            observaciones: '${registroBtcAlumno.observaciones}'
+                            })">
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
@@ -479,44 +476,27 @@
 <div class="modal-overlay" id="modalVerMas">
   <div class="modal-box modal-white">
     <h2>Detalle del registro</h2>
-    <label>Matrícula:</label>
-    <input type="text" id="vm-matricula" disabled>
-    <label>Nombre Completo:</label>
+
+      <label>ID:</label>
+      <input type="text" id="vm-id" disabled>
+      <label>Matrícula:</label>
+      <input type="text" id="vm-matricula" disabled>
+    <label>Nombre:</label>
     <input type="text" id="vm-nombre" disabled>
     <div class="row-2">
       <div>
-        <label>Fecha:</label>
-        <input type="text" id="vm-fecha" disabled>
+        <label>Apellido Paterno:</label>
+        <input type="text" id="vm-paterno" disabled>
       </div>
       <div>
-        <label>PC:</label>
-        <input type="text" id="vm-pc" disabled>
+        <label>Apellido Materno:</label>
+        <input type="text" id="vm-materno" disabled>
       </div>
     </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Entrada:</label>
-        <input type="text" id="vm-horaEntrada" disabled>
-      </div>
-      <div>
-        <label>Salón:</label>
-        <input type="text" id="vm-salon" disabled>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label>Hora Salida:</label>
-        <input type="text" id="vm-horaSalida" disabled>
-      </div>
-      <div>
-        <label>Docencia:</label>
-        <input type="text" id="vm-docencia" disabled>
-      </div>
-    </div>
-    <label>Estado:</label>
-    <input type="text" id="vm-estado" disabled>
     <label>Docente:</label>
     <input type="text" id="vm-docente" disabled>
+    <label>Observaciones:</label>
+    <input type="text" id="vm-observaciones" disabled>
     <div class="modal-actions">
       <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
@@ -530,20 +510,46 @@
     <input type="hidden" id="ed-id">
     <label>Matrícula:</label>
     <input type="text" name="matricula" id="ed-matricula">
-    <label>Nombre:</label>
-    <input type="text" name="nombre" id="ed-nombre">
+    <label>Nombre Completo:</label>
+    <input type="text" name="nombre_completo" id="ed-nombre">
     <div class="row-2">
       <div>
-        <label>Apellido Paterno:</label>
-        <input type="text" name="apellido_paterno" id="ed-apellidoPaterno">
+        <label>Fecha:</label>
+        <input type="text" name="fecha" id="ed-fecha">
       </div>
       <div>
-        <label>Apellido Materno:</label>
-        <input type="text" name="apellido_materno" id="ed-apellidoMaterno">
+        <label>PC:</label>
+        <input type="text" name="numero_pc" id="ed-pc">
       </div>
     </div>
-    <label>Observaciones:</label>
-    <input type="text" name="observaciones" id="ed-observaciones">
+    <div class="row-2">
+      <div>
+        <label>Hora Entrada:</label>
+        <input type="text" name="hora_entrada" id="ed-horaEntrada">
+      </div>
+      <div>
+        <label>Salón:</label>
+        <input type="text" name="salon_computo" id="ed-salon">
+      </div>
+    </div>
+    <div class="row-2">
+      <div>
+        <label>Hora Salida:</label>
+        <input type="text" name="hora_salida" id="ed-horaSalida">
+      </div>
+      <div>
+        <label>Docencia:</label>
+        <select name="docencia" id="ed-docencia">
+          <option value="D4">D4</option>
+          <option value="D3">D3</option>
+        </select>
+      </div>
+    </div>
+    <label>Estado:</label>
+    <select name="estado" id="ed-estado">
+      <option value="activo">Activo</option>
+      <option value="inactivo">Inactivo</option>
+    </select>
     <label>Docente:</label>
     <input type="text" name="nombre_docente" id="ed-docente" placeholder="Ingrese su Docente">
     <div class="modal-actions">
@@ -555,7 +561,7 @@
 
 <!-- Modal Agregar (Paso 1: Datos Alumno) -->
 <div class="modal-overlay" id="modalAgregar">
-  <form class="modal-box modal-white" action="bitacora-alumno-servlet">
+  <form class="modal-box modal-white" action="registro-agregar-servlet">
     <h2>Agregar registro Alumno</h2>
     <label>Matrícula:</label>
     <input type="text" name="matricula_usuario" id="ag-matricula" placeholder="Introduzca su matrícula" required>
@@ -565,13 +571,13 @@
     <input type="text" name="apellido" id="ag-nombre" placeholder="Introduzca su apellido" required>
     <div>
       <label>Observaciones</label>
-      <input type="text" name="Observaciones" id="observaciones" placeholder="Ej. Manchas en la pantalla">
+      <input type="text" name="observaciones" id="observaciones" placeholder="Ej. Manchas en la pantalla">
     </div>
     <label>Docente:</label>
     <input type="text" name="nombre_docente" id="ag-docente" placeholder="Ingrese su Docente" required>
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalAgregar')">Salir</button>
-      <button type="submit" class="btn-confirmar">Siguiente</button>
+      <button type="submit" class="btn-confirmar">Guardar</button>
     </div>
   </form>
 </div>
@@ -691,59 +697,33 @@
   }
 
   function verMas(datos) {
-    document.getElementById('vm-matricula').value = datos.matricula;
-    document.getElementById('vm-nombre').value = datos.nombre;
-    document.getElementById('vm-fecha').value = datos.fecha;
-    document.getElementById('vm-pc').value = datos.pc;
-    document.getElementById('vm-horaEntrada').value = datos.horaEntrada;
-    document.getElementById('vm-salon').value = datos.salon;
-    document.getElementById('vm-horaSalida').value = datos.horaSalida;
-    document.getElementById('vm-docencia').value = datos.docencia;
-    document.getElementById('vm-estado').value = datos.estado;
-    document.getElementById('vm-docente').value = datos.docente;
+    document.getElementById('vm-id').value = datos.id || '';
+    document.getElementById('vm-matricula').value = datos.matricula || '';
+    document.getElementById('vm-nombre').value = datos.nombre || '';
+    document.getElementById('vm-paterno').value = datos.paterno || '';
+    document.getElementById('vm-materno').value = datos.materno || '';
+    document.getElementById('vm-docente').value = datos.docente || '';
+    document.getElementById('vm-observaciones').value = datos.observaciones || '';
     abrirModal('modalVerMas');
   }
 
   function editar(id, datos) {
     document.getElementById('ed-id').value = id;
-    document.getElementById('ed-apellidoPaterno').value = datos.apellidoPaterno || '';
-    document.getElementById('ed-apellidoMaterno').value = datos.apellidoMaterno || '';
-    document.getElementById('ed-matricula').value = datos.matricula || '';
-    document.getElementById('ed-nombre').value = datos.nombre || '';
-    document.getElementById('ed-observaciones').value = datos.observaciones || '';
-    document.getElementById('ed-docente').value = datos.docente || '';
+    document.getElementById('ed-matricula').value = datos.matricula;
+    document.getElementById('ed-nombre').value = datos.nombre;
+    document.getElementById('ed-fecha').value = datos.fecha;
+    document.getElementById('ed-pc').value = datos.pc;
+    document.getElementById('ed-horaEntrada').value = datos.horaEntrada;
+    document.getElementById('ed-salon').value = datos.salon;
+    document.getElementById('ed-horaSalida').value = datos.horaSalida;
+    document.getElementById('ed-docencia').value = datos.docencia;
+    document.getElementById('ed-estado').value = datos.estado;
+    document.getElementById('ed-docente').value = datos.docente;
     abrirModal('modalEditar');
   }
 
   function guardarEdicion() {
-    var idOriginal = document.getElementById('ed-id').value;
-    var body = 'id_original=' + encodeURIComponent(idOriginal) +
-            '&matricula=' + encodeURIComponent(document.getElementById('ed-matricula').value) +
-            '&nombre=' + encodeURIComponent(document.getElementById('ed-nombre').value) +
-            '&apellido_paterno=' + encodeURIComponent(document.getElementById('ed-apellidoPaterno').value) +
-            '&apellido_materno=' + encodeURIComponent(document.getElementById('ed-apellidoMaterno').value) +
-            '&nombre_docente=' + encodeURIComponent(document.getElementById('ed-docente').value) +
-            '&observaciones=' + encodeURIComponent(document.getElementById('ed-observaciones').value);
-
-    fetch('editar-alumno-servlet', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: body
-    })
-            .then(function (response) { return response.json(); })
-            .then(function (data) {
-              if (data.success) {
-                location.reload();
-              } else {
-                alert('No se pudo editar: ' + (data.message || 'Error desconocido'));
-                cerrarModal('modalEditar');
-              }
-            })
-            .catch(function (error) {
-              console.error(error);
-              alert('Error de conexión al editar el registro.');
-              cerrarModal('modalEditar');
-            });
+    cerrarModal('modalEditar');
   }
 
   function cambiarEstado(id, boton) {

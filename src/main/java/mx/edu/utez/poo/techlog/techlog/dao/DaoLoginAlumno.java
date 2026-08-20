@@ -10,21 +10,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DaoLoginAlumno {
-    public BeanLoginAlumno findByMatricula(String matricula) {
+    public BeanLoginAlumno findByUsuario(String usuario) {
         BeanLoginAlumno alumno = null;
-        String sql = "SELECT * FROM USUARIO_ALUMNO WHERE MATRICULA = ?";
+        String sql = "SELECT * FROM USUARIO_ALUMNO WHERE USERNAME = ?";
 
         try (Connection conexion = Conexion.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
-            ps.setString(1, matricula);
+            ps.setString(1, usuario);
 
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
                     alumno = new BeanLoginAlumno();
-                    alumno.setNombre(rs.getString("NOMBRE"));
-                    alumno.setApellido(rs.getString("APELLIDO"));
-                    alumno.setMatricula(rs.getString("MATRICULA"));
+                    alumno.setUsuario(rs.getString("USERNAME"));
                     alumno.setContrasena(rs.getString("CONTRASENA"));
                 }
             }

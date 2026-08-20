@@ -390,7 +390,13 @@
               <i class="fa-solid fa-toggle-on"></i>
             </button>
             <button type="button" class="icon-btn" title="Ver detalles"
-                    onclick="cargarYVerMas('${registroBtcDocente.id}')">
+                    onclick="verMas({
+                            id: '${registroBtcDocente.id}',
+                            nombre: '${registroBtcDocente.nombre}',
+                            paterno: '${registroBtcDocente.apellidoPaterno}',
+                            materno: '${registroBtcDocente.apellidoMaterno}',
+                            area: '${registroBtcDocente.area}'
+                            })">
               <i class="fa-regular fa-eye"></i>
             </button>
             <button type="button" class="icon-btn" title="Editar"
@@ -576,24 +582,13 @@
     document.getElementById(idModal).classList.remove('activo');
   }
 
-  function cargarYVerMas(id) {
-    fetch(`DocentesVerMasServlet?action=getDetalle&id=${id}`)
-            .then(function (response) {
-              if (!response.ok) throw new Error("Error en la respuesta");
-              return response.json();
-            })
-            .then(function (datos) {
-              document.getElementById('vm-id').value = datos.id || '';
-              document.getElementById('vm-nombre').value = datos.nombre || '';
-              document.getElementById('vm-paterno').value = datos.apellidoPaterno || '';
-              document.getElementById('vm-materno').value = datos.apellidoMaterno || '';
-
-              var inputArea = document.getElementById('vm-area');
-              if (inputArea) inputArea.value = datos.area || '';
-
-              abrirModal('modalVerMas');
-            })
-            .catch(function (error) { console.error('Error al cargar detalle:', error); });
+  function verMas(datos) {
+    document.getElementById('vm-id').value = datos.id || '';
+    document.getElementById('vm-nombre').value = datos.nombre || '';
+    document.getElementById('vm-paterno').value = datos.paterno || '';
+    document.getElementById('vm-materno').value = datos.materno || '';
+    document.getElementById('vm-area').value = datos.area || '';
+    abrirModal('modalVerMas');
   }
 
   function editar(id, datos) {

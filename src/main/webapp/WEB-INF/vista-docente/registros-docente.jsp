@@ -342,19 +342,16 @@
           <td>${registroBtcAlumno.nombreDocente}</td>
           <td>${registroBtcAlumno.idPc}</td>
           <td>${registroBtcAlumno.observaciones}</td>
-
           <td>
             <button type="button" class="icon-btn" title="Ver detalles"
                     onclick="verMas({
+                            id: '${registroBtcAlumno.id}',
                             matricula: '${registroBtcAlumno.matricula}',
                             nombre: '${registroBtcAlumno.nombre}',
-                            fecha: '11/11/2026',
-                            pc: '${registroBtcAlumno.idPc}',
-                            horaEntrada: '11:00 AM',
-                            salon: 'MAC9',
-                            horaSalida: '13:00 PM',
-                            docencia: 'D4',
-                            estado: 'Activo'
+                            paterno: '${registroBtcAlumno.apellidoPaterno}',
+                            materno: '${registroBtcAlumno.apellidoMaterno}',
+                            docente: '${registroBtcAlumno.nombreDocente}',
+                            observaciones: '${registroBtcAlumno.observaciones}'
                             })">
               <i class="fa-regular fa-eye"></i>
             </button>
@@ -393,34 +390,33 @@
 
 <!-- ===================== MODAL: VER MAS ===================== -->
 <div class="modal-overlay" id="modalVerMas">
-  <div class="modal-box">
+  <div class="modal-box modal-white">
     <h2>Detalle del registro</h2>
+
+    <label>ID:</label>
+    <input type="text" id="vm-id" disabled>
+    <label>Matrícula:</label>
     <label>Matrícula:</label>
     <input type="text" id="vm-matricula" disabled>
 
-    <label>Nombre Completo:</label>
+    <label>Nombre:</label>
     <input type="text" id="vm-nombre" disabled>
-
     <div class="row-2">
-      <div><label>Fecha:</label><input type="text" id="vm-fecha" disabled></div>
-      <div><label>PC:</label><input type="text" id="vm-pc" disabled></div>
+      <div>
+        <label>Apellido Paterno:</label>
+        <input type="text" id="vm-paterno" disabled>
+      </div>
+      <div>
+        <label>Apellido Materno:</label>
+        <input type="text" id="vm-materno" disabled>
+      </div>
     </div>
-
-    <div class="row-2">
-      <div><label>Hora Entrada:</label><input type="text" id="vm-entrada" disabled></div>
-      <div><label>Salón:</label><input type="text" id="vm-salon" disabled></div>
-    </div>
-
-    <div class="row-2">
-      <div><label>Hora Salida:</label><input type="text" id="vm-salida" disabled></div>
-      <div><label>Docencia:</label><input type="text" id="vm-docencia" disabled></div>
-    </div>
-
-    <label>Estado:</label>
-    <input type="text" id="vm-estado" disabled>
-
+    <label>Docente:</label>
+    <input type="text" id="vm-docente" disabled>
+    <label>Observaciones:</label>
+    <input type="text" id="vm-observaciones" disabled>
     <div class="modal-actions">
-      <button type="button" class="btn-salir" onclick="cerrarModal('modalVerMas')">Salir</button>
+      <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
   </div>
 </div>
@@ -444,16 +440,14 @@
     document.getElementById(idModal).classList.remove('activo');
   }
 
-  function verMas(matricula, nombre, fecha, pc, entrada, salon, salida, docencia, estado) {
-    document.getElementById('vm-matricula').value = matricula;
-    document.getElementById('vm-nombre').value = nombre;
-    document.getElementById('vm-fecha').value = fecha;
-    document.getElementById('vm-pc').value = pc;
-    document.getElementById('vm-entrada').value = entrada;
-    document.getElementById('vm-salon').value = salon;
-    document.getElementById('vm-salida').value = salida;
-    document.getElementById('vm-docencia').value = docencia;
-    document.getElementById('vm-estado').value = estado;
+  function verMas(datos) {
+    document.getElementById('vm-id').value = datos.id || '';
+    document.getElementById('vm-matricula').value = datos.matricula || '';
+    document.getElementById('vm-nombre').value = datos.nombre || '';
+    document.getElementById('vm-paterno').value = datos.paterno || '';
+    document.getElementById('vm-materno').value = datos.materno || '';
+    document.getElementById('vm-docente').value = datos.docente || '';
+    document.getElementById('vm-observaciones').value = datos.observaciones || '';
     abrirModal('modalVerMas');
   }
 

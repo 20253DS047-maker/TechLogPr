@@ -25,7 +25,7 @@
       background-color: #cbc8be;
       color: #333333;
       font-family: Arial, Helvetica, sans-serif;
-      padding: 20px 40px;
+      padding: 20px 40px 70px 40px; /* Espacio reservado para la barra inferior fija */
       display: flex;
       flex-direction: column;
     }
@@ -35,6 +35,7 @@
       flex-direction: column;
       height: 100%;
       width: 100%;
+      position: relative;
     }
 
     /* Header */
@@ -113,10 +114,10 @@
       background-color: #e5ded8;
       border-radius: 2px;
       padding: 0;
-      overflow: hidden;
+      overflow-y: auto; /* Muestra desplazamiento interno si hay muchos registros */
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      display: block;
-      flex-direction: column;
+      flex-grow: 1; /* Ocupa el espacio vertical restante */
+      margin-bottom: 10px;
     }
     .custom-table {
       width: 100%;
@@ -160,22 +161,26 @@
       padding: 0;
     }
 
-    /* Footer y paginación al final */
+    /* Footer FIJO únicamente con los radio buttons */
     .footer-controls {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #cbc8be;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      margin-top: 15px;
-      flex-shrink: 0;
+      z-index: 10;
     }
     .radio-group {
-      justify-self: start;
       display: flex;
       gap: 15px;
       align-items: center;
     }
     .radio-group-right {
-      justify-self: end;
       display: flex;
       gap: 15px;
       align-items: center;
@@ -191,33 +196,6 @@
     .radio-group-right .form-check-input:checked {
       background-color: #000;
       border-color: #000;
-    }
-    .pagination-custom {
-      grid-column: 2;
-      justify-self: center;
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-    .pagination-custom .page-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1.5px solid #333333;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      font-weight: bold;
-      color: #333333;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .pagination-custom .page-btn.active {
-      background-color: #0d8065;
-      color: #ffffff;
-      border-color: #0d8065;
     }
 
     /* Modales */
@@ -350,16 +328,16 @@
     </div>
   </div>
 
-  <!-- Buscador -->
+  <!-- Buscador por Nombre -->
   <div class="search-bar-container">
     <button class="btn btn-custom-dark px-4" onclick="window.location.href='registro-docente-servlet'">Registrar Usuarios</button>
     <div class="search-input-group">
-      <input type="text" id="buscarMatricula" class="form-control" placeholder="Introduzca la matricula para buscar en el registro....">
+      <input type="text" id="buscarNombre" class="form-control" placeholder="Introduzca el nombre del alumno para buscar....">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
     </div>
   </div>
 
-  <!-- Tabla Agrandada dinámicamente -->
+  <!-- Tabla -->
   <div class="table-container">
     <table class="custom-table text-center">
       <thead>
@@ -417,17 +395,17 @@
             </button>
           </td>
         </tr>
-
       </c:forEach>
       </tbody>
     </table>
   </div>
 
+  <!-- Footer Fijo abajo sólo con Radios -->
   <div class="footer-controls">
     <!-- Esquina Izquierda: Filtros de Bitácora -->
     <div class="radio-group">
       <div class="form-check form-check-inline m-0">
-        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraAlumno" value="PC"  onchange="window.location.href='admin-pc-servlet'">
+        <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraAlumno" value="PC" onchange="window.location.href='admin-pc-servlet'">
         <label class="form-check-label fw-bold ms-1" for="optBitacoraAlumno">Bitácora(PC)</label>
       </div>
       <div class="form-check form-check-inline m-0">
@@ -438,18 +416,6 @@
         <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraPC" value="A" checked onchange="window.location.href='admin-alumno-servlet'" disabled>
         <label class="form-check-label fw-bold ms-1" for="optBitacoraPC">Bitácora(Alumnos)</label>
       </div>
-    </div>
-
-    <!-- Centro: Paginación -->
-    <div class="pagination-custom">
-      <a class="page-btn"><i class="fa-solid fa-angles-left"></i></a>
-      <a class="page-btn"><i class="fa-solid fa-angle-left"></i></a>
-      <a class="page-btn active">1</a>
-      <a class="page-btn">2</a>
-      <a class="page-btn">3</a>
-      <a class="page-btn">4</a>
-      <a class="page-btn"><i class="fa-solid fa-angle-right"></i></a>
-      <a class="page-btn"><i class="fa-solid fa-angles-right"></i></a>
     </div>
 
     <!-- Esquina Derecha: Filtros de Usuarios -->
@@ -640,6 +606,25 @@
 <script>
   var filaAEliminar = null;
 
+  /* BUSCADOR POR NOMBRE */
+  document.getElementById('buscarNombre').addEventListener('keyup', function() {
+    let filtro = this.value.toLowerCase().trim();
+    let filas = document.querySelectorAll('.custom-table tbody tr');
+
+    filas.forEach(function(fila) {
+      let celdaNombre = fila.getElementsByTagName('td')[2]; // Columna NOMBRE ALUMNO
+      if (celdaNombre) {
+        let textoNombre = celdaNombre.textContent || celdaNombre.innerText;
+        if (textoNombre.toLowerCase().includes(filtro)) {
+          fila.style.display = '';
+        } else {
+          fila.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  /* FUNCIONALIDADES DE MODALES Y ACCIONES */
   function abrirModal(idModal) {
     document.getElementById(idModal).classList.add('activo');
   }
@@ -647,11 +632,9 @@
     document.getElementById(idModal).classList.remove('activo');
   }
 
-  /* Transición entre el Modal 1 y el Modal 2 de Agregar */
   function abrirSiguienteModal(event) {
     event.preventDefault(); // Previene la recarga de página inmediata
 
-    // Pasa los valores ingresados en el Paso 1 a los campos ocultos del Paso 2
     document.getElementById('pc-hidden-matricula').value = document.getElementById('ag-matricula').value;
     document.getElementById('pc-hidden-nombre').value = document.getElementById('ag-nombre').value;
     document.getElementById('pc-hidden-observaciones').value = document.getElementById('observaciones').value;

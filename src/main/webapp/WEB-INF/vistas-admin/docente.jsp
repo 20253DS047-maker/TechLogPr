@@ -26,7 +26,7 @@
       background-color: #cbc8be;
       color: #333333;
       font-family: Arial, Helvetica, sans-serif;
-      padding: 20px 40px;
+      padding: 20px 40px 70px 40px; /* Padding inferior para dejar espacio al footer fijo */
       display: flex;
       flex-direction: column;
     }
@@ -36,6 +36,7 @@
       flex-direction: column;
       height: 100%;
       width: 100%;
+      position: relative;
     }
 
     /* Header */
@@ -114,10 +115,10 @@
       background-color: #e5ded8;
       border-radius: 2px;
       padding: 0;
-      overflow: hidden;
+      overflow-y: auto; /* Permite scroll interno si sobrepasa el alto */
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      display: block;
-      flex-direction: column;
+      flex-grow: 1; /* Ocupa el espacio restante en pantalla */
+      margin-bottom: 10px;
     }
     .custom-table {
       width: 100%;
@@ -158,13 +159,19 @@
       padding: 0;
     }
 
-    /* Footer y paginación */
+    /* Footer y paginación FIJOS abajo */
     .footer-controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #cbc8be;
+      padding: 0 40px;
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      margin-top: 15px;
-      flex-shrink: 0;
+      z-index: 10;
     }
     .radio-group {
       justify-self: start;
@@ -345,9 +352,9 @@
 
   <!-- Buscador -->
   <div class="search-bar-container">
-    <button class="btn btn-custom-dark px-4" onclick="window.location.href='usuarios-docentes-servlet'">Registrar Usuarios</button>
+    <button class="btn btn-custom-dark px-4" onclick="window.location.href='registro-docente-servlet'">Registrar Usuarios</button>
     <div class="search-input-group">
-      <input type="text" id="buscarIdDocente" class="form-control" placeholder="Introduzca el ID del docente para buscar...">
+      <input type="text" id="buscarNombre" class="form-control" placeholder="Introduzca el nombre del docente para buscar...">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
     </div>
   </div>
@@ -408,7 +415,7 @@
     </table>
   </div>
 
-  <!-- Footer y Paginación -->
+  <!-- Footer y Paginación Fijos Abajo -->
   <div class="footer-controls">
     <!-- Esquina Izquierda: Filtros de Bitácora -->
     <div class="radio-group">
@@ -426,16 +433,16 @@
       </div>
     </div>
 
-    <!-- Centro: Paginación -->
+    <!-- Centro: Paginación (Solo Vista) -->
     <div class="pagination-custom">
-      <a class="page-btn"><i class="fa-solid fa-angles-left"></i></a>
-      <a class="page-btn"><i class="fa-solid fa-angle-left"></i></a>
-      <a class="page-btn active">1</a>
-      <a class="page-btn">2</a>
-      <a class="page-btn">3</a>
-      <a class="page-btn">4</a>
-      <a class="page-btn"><i class="fa-solid fa-angle-right"></i></a>
-      <a class="page-btn"><i class="fa-solid fa-angles-right"></i></a>
+      <span class="page-btn"><i class="fa-solid fa-angles-left"></i></span>
+      <span class="page-btn"><i class="fa-solid fa-angle-left"></i></span>
+      <span class="page-btn active">1</span>
+      <span class="page-btn">2</span>
+      <span class="page-btn">3</span>
+      <span class="page-btn">4</span>
+      <span class="page-btn"><i class="fa-solid fa-angle-right"></i></span>
+      <span class="page-btn"><i class="fa-solid fa-angles-right"></i></span>
     </div>
 
     <!-- Esquina Derecha: Filtros de Usuarios -->
@@ -528,6 +535,26 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   var filaAEliminar = null;
+
+  /* BUSCADOR FILTRADO POR NOMBRE */
+  document.getElementById('buscarNombre').addEventListener('keyup', function() {
+    let filtro = this.value.toLowerCase().trim();
+    let filas = document.querySelectorAll('.custom-table tbody tr');
+
+    filas.forEach(function(fila) {
+      // Índice 2 corresponde a la 3ra columna: NOMBRE
+      let celdaNombre = fila.getElementsByTagName('td')[2];
+
+      if (celdaNombre) {
+        let textoNombre = celdaNombre.textContent || celdaNombre.innerText;
+        if (textoNombre.toLowerCase().includes(filtro)) {
+          fila.style.display = '';
+        } else {
+          fila.style.display = 'none';
+        }
+      }
+    });
+  });
 
   function abrirModal(idModal) {
     document.getElementById(idModal).classList.add('activo');

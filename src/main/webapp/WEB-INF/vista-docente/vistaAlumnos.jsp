@@ -11,21 +11,22 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100..900&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
     }
     html, body {
-      min-height: 100vh;
+      height: 100%;
       margin: 0;
       padding: 0;
-      overflow-y: auto;
+      overflow: hidden;
     }
     body {
       background-color: #cbc8be;
       color: #333333;
-      font-family: Arial, Helvetica, sans-serif;
-      padding: 20px 40px;
+      font-family: "Lexend Exa", sans-serif;
+      padding: 20px 40px 70px 40px; /* Espacio inferior reservado para la barra fija */
       display: flex;
       flex-direction: column;
     }
@@ -34,7 +35,8 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      min-height: 100vh;
+      height: 100%;
+      position: relative;
     }
 
     /* Header con Logo y Botones */
@@ -110,14 +112,15 @@
       font-size: 1.1rem;
     }
 
-    /* Tabla adaptable */
+    /* Tabla adaptable con Scroll Interno */
     .table-container {
       width: 100%;
       background-color: #e5ded8;
       border-radius: 2px;
-      overflow-x: auto;
+      overflow-y: auto; /* Permite scroll vertical interno */
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       margin-bottom: 10px;
+      flex-grow: 1; /* Ocupa el espacio vertical restante */
     }
     table {
       width: 100%;
@@ -156,42 +159,20 @@
       padding: 0;
     }
 
-    /* Paginación */
-    .pagination-bar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 0;
-      flex-shrink: 0;
-    }
-    .pagination-bar button {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1.5px solid #333333;
-      background-color: #ffffff;
-      font-size: 0.85rem;
-      font-weight: bold;
-      color: #333333;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .pagination-bar button.active {
-      background-color: #0d8065;
-      color: #ffffff;
-      border-color: #0d8065;
-    }
-
-    /* Filtros inferiores */
+    /* Filtros inferiores FIJOS */
     .filters {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #cbc8be;
+      padding: 0 40px;
       display: flex;
       gap: 20px;
-      padding: 10px 0;
       flex-shrink: 0;
       align-items: center;
+      z-index: 10;
     }
     .filters label {
       display: flex;
@@ -315,8 +296,9 @@
     </div>
   </div>
 
+  <!-- Buscador por Nombre o Matrícula -->
   <div class="search-bar">
-    <input type="text" id="buscarMatricula" placeholder="Introduzca la matrícula para buscar en el registro....">
+    <input type="text" id="buscarMatriculaONombre" placeholder="Introduzca la matrícula o nombre para buscar en el registro....">
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
 
@@ -355,19 +337,7 @@
     </table>
   </div>
 
-  <!-- Paginadores -->
-  <div class="pagination-bar">
-    <button type="button"><i class="fa-solid fa-angles-left"></i></button>
-    <button type="button"><i class="fa-solid fa-angle-left"></i></button>
-    <button type="button" class="active">1</button>
-    <button type="button">2</button>
-    <button type="button">3</button>
-    <button type="button">4</button>
-    <button type="button"><i class="fa-solid fa-angle-right"></i></button>
-    <button type="button"><i class="fa-solid fa-angles-right"></i></button>
-  </div>
-
-  <!--Filtros -->
+  <!-- Filtros -->
   <div class="filters">
     <label>
       <input type="radio" name="filtro"
@@ -410,6 +380,28 @@
 </div>
 
 <script>
+  /* BUSCADOR FILTRADO POR MATRÍCULA Y/O NOMBRE DEL ALUMNO */
+  document.getElementById('buscarMatriculaONombre').addEventListener('keyup', function() {
+    let filtro = this.value.toLowerCase().trim();
+    let filas = document.querySelectorAll('.custom-table tbody tr');
+
+    filas.forEach(function(fila) {
+      // Celda 0 = Matrícula
+      // Celda 2 = Nombre
+      let celdaMatricula = fila.getElementsByTagName('td')[0];
+      let celdaNombre = fila.getElementsByTagName('td')[2];
+
+      let textoMatricula = celdaMatricula ? (celdaMatricula.textContent || celdaMatricula.innerText).toLowerCase() : '';
+      let textoNombre = celdaNombre ? (celdaNombre.textContent || celdaNombre.innerText).toLowerCase() : '';
+
+      if (textoMatricula.includes(filtro) || textoNombre.includes(filtro)) {
+        fila.style.display = '';
+      } else {
+        fila.style.display = 'none';
+      }
+    });
+  });
+
   // ---------- abrir/cerrar cualquier modal ----------
   function abrirModal(idModal) {
     document.getElementById(idModal).classList.add('activo');

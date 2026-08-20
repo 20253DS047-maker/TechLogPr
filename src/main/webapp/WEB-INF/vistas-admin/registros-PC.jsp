@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: USER
-  Date: 12/08/2026
-  Time: 08:56 p.m.
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
@@ -32,7 +25,7 @@
             background-color: #cbc8be;
             color: #333333;
             font-family: Arial, Helvetica, sans-serif;
-            padding: 20px 40px;
+            padding: 20px 40px 70px 40px; /* Espacio inferior reservado para la barra fija */
             display: flex;
             flex-direction: column;
         }
@@ -42,6 +35,7 @@
             flex-direction: column;
             height: 100%;
             width: 100%;
+            position: relative;
         }
 
         /* Header */
@@ -115,14 +109,15 @@
             cursor: pointer;
         }
 
+        /* Tabla flexible que permite scroll interno cuando sobrepasa la pantalla */
         .table-container {
             background-color: #e5ded8;
             border-radius: 2px;
             padding: 0;
-            overflow: hidden;
+            overflow-y: auto; /* Scroll vertical interno */
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            display: block;
-            flex-direction: column;
+            flex-grow: 1; /* Ocupa el alto vertical disponible */
+            margin-bottom: 10px;
         }
         .custom-table {
             width: 100%;
@@ -165,21 +160,26 @@
             padding: 0;
         }
 
+        /* Footer FIJO únicamente con los radio buttons */
         .footer-controls {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #cbc8be;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            margin-top: 15px;
-            flex-shrink: 0;
+            z-index: 10;
         }
         .radio-group {
-            justify-self: start;
             display: flex;
             gap: 15px;
             align-items: center;
         }
         .radio-group-right {
-            justify-self: end;
             display: flex;
             gap: 15px;
             align-items: center;
@@ -195,33 +195,6 @@
         .radio-group-right .form-check-input:checked {
             background-color: #000;
             border-color: #000;
-        }
-        .pagination-custom {
-            grid-column: 2;
-            justify-self: center;
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-        .pagination-custom .page-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 1.5px solid #333333;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: #333333;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .pagination-custom .page-btn.active {
-            background-color: #0d8065;
-            color: #ffffff;
-            border-color: #0d8065;
         }
 
         /* Modales */
@@ -349,15 +322,16 @@
         <h1 class="main-title">Registros Equipos / PC</h1>
 
         <div class="d-flex flex-column gap-2 align-items-end">
-            <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesión</button>
+            <button type="button" class="btn-custom-dark" onclick="abrirModal('modalCerrarSesion')">Cerrar Sesion</button>
+            <button type="button" class="btn-custom-dark" onclick=""><i class="fa-solid fa-square-plus"></i> Agregar</button>
         </div>
     </div>
 
-    <!-- Buscador -->
+    <!-- Buscador por Salón -->
     <div class="search-bar-container">
         <button class="btn btn-custom-dark px-4" onclick="window.location.href='registro-docente-servlet'">Registrar Usuarios</button>
         <div class="search-input-group">
-            <input type="text" id="buscarPC" class="form-control" placeholder="Introduzca el número de PC o salón para buscar....">
+            <input type="text" id="buscarPC" class="form-control" placeholder="Introduzca el salón o cómputo para buscar....">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
         </div>
     </div>
@@ -367,14 +341,13 @@
         <table class="custom-table text-center">
             <thead>
             <tr>
-                <th style="width: 5%;">ID PC</th>
-                <th style="width: 15%;">ID REGISTRO ALUMNO</th>
-                <th style="width: 10%;">COMPUTO</th>
+                <th style="width: 10%;">ID PC</th>
+                <th style="width: 15%;">CÓMPUTO / SALÓN</th>
                 <th style="width: 15%;">DOCENCIA</th>
-                <th style="width: 5%;">NÚMERO PC</th>
-                <th style="width: 15%;">MODELO</th>
-                <th style="width: 10%;">ISLA / MESA</th>
-                <th style="width: 10%;">ESTADO</th>
+                <th style="width: 12%;">NÚMERO PC</th>
+                <th style="width: 20%;">MODELO</th>
+                <th style="width: 13%;">ISLA / MESA</th>
+                <th style="width: 15%;">ESTADO</th>
                 <th style="width: 15%;">ACCIONES</th>
             </tr>
             </thead>
@@ -382,7 +355,6 @@
             <c:forEach items="${listaRegistrosPC}" var="pc" varStatus="estado">
                 <tr>
                     <td>${pc.id}</td>
-                    <td>${pc.idRegistroAlumno}</td>
                     <td>${pc.salonComputo}</td>
                     <td>${pc.docencia}</td>
                     <td>${pc.numeroPc}</td>
@@ -425,7 +397,7 @@
                         </button>
 
 
-                        <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${pc.id}')">
+                        <button type="button" class="icon-btn" title="Eliminar" onclick="eliminar('${pc.id}', this)">
                             <i class="fa-regular fa-trash-can"></i>
                         </button>
                     </td>
@@ -435,6 +407,7 @@
         </table>
     </div>
 
+    <!-- Footer Fijo abajo solo con Radios -->
     <div class="footer-controls">
         <!-- Esquina Izquierda: Filtros de Bitácora -->
         <div class="radio-group">
@@ -450,18 +423,6 @@
                 <input class="form-check-input" type="radio" name="filtroBitacora" id="optBitacoraPC" value="A"  onchange="window.location.href='admin-alumno-servlet'">
                 <label class="form-check-label fw-bold ms-1" for="optBitacoraPC">Bitácora(Alumno)</label>
             </div>
-        </div>
-
-        <!-- Centro: Paginación -->
-        <div class="pagination-custom">
-            <a class="page-btn"><i class="fa-solid fa-angles-left"></i></a>
-            <a class="page-btn"><i class="fa-solid fa-angle-left"></i></a>
-            <a class="page-btn active">1</a>
-            <a class="page-btn">2</a>
-            <a class="page-btn">3</a>
-            <a class="page-btn">4</a>
-            <a class="page-btn"><i class="fa-solid fa-angle-right"></i></a>
-            <a class="page-btn"><i class="fa-solid fa-angles-right"></i></a>
         </div>
 
         <!-- Esquina Derecha: Filtros de Usuarios -->
@@ -572,7 +533,6 @@
     </div>
 </div>
 
-<!-- Modal Cerrar Sesión -->
 <div class="modal-overlay" id="modalCerrarSesion">
     <div class="confirm-box">
         <div class="confirm-header">¿Estás seguro de cerrar sesión?</div>
@@ -585,6 +545,27 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    var filaAEliminar = null;
+
+    document.getElementById('buscarPC').addEventListener('keyup', function() {
+        let filtro = this.value.toLowerCase().trim();
+        let filas = document.querySelectorAll('.custom-table tbody tr');
+
+        filas.forEach(function(fila) {
+            // Índice 1 corresponde a la 2da columna actual: CÓMPUTO / SALÓN
+            let celdaSalon = fila.getElementsByTagName('td')[1];
+
+            if (celdaSalon) {
+                let textoSalon = celdaSalon.textContent || celdaSalon.innerText;
+                if (textoSalon.toLowerCase().includes(filtro)) {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = 'none';
+                }
+            }
+        });
+    });
+
     function abrirModal(idModal) {
         document.getElementById(idModal).classList.add('activo');
     }
@@ -601,7 +582,6 @@
         document.getElementById('vm-estado').value = datos.estado || '';
         abrirModal('modalVerMas');
     }
-
 
     function editar(id, datos) {
         document.getElementById('ed-id').value = id;

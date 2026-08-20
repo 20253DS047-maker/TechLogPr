@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TechLog:war2">
+    <output-path>$PROJECT_DIR$/out/artifacts/TechLog_war2</output-path>
+    <root id="archive" name="TechLog_war.war">
+      <element id="artifact" artifact-name="TechLog:war exploded" />
+    </root>
+  </artifact>
+</component>

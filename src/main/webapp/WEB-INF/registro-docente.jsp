@@ -124,13 +124,13 @@
                     <label for="username" class="form-label">Username:</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Ej: SantiDatid" required>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese su correo institucional" required>
                     </div>
                 </div>
             </div>
 
             <div class="d-grid gap-20 col-8 mx-auto mb-4">
-                <button type="submit" class="btn-primary">Iniciar</button>
+                <button type="submit" class="btn-primary">Registrar</button>
             </div>
         </form>
 

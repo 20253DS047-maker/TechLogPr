@@ -1,13 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: USER
-  Date: 24/07/2026
-  Time: 03:01 p.m.
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100..900&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -18,6 +12,7 @@
             width: 100vw;
             height: 100vh;
             background-color: #FFFFFF;
+            font-family: "Lexend Exa", sans-serif;
         }
         .overlay-exito {
             position: fixed;

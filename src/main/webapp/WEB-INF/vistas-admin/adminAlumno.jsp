@@ -444,6 +444,8 @@
     <input type="text" id="ed-apellido">
     <label>Username:</label>
     <input type="text" id="ed-username">
+    <label>Nueva Contraseña:</label>
+    <input type="password" id="ed-password" placeholder="Dejar vacío para no cambiarla" autocomplete="new-password">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
       <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
@@ -520,6 +522,7 @@
     document.getElementById('ed-nombre').value = datos.nombre || '';
     document.getElementById('ed-apellido').value = datos.apellido || '';
     document.getElementById('ed-username').value = datos.username || '';
+    document.getElementById('ed-password').value = '';
     abrirModal('modalEditar');
   }
 
@@ -528,7 +531,8 @@
     var body = 'matricula_original=' + encodeURIComponent(matriculaOriginal) +
             '&nombre=' + encodeURIComponent(document.getElementById('ed-nombre').value) +
             '&apellido=' + encodeURIComponent(document.getElementById('ed-apellido').value) +
-            '&username=' + encodeURIComponent(document.getElementById('ed-username').value);
+            '&username=' + encodeURIComponent(document.getElementById('ed-username').value) +
+            '&nueva_password=' + encodeURIComponent(document.getElementById('ed-password').value);
 
     fetch('editar-usuario-alumno-servlet', {
       method: 'POST',

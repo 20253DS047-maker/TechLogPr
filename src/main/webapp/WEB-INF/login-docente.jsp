@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -38,6 +38,19 @@
             background-color: #CBCABE;
             font-family: 'Lexend Exa', sans-serif;
         }
+        .link-recuperar {
+            color: #20477E;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .link-recuperar:hover {
+            color: #183052;
+        }
+        #modalRecuperar .modal-content {
+            background-color: #EFE6E6;
+            font-family: 'Lexend Exa', sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -64,6 +77,9 @@
                     <span class="input-group-text"><i class="bi  bi-lock"></i></span>
                     <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese su contraseña" required>
                 </div>
+                <div class="text-end mt-1">
+                    <span class="link-recuperar" data-bs-toggle="modal" data-bs-target="#modalRecuperar">¿Olvidaste tu contraseña?</span>
+                </div>
             </div>
 
             <div class="d-grid gap-20 col-8 mx-auto mb-3">
@@ -74,6 +90,25 @@
             <button type="button" onclick="window.location.href='principal-servlet'" class="btn-primary">Regresar</button>
         </div>
 
+    </div>
+</div>
+
+<!-- Modal Recuperar Contraseña -->
+<div class="modal fade" id="modalRecuperar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-2">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-title">¿Olvidaste tu contraseña?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                Por seguridad, tu contraseña no puede recuperarse automáticamente.
+                Acude con un administrador del sistema para que te ayude a restablecerla.
+            </div>
+            <div class="modal-footer border-0 justify-content-center">
+                <button type="button" class="btn-primary px-4" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
     </div>
 </div>
 

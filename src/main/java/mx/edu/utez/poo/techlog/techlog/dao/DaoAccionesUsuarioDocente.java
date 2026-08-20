@@ -39,4 +39,19 @@ public class DaoAccionesUsuarioDocente {
             return false;
         }
     }
+
+    // NUEVO: reemplaza la contraseña por un hash ya calculado (SHA-256)
+    public boolean cambiarPassword(int id, String hashNuevaContrasena) {
+        String sql = "UPDATE USUARIO_DOCENTE SET PASSWORD = ? WHERE ID_DOCENTE = ?";
+        try (Connection conexion = Conexion.getConexion();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setString(1, hashNuevaContrasena);
+            ps.setInt(2, id);
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

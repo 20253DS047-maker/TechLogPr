@@ -2,6 +2,7 @@ package mx.edu.utez.poo.techlog.techlog.service;
 
 import mx.edu.utez.poo.techlog.techlog.dao.DaoAccionesUsuarioAlumno;
 import mx.edu.utez.poo.techlog.techlog.model.BeanTablaUsuarioAlumno;
+import mx.edu.utez.poo.techlog.techlog.util.HashUtils;
 
 public class ServiceAccionesUsuarioAlumno {
     private DaoAccionesUsuarioAlumno daoAccionesUsuarioAlumno = new DaoAccionesUsuarioAlumno();
@@ -23,5 +24,16 @@ public class ServiceAccionesUsuarioAlumno {
             return false;
         }
         return daoAccionesUsuarioAlumno.actualizar(usuario, matriculaOriginal);
+    }
+
+    // NUEVO: hashea la nueva contraseña con el mismo algoritmo que usa el login (SHA-256)
+    // y la guarda. El admin nunca puede ver la contraseña actual, solo asignar una nueva.
+    public boolean cambiarPassword(String matricula, String nuevaContrasenaPlano) {
+        if (matricula == null || matricula.trim().isEmpty() ||
+                nuevaContrasenaPlano == null || nuevaContrasenaPlano.trim().isEmpty()) {
+            return false;
+        }
+        String hash = HashUtils.sha256(nuevaContrasenaPlano.trim());
+        return daoAccionesUsuarioAlumno.cambiarPassword(matricula, hash);
     }
 }

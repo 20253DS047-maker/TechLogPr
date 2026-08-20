@@ -248,6 +248,17 @@
       font-size: 0.95rem;
       cursor: pointer;
     }
+    .btn-confirmar {
+      background-color: #0d8065;
+      color: #fff;
+      border: none;
+      padding: 11px;
+      border-radius: 4px;
+      font-weight: 700;
+      flex: 1;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
 
     .confirm-box {
       background-color: #ffffff;
@@ -309,8 +320,8 @@
         <th style="width: 20%;">MATRÍCULA</th>
         <th style="width: 20%;">USERNAME</th>
         <th style="width: 25%;">NOMBRE</th>
-        <th style="width: 25%;">APELLIDO</th>
-        <th style="width: 10%;">ACCIONES</th>
+        <th style="width: 20%;">APELLIDO</th>
+        <th style="width: 15%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
@@ -329,6 +340,10 @@
                             username: '${usuarioAlumno.username}'
                             })">
               <i class="fa-regular fa-eye"></i>
+            </button>
+            <button type="button" class="icon-btn" title="Cambiar contraseña"
+                    onclick="abrirCambiarPassword('${usuarioAlumno.matricula}')">
+              <i class="fa-regular fa-pen-to-square"></i>
             </button>
           </td>
         </tr>
@@ -366,6 +381,24 @@
       <button type="button" class="btn-salir" style="max-width:100%" onclick="cerrarModal('modalVerMas')">Salir</button>
     </div>
   </div>
+</div>
+
+<!-- ===================== MODAL: CAMBIAR CONTRASEÑA (docente) =====================
+     El docente SOLO puede escribir una nueva contraseña. Matricula viaja oculta
+     y de solo lectura; nombre, apellido y username no se tocan aqui. -->
+<div class="modal-overlay" id="modalCambiarPassword">
+  <form class="modal-box modal-white" onsubmit="return false;">
+    <h2>Cambiar Contraseña del Alumno</h2>
+    <input type="hidden" id="cp-matricula">
+    <label>Matrícula:</label>
+    <input type="text" id="cp-matricula-visible" disabled>
+    <label>Nueva Contraseña:</label>
+    <input type="password" id="cp-nueva-password" placeholder="Escribe la nueva contraseña" autocomplete="new-password">
+    <div class="modal-actions">
+      <button type="button" class="btn-salir" onclick="cerrarModal('modalCambiarPassword')">Salir</button>
+      <button type="button" class="btn-confirmar" onclick="guardarCambioPassword()">Confirmar</button>
+    </div>
+  </form>
 </div>
 
 <!-- ===================== MODAL: CERRAR SESION ===================== -->
@@ -417,6 +450,46 @@
     document.getElementById('vm-apellido').value = datos.apellido || '';
     document.getElementById('vm-username').value = datos.username || '';
     abrirModal('modalVerMas');
+  }
+
+  // ---------- Cambiar contraseña: el docente solo puede tocar este campo ----------
+  function abrirCambiarPassword(matricula) {
+    document.getElementById('cp-matricula').value = matricula;
+    document.getElementById('cp-matricula-visible').value = matricula;
+    document.getElementById('cp-nueva-password').value = '';
+    abrirModal('modalCambiarPassword');
+  }
+
+  function guardarCambioPassword() {
+    var matricula = document.getElementById('cp-matricula').value;
+    var nuevaPassword = document.getElementById('cp-nueva-password').value;
+
+    if (!nuevaPassword || !nuevaPassword.trim()) {
+      alert('Escribe la nueva contraseña.');
+      return;
+    }
+
+    var body = 'matricula=' + encodeURIComponent(matricula) +
+            '&nueva_password=' + encodeURIComponent(nuevaPassword);
+
+    fetch('cambiar-password-alumno-servlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+              if (data.success) {
+                alert('Contraseña actualizada correctamente.');
+                cerrarModal('modalCambiarPassword');
+              } else {
+                alert('No se pudo cambiar la contraseña: ' + (data.message || 'Error desconocido'));
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+              alert('Error de conexión al cambiar la contraseña.');
+            });
   }
 
   // ---------- Cerrar sesion confirmado ----------

@@ -28,10 +28,22 @@ public class EditarUsuarioAlumnoServlet extends HttpServlet {
         ServiceAccionesUsuarioAlumno service = new ServiceAccionesUsuarioAlumno();
         boolean editado = service.editarUsuario(usuario, matriculaOriginal);
 
-        if (editado) {
-            out.print("{\"success\": true}");
-        } else {
+        if (!editado) {
             out.print("{\"success\": false, \"message\": \"No se pudo editar el usuario\"}");
+            return;
         }
+
+        // NUEVO: si el admin escribio una nueva contraseña, se hashea y reemplaza aparte.
+        // Si el campo viene vacio, no se toca la contraseña actual.
+        String nuevaPassword = req.getParameter("nueva_password");
+        if (nuevaPassword != null && !nuevaPassword.trim().isEmpty()) {
+            boolean passwordCambiada = service.cambiarPassword(matriculaOriginal, nuevaPassword);
+            if (!passwordCambiada) {
+                out.print("{\"success\": false, \"message\": \"Datos actualizados, pero no se pudo cambiar la contraseña\"}");
+                return;
+            }
+        }
+
+        out.print("{\"success\": true}");
     }
 }

@@ -506,6 +506,8 @@
     <input type="text" id="ed-apellido-materno">
     <label>Área:</label>
     <input type="text" id="ed-area">
+    <label>Nueva Contraseña:</label>
+    <input type="password" id="ed-password" placeholder="Dejar vacío para no cambiarla" autocomplete="new-password">
     <div class="modal-actions">
       <button type="button" class="btn-salir" onclick="cerrarModal('modalEditar')">Salir</button>
       <button type="button" class="btn-confirmar" onclick="guardarEdicion()">Confirmar</button>
@@ -587,17 +589,20 @@
     document.getElementById('ed-apellido-paterno').value = datos.apellido_paterno || '';
     document.getElementById('ed-apellido-materno').value = datos.apellido_materno || '';
     document.getElementById('ed-area').value = datos.area || '';
+    document.getElementById('ed-password').value = '';
     abrirModal('modalEditar');
   }
 
   function guardarEdicion() {
     var idOriginal = document.getElementById('ed-id').value;
+    var nuevaPassword = document.getElementById('ed-password').value;
     var body = 'id_original=' + encodeURIComponent(idOriginal) +
             '&username=' + encodeURIComponent(document.getElementById('ed-username').value) +
             '&nombre=' + encodeURIComponent(document.getElementById('ed-nombre').value) +
             '&apellido_paterno=' + encodeURIComponent(document.getElementById('ed-apellido-paterno').value) +
             '&apellido_materno=' + encodeURIComponent(document.getElementById('ed-apellido-materno').value) +
-            '&area=' + encodeURIComponent(document.getElementById('ed-area').value);
+            '&area=' + encodeURIComponent(document.getElementById('ed-area').value) +
+            '&nueva_password=' + encodeURIComponent(nuevaPassword);
 
     fetch('editar-usuario-docente-servlet', {
       method: 'POST',
@@ -607,6 +612,9 @@
             .then(function (response) { return response.json(); })
             .then(function (data) {
               if (data.success) {
+                if (nuevaPassword && nuevaPassword.trim()) {
+                  alert('Contraseña actualizada correctamente.');
+                }
                 location.reload();
               } else {
                 alert('No se pudo editar: ' + (data.message || 'Error desconocido'));

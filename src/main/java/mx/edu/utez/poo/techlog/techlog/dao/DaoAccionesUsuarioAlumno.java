@@ -37,4 +37,20 @@ public class DaoAccionesUsuarioAlumno {
             return false;
         }
     }
+
+    // NUEVO: reemplaza la contraseña por un hash ya calculado (SHA-256).
+    // El admin nunca ve ni maneja la contraseña en texto plano mas alla del input del formulario.
+    public boolean cambiarPassword(String matricula, String hashNuevaContrasena) {
+        String sql = "UPDATE USUARIO_ALUMNO SET CONTRASENA = ? WHERE MATRICULA = ?";
+        try (Connection conexion = Conexion.getConexion();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setString(1, hashNuevaContrasena);
+            ps.setString(2, matricula);
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -528,11 +528,12 @@
 
   function guardarEdicion() {
     var matriculaOriginal = document.getElementById('ed-id').value;
+    var nuevaPassword = document.getElementById('ed-password').value;
     var body = 'matricula_original=' + encodeURIComponent(matriculaOriginal) +
             '&nombre=' + encodeURIComponent(document.getElementById('ed-nombre').value) +
             '&apellido=' + encodeURIComponent(document.getElementById('ed-apellido').value) +
             '&username=' + encodeURIComponent(document.getElementById('ed-username').value) +
-            '&nueva_password=' + encodeURIComponent(document.getElementById('ed-password').value);
+            '&nueva_password=' + encodeURIComponent(nuevaPassword);
 
     fetch('editar-usuario-alumno-servlet', {
       method: 'POST',
@@ -542,6 +543,9 @@
             .then(function (response) { return response.json(); })
             .then(function (data) {
               if (data.success) {
+                if (nuevaPassword && nuevaPassword.trim()) {
+                  alert('Contraseña actualizada correctamente.');
+                }
                 location.reload();
               } else {
                 alert('No se pudo editar: ' + (data.message || 'Error desconocido'));

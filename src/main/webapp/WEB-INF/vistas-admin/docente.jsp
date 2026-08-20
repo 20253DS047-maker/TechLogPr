@@ -148,15 +148,31 @@
       height: 45px;
     }
 
+    /* Contenedor flex para alinear íconos en una sola fila */
+    .actions-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+    }
+
     /* Iconos de acciones */
     .icon-btn {
       border: none;
       background: none;
       color: #222222;
-      margin: 0 4px;
       cursor: pointer;
       font-size: 1.1rem;
-      padding: 0;
+      padding: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+    .icon-btn:hover {
+      color: #0d8065;
     }
 
     /* Footer y paginación FIJOS abajo */
@@ -368,9 +384,9 @@
         <th style="width: 20%;">USERNAME</th>
         <th style="width: 15%;">NOMBRE</th>
         <th style="width: 15%;">APELLIDO PATERNO</th>
-        <th style="width: 15%;">APELLIDO MATERNO</th>
+        <th style="width: 10%;">APELLIDO MATERNO</th>
         <th style="width: 10%;">ÁREA</th>
-        <th style="width: 15%;">ACCIONES</th>
+        <th style="width: 20%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
@@ -434,16 +450,6 @@
     </div>
 
     <!-- Centro: Paginación (Solo Vista) -->
-    <div class="pagination-custom">
-      <span class="page-btn"><i class="fa-solid fa-angles-left"></i></span>
-      <span class="page-btn"><i class="fa-solid fa-angle-left"></i></span>
-      <span class="page-btn active">1</span>
-      <span class="page-btn">2</span>
-      <span class="page-btn">3</span>
-      <span class="page-btn">4</span>
-      <span class="page-btn"><i class="fa-solid fa-angle-right"></i></span>
-      <span class="page-btn"><i class="fa-solid fa-angles-right"></i></span>
-    </div>
 
     <!-- Esquina Derecha: Filtros de Usuarios -->
     <div class="radio-group-right">

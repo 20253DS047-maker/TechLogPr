@@ -6,7 +6,6 @@ public class BeanLoginAdmin {
     private String usuario;
     private String contrasena;
 
-
     public String getNombre() {
         return nombre;
     }
@@ -27,7 +26,7 @@ public class BeanLoginAdmin {
         return usuario;
     }
 
-    public void setUsuario(String username) {
+    public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 

@@ -12,17 +12,16 @@ public class DaoLoginAdmin {
     public BeanLoginAdmin findByUsuario(String usuario) {
 
         BeanLoginAdmin admin = null;
-
         String sql = "SELECT * FROM ADMIN WHERE UPPER(USUARIO) = UPPER(?)";
 
         try (Connection conexion = Conexion.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
-                ps.setString(1, usuario);
+            ps.setString(1, usuario);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     admin = new BeanLoginAdmin();
-                    admin.setNombre(rs.getString("USUARIO"));
+                    admin.setUsuario(rs.getString("USUARIO"));
                     admin.setContrasena(rs.getString("CONTRASENA"));
                     admin.setNombre(rs.getString("NOMBRE"));
                     admin.setApellido(rs.getString("APELLIDO"));
@@ -33,6 +32,5 @@ public class DaoLoginAdmin {
         }
 
         return admin;
-
     }
 }

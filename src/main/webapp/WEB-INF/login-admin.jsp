@@ -47,11 +47,9 @@
         <div class="col-sm-6 col-md-8 mx-auto text-center mb-4">
             <h2 class="text-title">LOGIN ADMIN</h2>
         </div>
-
         <c:if test="${not empty requestScope.error}">
             <div class="alert alert-danger">${requestScope.error}</div>
         </c:if>
-
         <form action="login-admin-servlet" method="post">
             <div class="col-sm-6 col-md-8 mx-auto mb-3">
                 <label for="usuario" class="form-label">Username:</label>

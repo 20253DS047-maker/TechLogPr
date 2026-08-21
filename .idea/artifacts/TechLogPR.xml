@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TechLogpr">
+    <output-path>$PROJECT_DIR$/out/artifacts/TechLogpr</output-path>
+    <root id="archive" name="TechLogpr.war" />
+  </artifact>
+</component>

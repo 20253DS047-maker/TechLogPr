@@ -349,7 +349,7 @@
         <th style="width: 13%;">ÁREA</th>
         <th style="width: 14%;">FECHA REGISTRO</th>
         <th style="width: 8%;">ESTADO</th>
-        <th style="width: 10%;">ACCIONES</th>
+        <th style="width: 12%;">ACCIONES</th>
       </tr>
       </thead>
       <tbody>
